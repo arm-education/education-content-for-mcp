@@ -1,0 +1,69 @@
+﻿
+This module dives deeper into a powerful
+
+
+and widely used model in Machine Learning:
+
+
+the Artificial Neural Network.
+
+
+These can analyze large quantities of
+
+
+input data in complex ways, in order
+
+
+to solve classification problems,
+
+
+such as identifying objects in
+
+
+an image. In order to run neural
+
+
+networks on small microprocessors,
+
+
+these models need to be as
+
+
+streamlined as possible.
+
+
+So you will also look at the complexity
+
+
+of a typical neural network,
+
+
+and see some techniques to reduce this
+
+
+complexity, such as quantization.
+
+
+In the lab, you will continue building a
+
+
+classifier for activity recognition,
+
+
+but this time using a neural network
+
+
+on an Arm-based microprocessor.
+
+
+For this, you will be introduced
+
+
+to the Tensorflow Python Library,
+
+
+which is also popular for many
+
+
+applications in Machine Learning.
+

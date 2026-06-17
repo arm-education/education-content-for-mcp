@@ -1,0 +1,63 @@
+﻿
+In this module, you will explore
+
+
+some of the key concepts in
+
+
+Machine Learning, such as feature
+
+
+extraction and classification models,
+
+
+in the context of signal processing.
+
+
+You will understand the importance of
+
+
+training and evaluation in the Machine
+
+
+Learning workflow, and the constraints
+
+
+involved when using microcontrollers for this.
+
+
+The ability to run Machine Learning
+
+
+models on microcontrollers
+
+
+allows complex prediction tasks
+
+
+to be carried out on portable devices
+
+
+such as smartphones and wireless
+
+
+headphones. At the end of the module,
+
+
+you will complete a practical lab
+
+
+exercise, to implement some simple
+
+
+Machine Learning models for activity
+
+
+recognition, using accelerometer data.
+
+
+To do so, you will be shown how to use Anaconda
+
+
+and Python to work with the datasets.
+

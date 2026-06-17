@@ -1,0 +1,2016 @@
+Hey, I'm Kieran,
+and I'll be the instructor for this lab.
+
+This assumes you have already set up your
+Raspberry Pi device using the official
+
+documentation.
+
+That includes things like burning the
+image onto the SD card and connecting all
+
+the cables up.
+
+So let's get into it.
+
+All right,
+first let's check that we've connected to
+
+the Internet.
+
+Scroll to the top right and click on the
+the Wi-Fi icon and you can see
+
+I'm correctly connected to a
+network.
+
+Next,
+we're going to just check what system we
+
+have.
+
+So on your Raspberry Pi,
+if you type in the command lscpu,
+
+which stands for list CPU,
+this will list all the features available
+
+to your on your Raspberry Pi.
+
+And I'm using the fifth version which has
+four Cortex A-76 processors.
+
+And you can also see the features
+available for that CPU.
+
+So to get started,
+we need to navigate to the repository
+
+that holds the lab and this is on the
+Arm University GitHub.
+
+So search for that within the engine and
+click on the suitable link and scroll
+
+down until you see the course name.
+
+Click on that and navigate to the
+code button in green here and then copy
+
+the value of the
+https://link.
+
+In a fresh terminal session,
+we're going to run the git clone command.
+
+You should already have git installed,
+but if you don't,
+
+you can type in sudo apt install
+git.
+
+So I'm currently in my test directory,
+but if I change into,
+
+let's say the documents,
+I can clone it there.
+
+So now I'm typing in git clone and to
+paste in the URL you need to press
+
+control shift the and as you can see I've
+already cloned the repository as you
+
+can see here.
+
+So we will probably also want to open up
+a suitable editor. Using the
+
+terminal command probably isn't
+suitable,
+
+so we're going to use Visual Studio Code,
+which can be installed with that command
+
+there sudo apt install code.
+
+So once it's done,
+you should be able to search for Visual
+
+Studio Code and open up the familiar
+IDE.
+
+Since I recently opened up the lab,
+it opens to the directory, but for you,
+
+you'll probably see a blank screen.
+
+So pressing file, open folder and then
+clicking on the repository to get it
+
+open.
+
+So we're going to go through lab one in
+this exercise.
+
+But as you can see,
+there's a read me file which we recommend
+
+you take a look before starting.
+
+And this will ask you to run the setup_pi
+script at the bottom there.
+
+So I'm just going to click on that script.
+
+So this is a bash script that installs
+all the prerequisites on your system.
+
+You may notice I've commented outline 12
+on upgrading the system.
+
+This is because it will actually install
+all the packages,
+
+which for this demonstration might take a
+little while.
+
+So I'm just going to skip that.
+
+So running the script,
+we'll begin installing all 
+
+the requirements.
+
+Once it's done,
+it should say that you've been
+
+successful.
+
+Great.
+
+So if things go smoothly for you,
+you should see a set up script completed
+
+successfully output at the bottom.
+
+And now we have a new folder for our
+environment.
+
+So running the source command and then
+searching for the activate function
+
+enters our environment.
+
+So this is an isolated region where
+specific packages can be installed
+
+without clobbering or interfering with
+system packages.
+
+So now we're almost ready to run our lab.
+
+Just going to 
+clear the screen for readability.
+
+But now we need to connect to a specific
+Python kernel.
+
+So clicking on the button in the top
+right,
+
+because we've already entered our
+environment, we can select it here.
+
+And once you've connected,
+we are ready to run our lab.
+
+So the first part is on Optimizing
+Generative AI Workloads on Arm.
+
+And the example architecture is the Armv8 
+architecture,
+
+but this would also work on more recent
+architectures due to the backwards
+
+compatibility of the Arm architecture.
+
+So we'll span both low level languages as
+C, we'll then move over to higher level
+
+frameworks like PyTorch and Llama.cpp.
+
+And the example model will be Apple's
+OpenELM,
+
+which will be available through Hugging
+Face.
+
+So the requirements are an Armv8 based
+system.
+
+And of course,
+we're using a Raspberry Pi in this lab,
+
+but that's not to say that other
+platforms won't be able to run this lab.
+
+So why are we choosing Arm vector
+instructions?
+
+So first, as you previously learnt,
+we're going to demonstrate single
+
+instruction, multiple data,
+which involves packing multiple data
+
+elements into a single instruction.
+
+And this is branded under Neon.
+
+And there's also other extensions such as
+I8MM,
+
+which stands for 8 bit integer matrix
+multiplication.
+
+And these all offer significant
+improvements of parallel processing of
+
+multiple data elements.
+
+So what are the lab objectives of this
+first lab?
+
+So we're going to go into low level C and
+learn about different levels of precision
+
+going from floating-point
+32 bit integers, down to floating-point
+
+32 bit values, down to 8 bit integers.
+
+Next we're going to go into a high level
+framework that you're probably more
+
+familiar with measuring the different
+operations using PyTorch.
+
+We'll then actually deploy a model for
+inferencing.
+
+And again, this will be at OpenELM.
+
+And then how to really optimize on Arm.
+
+So we're going to look at integer
+quantization and how to write it your
+
+source code to to quantize your model.
+
+So you'll learn both low level
+optimizations as well as high level
+
+optimizations through framework such as
+PyTorch.
+
+And you there are some prerequisite
+skills.
+
+I'll let you pause the video and read
+them at your own leisure.
+
+First,
+let's go over matrix multiplication,
+
+which of course is the core algorithm in
+AI workloads, and offers the greatest
+
+performance increase through optimization.
+
+We'll go over a naive implementation in C
+as well as one in 32 bit floating-point
+
+and 8 bit integer.
+
+So before we get started,
+we have to recap what the algorithm
+
+is.
+
+So we have two matrices A and
+B, which are inputs, and we're looking to
+
+do a matrix multiplication on them.
+
+So A is a two by three where two is the
+rows and three is the column,
+
+and B is three by two and that will result in a
+two by two matrix C. And you may remember
+
+from high school or foundational courses
+that you take the rows and multiply each
+
+element by the corresponding column in
+the other matrix.
+
+And that's what that demonstrates.
+
+Please feel free to pause it to read
+further. But the time complexity,
+
+which is how the time taken to
+perform the calculation evolves as the
+
+number of elements grows, is n-cubed,
+which clearly is very poor.
+
+So what would be the simplest way to
+implement this algorithm,
+
+which we're calling the kernel?
+
+So we could have two matrices A and 
+B which we could store as a 2D row
+
+major order row major,
+meaning each row is stored contiguously
+
+in memory.
+
+And we could have N being the same size.
+
+So what would that look like as for loops
+in C?
+
+So first, let's run this cell to create
+the kernels file.
+
+As you can see,
+this creates a new file in the source
+
+code C kernels directory.
+
+I have all three available because I've
+run this lab before,
+
+but you should see a new file appear.
+
+Now let's scroll down to the C
+implementation.
+
+So we're using standard header files here,
+nothing new.
+
+And we're taking in three pointers and an
+integer K. We initialize an
+
+accumulator and we loop through K in both
+our inner and outer loops of our
+
+algorithm.
+
+We then set the accumulator to be zero in
+the floating-point number.
+
+And here we calculate the value C in the
+accumulator value,
+
+whereby we use that m times K type plus K to
+index into the correct element.
+
+So let's just run this.
+
+And now we've created the file.
+
+So clearly we're going through a lot of
+elements and now we introduce single
+
+instruction, multiple data,
+which introduces 128 bit registers that
+
+can pack multiple data elements into a
+single instruction.
+
+So we have 32 bit floating-point numbers,
+which of course take 32 bits and we have a
+
+128 bit register,
+so we can fit four elements into a
+
+single instruction.
+
+So the key instructions used are
+mentioned here and we can interact with
+
+Neon through what we call intrinsics, 
+which are available through a header
+
+library, as we'll see shortly.
+
+And to do the optimized accumulate,
+as you saw in the previous section,
+
+we can use the fuse multiply add,
+which is to do horizontal that can
+
+accumulate incrementally.
+
+And for the reduction step where we sum
+all the elements,
+
+there are special functions.
+
+So the advantages are efficient memory access  due to the
+
+packing, optimized accumulation, and this
+general hardware acceleration taking
+
+advantage of actual silicon.
+
+So as I mentioned,
+we're now including this Arm Neon,
+
+which will expose the intrinsics and the
+source code looks quite similar.
+
+We're going over a square matrix,
+but here we see we're using the defined
+
+data type of 32 by 4,
+which is used for our SIMD Neon.
+
+So we're calling specific intrinsic
+functions to create the accumulator.
+
+And here on the inner loop we are
+doing a vector load of 32 bit integers
+
+into a vector unit, a vector array.
+
+And finally we're calling the intrinsic
+vector add function to reduce all the
+
+elements in that array.
+
+So in that example we used 32 bits
+floating-point numbers and now we can
+
+go into even smaller
+numbers such as eight per integer.
+
+Given it's four types smaller,
+we can pack four times as many values and
+
+elements into a single instruction.
+
+So this is very similar in the sense that
+the process is the same,
+
+but the intrinsic functions will look
+slightly different.
+
+Now we are,
+
+as you can see,
+the intrinsic functions used have s8
+
+appended to them rather than the 32 bit
+variants.
+
+And there are similar functions for
+reduction,
+
+horizontally summing each element to
+produce the scalar final value that goes
+
+into the output matrix C.
+
+And again,
+it's very much the same story in terms of
+
+efficiency.
+
+So again we clone the we include the 
+Arm Neon header library.
+
+Very similarly,
+
+we loop over two matrices.
+
+We now have a new data type assigned
+that's defined in the header file of 16
+
+by 8.
+
+So we can fit sixteen 8 bit integer
+values into a single instruction.
+
+And it's a very similar story to the
+previous section using the right
+
+intrinsic functions.
+
+So how fast actually is this?
+
+So we're going to use the open source GCC
+compiler from the GNU Compiler Collective.
+
+And this has already been installed
+through the prerequisites.
+
+And this compiler is open source that can
+take advantage of Neon and SIMD.
+
+So the first command here,
+we input the flag O0 which is the 0
+
+optimizations and S to output an assembly
+file.
+
+And the m arch flag indicates the
+architecture we're targeting,
+
+and we've included plus SIMD to target
+that value.
+
+So we compile all three values to
+assembly files.
+
+So now we have three assembly files
+generated.
+
+So the naive implementation isn't able to
+take advantage of the Neon
+
+instructions.
+
+And this is partially because the
+compiler has set been set to no
+
+optimizations and, of course, because we
+haven't explicitly told it to in the
+
+source code,
+so there's no opportunity there.
+
+So to help us read the assembly,
+we can install Visual Studio Code
+
+extension.
+
+So if you search for Arm language server
+and install the one the official one from
+
+Arm,
+as you can see I've already got it
+
+installed here.
+
+It can be used to provide on hover
+documentation of those instructions as
+
+you can see here.
+
+So a very naive way to understand what
+has produced the more efficient binary
+
+would be to count the number of lines.
+
+If I simply open up the naive dot S file,
+the assembly file and we can see we've
+
+got about 94 lines of code including all
+the setup code.
+
+And then for the intake implementation we
+have 55.
+
+So it's clearly it's been able to produce
+a smaller assembly file,
+
+but let's actually measure the
+performance.
+
+So as we mentioned,
+the naive implementation won't use
+
+any vector instructions,
+but will default to standard load and
+
+store instructions.
+
+So the output here is just taken from a
+previous example.
+
+And the reason this can be an issue is
+because we have we're not taking
+
+advantage of the hardware available.
+
+So just for clarity,
+I ran the command GCC version and I'm
+
+using version 12.
+
+So when you run this example
+yourself,
+
+you may see slightly different results
+depending on the version of the compiler
+
+you use.
+
+So this command is available for your
+Linux,
+
+the stream editor file that simply passes the file for specific character
+
+strings.
+
+And as you can see here,
+we can see in our binary the
+
+loads in the stores.
+
+Now for the Neon implementation,
+we'll be utilising completely different
+
+instructions and here are a few of them
+shown here.
+
+And this will use that 128 bit register
+and pack four single precision 30 point
+
+numbers or even more with our API integer
+example.
+
+And this command here GREP searches for
+regular expressions and we'll pass the
+
+the ones of interest.
+
+And we can see we're now fp32 Neon file.
+
+We have those instructions.
+
+So I'm just going to go there and search
+for that actual function.
+
+And if you hover over,
+thanks to that extension,
+
+you can see the definition and
+the operation arguments,
+
+the operands.
+
+And now finally, as the final example,
+let's look at the integer 8 version.
+
+And this will use instructions such as
+side, multiply, add long.
+
+There's many instructions available.
+
+So as I already mentioned,
+this 8 bit integer variant will be able
+
+to pack even more elements in,
+
+so we should get even greater performance.
+
+But of course there is a limitation when
+you quantize the number,
+
+which means to reduce the precision,
+there's fewer possible states and you
+
+introduce quantization error as a result.
+
+So although we're able to pack more
+instructions,
+
+pack more elements per instruction,
+we may come at a loss of accuracy.
+
+So again,
+just looking at this example instruction,
+
+we can see that we're correctly compiled
+down to vector instructions.
+
+So this basic C example has been
+optimized.
+
+So let's actually benchmark inspecting
+assembly code is good for educational
+
+purposes,
+but let's see what the actual performance
+
+is.
+
+So this was run on my Raspberry Pi and we
+first create a C array and create values
+
+incrementing in powers of two.
+
+We're then going to create a directory
+and we're going to compile down our
+
+example.
+
+So this is a slightly different file.
+
+So if we open up the source code C and go
+to the benchmark native,
+
+we can see how we're actually
+benchmarking our example.
+
+So we'll just scroll up to the top.
+
+We're including one function to get
+the time getting the time of day.
+
+We don't need to read all the source code
+in detail.
+
+The key information is that we are
+creating a warm up run.
+
+So we're here we're just initializing all
+the variables to make sure the cache is
+
+warmed up.
+
+And this is the main bit that tests the
+code whereby we start and stop our
+
+timer and in between we run our function
+either the naive implementation,
+
+the int 8 implementation, or the 32 bit
+floating-point implementation.
+
+So here we're just going to compile it
+down with 0 optimizations and run it and
+
+we get some results which are sent to
+a file.
+
+So worth noting that on our our naive
+implementation,
+
+we can see we're still running the
+example and finally it's finished.
+
+Took over 2 seconds.
+
+Doing the same thing for the optimized
+example,
+
+but now we're also passing in the
+fast math feature to the compiler,
+
+which introduces some very small accuracy
+losses due to the nature of the
+
+hardware,
+but can offer significant performance
+
+increases.
+
+And as you can see,
+actually our cells already finished
+
+running.
+
+And now finally,
+we'll do exactly the same thing for the
+
+integer 8 based version.
+
+And this ran even quicker.
+
+So we have the values there.
+
+But to help visualize,
+let's plot it on a graph.
+
+So this is a simple Python script using
+map plot Lib to plot the graph and using
+
+Panda's data frame to to aggregate and to
+aggregate the data.
+
+There's no need to actually look into the
+source code here,
+
+so let's just run that cell.
+
+If you scroll down, in a few seconds you
+should see a graph appear.
+
+So the red line is the naive 32 bit 
+floating-point implementation,
+
+and you can see a huge increase in the
+time to run the y axis,
+
+going from two seconds down to, looks to be
+well under half a second for the 32 bit
+
+Neon implementation.
+
+And we can get some even more improvement
+through quantization.
+
+So that's to give an idea of the scale of
+improvement that can be achieved through
+
+vector extensions and Arm Neon.
+
+But now let's move on to a framework
+which you are probably more familiar with,
+
+Python.
+
+The example above is only really
+relevant if you're creating your own
+
+library and most of you will interact
+with high level frameworks such as
+
+Pytorch which abstract away the low
+level details.
+
+So first let's run the top cell which
+creates the directory.
+
+We're next going to create two tensors
+A and
+
+B of a random normal distribution and you
+notice the data type is float 32.
+
+So click the cell and we will run that
+Python script and then we'll do a
+
+very similar thing for int8 based matrix
+multiplication.
+
+So we can see here we've just created
+that previous file going back to
+
+the lab and clicking the next cell,
+we'll create the 8 bit integer file.
+
+So as you can see,
+because we have 8 bits of size of
+
+precision,
+we can only go from -128 to plus 28.
+
+So to inspect actually what Python is
+doing,
+
+because Python's a managed language,
+we need to use Linux perf to 
+
+inspect which instructions are actually
+being operated.
+
+So as you can see I ran perf dash dash
+version and I'm running version 6 point
+
+12 as of this time.
+
+So this records the instruction event and
+it counts it a large number of times
+
+after running whilst running the
+script.
+
+So this might take a little while to run
+as we're doing it so many times,
+
+but and this will create a perf dot data
+file which can be passed by the perf
+
+annotate sub command which will run in a
+second.
+
+So this will create a file in the results
+sub directory for the floating-point matmul
+
+and this can take a while to to pass
+all the data.
+
+Even though we only have .041 megabytes,
+it's very data rich.
+
+Great, so it's annotated all the data.
+
+So annotation means it's looked at which
+instructions are actually being run when
+
+the Python script starts and runs.
+
+So now we're just going to do the same
+thing for the 8 bit integer
+
+implementation.
+
+So again, running perf record,
+it will create another perf dot data and
+
+move the old data to perf dot data to old.
+
+As you can see on the left again we're
+going to annotate this data.
+
+Again, this might take a little while.
+
+So now let's extract which instructions
+using the Linux grep command which
+
+searches using that regular expression.
+
+So first looking through the floating
+point we can see we're using a lot of fmul
+
+which shows that we are
+vectorizing our instruction even with 32-
+
+bit floating-point.
+
+And we can see the fmul performs a
+floating-point multiplication operation
+
+between two operands and again the
+multiply add does as what it suggests.
+
+Running the similar command for the 8
+bits variance,
+
+we can see similar commands but also some
+slightly different ones,
+
+similar instructions rather.
+
+This is because with a different level
+position we might have to load the data
+
+using different instructions.
+
+So here we can see that even using a high
+level framework we're able to take
+
+advantage of Arm's vector extensions.
+
+Now as a more simple example,
+let's benchmark a specific linear layer.
+
+So this simple Python cell here is used
+for benchmarking and similar to the C
+
+example above,
+we have three warm up functions before
+
+timing the runs using the time module.
+
+Feel free to pause if you want to read
+the source code in your own time.
+
+We then create an array again of
+incrementing in sizes of two.
+
+We can express a dense matrix
+multiplication,
+
+which is used frequently in transformer
+blocks using Y equals XW plus B,
+
+where B is our bias term,
+W is our weight matrices and X is our
+
+input, all of which are real numbers.
+
+So we first have an initialized
+uninitialized list called float times.
+
+We then create a tensor of a random
+normal distribution of the
+
+incrementing size and of a 32 bit data
+type.
+
+We then create a linear layer as you can
+see below and we run our benchmark
+
+with the linear layer and the x term.
+
+So I just realized I forgot to run the
+previous cell.
+
+So click that first and then create our
+sizes list and now we can run the
+
+benchmark on the linear layer by
+searching clicking on the cell.
+
+So now we can do a similar exercise but
+for an intake quantized layer.
+
+So it's the same Y equals XW plus B but
+we need to quantize but still preserve
+
+the accuracy.
+
+So often the bias term is still at a
+higher precision to preserve accuracy.
+
+So to round we to quantize,
+
+sorry,
+we need to scale our input value by S and
+
+round before adding a Z zero term.
+
+And fortunately PyTorch has exposed a
+function to help us with this,
+
+the quantize per tensor,
+
+and as you can see it takes various
+arguments to do that.
+
+Please refer to the documentation as to
+the latest version of the function and
+
+what all the arguments are.
+
+But essentially we have to provide a
+scale and a zero point.
+
+So run that function.
+
+And again,
+let's plot the graph in matplotlib.
+
+There's no need to read this source
+code.
+
+It's just printing the results we
+previously generated.
+
+So here we're looking at the time to
+run our benchmark for different matrix
+
+sizes from both red,
+which is floating-point and blue at the
+
+bottom for intake.
+
+And again we can see the intake
+quantization is able to offer some
+
+improvement.
+
+Now we're going to run inference on a
+large language model.
+
+So first we need to create a Hugging Face
+account,
+
+which is a website that stores models and
+data sets.
+
+So if you don't already have an account,
+please create one.
+
+This shouldn't take more than a few
+minutes.
+
+Next we need to have access to specific
+repositories with models.
+
+So one is Apple's OpenELM.
+
+As you can see,
+I already have requested permission to
+
+use this model.
+
+So please read the license thoroughly.
+
+This is for the Llama 370 billion model.
+
+Put all in your information and press
+submit.
+
+This should take no longer than 10
+minutes to get access.
+
+And finally we need to log in to Hugging
+Face.
+
+So Hugging Face CLI tool has already been
+installed through our prerequisites.
+
+But we need to navigate to the website
+and go to our tokens.
+
+And as you can see here you need to
+create a new read token and copy the
+
+value that's presented.
+
+So to login,
+make sure you're in your Python environment,
+
+then type in Hugging Face CLI and space
+login,
+
+then ask you to paste in your your token
+and press control shift V on your
+
+Raspberry Pi to paste that in.
+
+So you should see in a few seconds that
+I'm able to log in through the terminal
+
+output.
+
+You can see login successful here.
+
+So now we're ready to download our
+model.
+
+We've been granted access and we've
+logged in.
+
+So we're going to use the
+transformers Python module from Hugging
+
+Face and this automatically will pull the
+correct file based on the string.
+
+So as you can see here,
+we're looking for Meta Llama, Llama 2,
+
+which is actually even now an outdated
+model.
+
+So you can potentially try a newer model
+later down the line.
+
+And we're also going to download Apple's
+OpenELM.
+
+So once it's downloaded,
+you'll see all the progress bars
+
+go to green.
+
+OpenELM is a model that has been
+instruction tuned,
+
+which means there has been trained on
+some conversation data to act like a chat
+
+bot.
+
+So in this example,
+we're going to provide the input prompt.
+
+'Arm is a company that designs' and the 
+
+OpenELM will continue the sentence and
+we set a max length of 30 tokens.
+
+So running this,
+it will have to load the model for the
+
+first time,
+but in a few seconds we'll be able to see
+
+the output displayed.
+
+And what's important is to know is we
+want to see if the output is the same
+
+across a variety of models and
+quantization schemes.
+
+So as you can see here,
+it says "Apple's a company that designs
+
+and manufacturers high performance,
+lightweight and compact electronic
+
+components."
+
+So it's slightly off the mark in terms of Arm being an IP company,
+
+but we're trying to see if the model
+gets the correct is reproducible across
+
+different quantizations.
+
+So let's just see how big this model is.
+
+So this this script simply finds the path
+and prints the size in megabytes.
+
+Alternatively,
+you could use the terminal to see the
+
+the size of the file.
+
+So as you can see here,
+it's over a gigabyte in size,
+
+which for our Raspberry Pi 5,
+which has 5 gigabytes of memory,
+
+8 gigabytes,
+
+sorry,
+it's taken up a significant portion.
+
+So now we're going to see what actual
+instructions are being used.
+
+And this is using something called the PyTorch profiler, as you can see here.
+
+So like a profiler,
+the name suggests it profiles what are
+
+the most important and expensive
+operations in this model and it's
+
+available through the standard Torch
+module.
+
+So here we're just going to print the CPU
+total time.
+
+We're going to get an order by the CPUs
+total time.
+
+So running this cell below,
+in a few seconds,
+
+we will see what the most important
+operators are.
+
+As you can see here in the attention
+blocks,
+
+almost 70% of the time has been taken up
+by the matrix multiplication.
+
+That is, that does not broadcast.
+
+If you don't know what that broadcast
+term is,
+
+please check the Python documentation.
+
+Now we can focus on the core message of
+this lab, which is optimization.
+
+So in this particular section,
+we're going to use integer per tensor
+
+symmetric weight only quantization,
+which is quite verbose,
+
+but let's break that down.
+
+South per tensor means we're working on
+the entire tensor to create to find the
+
+the weight's scaling factor.
+
+Secondly,
+weight only means we are only doing the
+
+weight tensor,
+not the bias tensor or anything else.
+
+One thing to note is that when we're
+quantizing we also need to think about
+
+dequantizing which we need because when
+performing operation on the CPU we need
+
+to be using the same data types so we
+need to dequantize.
+
+So quantizing will reduce the memory
+and the memory bandwidth,
+
+but we still need to dequantize.
+
+So as you can see here we can represent a
+linear layer as Y equals XW plus B where
+
+fp stands for the floating-point and X is
+our input,
+
+W is our weight and B is our bias.
+
+So to calculate a scaling factor,
+as you learned from the previous videos,
+
+we need to find the maximum value of
+the absolute value of the weight matrix.
+
+So taking all negative and turning it
+positive and divide by the number of bits
+
+we have available with that formula 2 to
+the power of b-1, -1.
+
+This will squeeze the large range
+into that smaller range.
+
+So to actually quantize,
+we divide our weight matrix by the
+
+scaling factor as you can see by the
+equation above and we need to round which
+
+induces the quantization error.
+
+And then it's quite a similar story for
+dequantizing.
+
+To see quantization in action,
+let's collect a weight matrix and we're
+
+going to use the register module
+forward hook,
+
+which allows us to collect that
+information.
+
+And there's the documentation there.
+
+So we're just in this example going to
+take a layer 12.
+
+This is completely arbitrary and you
+could take a different layer and see
+
+different quantization and scaling values.
+
+So I'm just going to run this cell and we
+can see the dimensions,
+
+the shape and in the second we can
+see the quantization.
+
+So we're just going to implement that
+equation above.
+
+One thing to note is we're using the 
+clamp function there,
+
+which takes the minimum and the maximum
+and make sure the values are within that
+
+range.
+
+So let's briefly discuss the 
+quantization error,
+
+because I mentioned that the rounding
+introduces that error,
+
+which makes sense as you have fewer
+number of bits and states to use.
+
+So the rounding error is simply the 
+difference between the actual and the
+
+quantized version.
+
+And as you can see there and the relative
+is simply that divided by the maximum
+
+divided by the original,
+
+sorry.
+
+So as you can see here the maximum is
+quite high.
+
+The minimum is 0 when the value
+happens to be the same as the quantized 1
+
+and you can see the mean there.
+
+So there's quite a wide swing in terms of
+ranges there.
+
+There are techniques to improve and
+there's the paper there in this text that
+
+you can read later.
+
+So let's plot this in matplotlib.
+
+And we're going to take the top four
+or five minimum and maximum and plot a
+
+box plot.
+
+So this shows you the distribution of
+quantization error.
+
+So the ones, the five on the left are
+the largest quantization error and you
+
+can see wide swing especially with the
+one towards the middle and the five
+
+on the right are the smallest.
+
+So let's think about what the impact of
+this large swing in quantization error
+
+would be.
+
+So clearly we want to minimize this area
+and the larger channels exhibit this
+
+broad distribution of outliers.
+
+So let's think about how this would
+affect the scale factor SW.
+
+So if we recall the equation,
+it's W the weight matrix,
+
+the absolute value dot Max.
+
+And I'll just scroll up to find that.
+
+So a key bit of information to think
+about is the denominator 2 to the power
+
+of B -1, -1 is fixed, since B is fixed.
+
+So our scale factor will be influenced by
+the widest channel,
+
+which means the quantization error could
+vary as we can see.
+
+So to overcome this,
+we can use a per channel weight,
+
+which is essentially the row of the
+weight matrix.
+
+So here's the equation for the per
+channel.
+
+And it's very similar except that we have
+W subscript I.
+
+So it's actually exactly the same when we
+can almost skip over.
+
+So now we're taking the per row value.
+
+So I'm going to pause it here.
+
+Please pause the video if you want to try
+the first exercise yourself,
+
+but I'm quickly going to go through this.
+
+So we need to fill out the scale
+factor per channel.
+
+This is a variable that hasn't been
+defined yet, so let's uncomment that out.
+
+So the easiest thing to do first is the
+the denominator to fixed part,
+
+which we know will be 2 to the power of b
+-1 ,-1.
+
+And we can write down Python with the
+double star.
+
+The trickier thing to identify is the
+numerator.
+
+So we know we need to take the
+floating-point weight matrix and find the
+
+absolute value.
+
+So turning all the negative values
+positive and we want to take the
+
+maximum value from that.
+
+And PyTorch has the built in dot max
+operator.
+
+But over what dimension do we want to
+reduce?
+
+So if you put zero,
+we could do over the columns or if you do
+
+one, we could do over the rows.
+
+So let's do over 1.
+
+And secondly,
+we want to keep the dimensions.
+
+This is another argument that means we
+have an N by one matrix rather than an N
+
+matrix, which is better for broadcasting.
+
+So running this cell,
+we will calculate the y hat per channel
+
+and to test it we have this very
+simple cell,
+
+it checks if the residual per channel is
+less than the residual relative.
+
+So basically saying have we improved the
+quantization?
+
+And running this we can see yes,
+the per channel quantization mean is
+
+to 6.12% which is lower.
+
+So we've clearly improved the
+quantization error here.
+
+So now that we've calculated the 
+scale factor,
+
+let's actually implement this in a PyTorch linear layer.
+
+So we're given this code snippet and
+again,
+
+please pause at this point if you want to
+try it out yourself.
+
+And this is a we've created our own class
+weight only intake layer that inherits
+
+from the standard neural network dot
+module class.
+
+So we include all of the standard
+constructor functions and we are required
+
+to calculate the scale factor of a tensor,
+and again this is the per channel
+
+quantization scale factor.
+
+So first we can use the basic torch dot
+tensor and we want to use the same
+
+equation but now applying to a tensor
+rather than a weight row.
+
+So we're going to go tensor and take the
+absolute value and again take the max of
+
+that.
+
+And because we're going over the rows
+rather than columns,
+
+rather than having dim equals 0,
+we're going to have dimension equals 1
+
+and keep dims equals true.
+
+And now we just need to index over the
+zero parts.
+
+And to calculate the scale, we just
+divide by that previous Q max value which
+
+is calculated a few lines above.
+
+Right.
+
+And if we Scroll down slightly further,
+we also asked to calculate y,
+
+which is the dequantized weights.
+
+So we're going the other way.
+
+And if you notice above,
+it mentions we can use the torch dot nn
+
+dot functional linear layer and it is
+defined on the top lines.
+
+So we can Simply put,
+let me just scroll up here.
+
+So it's defined as F so we can make our
+code slightly more readable.
+
+So F we can just use the standard linear
+which does a linear transformation of y
+
+equals x times A to the a transpose plus
+B.
+
+So you're applying that linear
+transformation on your input x.
+
+So we just need to pass in a few
+arguments into our function.
+
+As you can see here,
+the first is the input x,
+
+the next is the weight and the time's the
+scale factor,
+
+which is our function.
+
+And then finally the bias term which is
+also defined there.
+
+So that's it.
+
+Now let's run this and see if we've got
+it correct.
+
+So again we have a similar test that
+tests the mean residual and relative
+
+errors.
+
+So the mean relative quantization error
+is again lower,
+
+so it's successful.
+
+Now we're going to deploy a large
+language model in C plus plus based
+
+framework called llama dot CPP.
+
+So why would you want to do this?
+
+Well,
+if you're trying to deploy in a resource
+
+constrained environment where you don't
+have enough memory for a Python
+
+interpreter for example,
+you could use C plus plus framework.
+
+This offers several advantages just how
+Python is an interpreted language where
+
+you go line by line,
+
+using a C plus plus based framework can
+enable optimizations through graph
+
+execution.
+
+So as you can see here,
+this computes a graph which enables
+
+optimization such as fusing operators and
+and leveraging hardware specific
+
+optimization such as SIMD or different
+memory layouts.
+
+This is analogous to compilation versus
+just in time compilation.
+
+So first let's clone this repository.
+
+We're going to first install some
+dependencies.
+
+I noticed in this example I'm unable to
+locate a specific package so I'm just
+
+going to try and do it from within my
+Python environment.
+
+So since we're using a Debian based
+system,
+
+I'm just going to search for that package
+which was a Lib curl for open SSL and I
+
+can see it here.
+
+So I'm just going to install it manually
+using the pseudo app to install sub
+
+command.
+
+Yep.
+
+And I already have it installed.
+
+So now we're going to clone the llama
+dot CPP framework from GitHub.
+
+And because I've already ran this lab,
+it's available as you can see within this
+
+directory in the llama dot CPP folder.
+
+So we need to build this from source.
+
+And building from source enables us to
+target our specific hardware.
+
+As you can see here,
+our compiler flags of mcpu native means
+
+we could take optimization specifically
+for the Raspberry Pi 5's CPU.
+
+So we're also using the M proc sub
+command to build this as quickly as
+
+possible.
+
+So as you can see,
+it's going to it'll take a few minutes to
+
+to build this this file.
+
+So I've skipped to where we've got
+100% build and to check and make sure
+
+that this runs,
+we're going to change directory into the
+
+build bin, the Llama CLI.
+
+And we're just going to run the 
+version command as you can see here to
+
+make sure that it's installed correctly.
+
+And as you can see it is.
+
+So we can also interact with llama dot
+CPP through a Python wrapper.
+
+So we're just going to install that into
+our environment,
+
+may take a few minutes to download.
+
+So llama dot CPP stores its models in its
+own framework called GGUF.
+
+So there's a built in Python script to
+convert.
+
+And as you can see at the end,
+we can specify the precision level.
+
+So f32 for 32 bit floating-point.
+
+So I'm just going to run this the script
+which will generate the file. You can
+
+see it there within the directory.
+
+As you can probably see here,
+it's going through all the different
+
+layers, the keys,
+the value matrices and converting them to
+
+the right format and shape.
+
+This might take a few minutes to convert.
+
+And likewise,
+we can do the same for the 8 bit
+
+quantized model.
+
+As you can see here,
+we've put the output type as q8 and the
+
+second zero stands for the key
+matrices which we're not doing any
+
+quantization to.
+
+So it's weight only. This has taken a
+far shorter amount of time.
+
+So let's see how small our models are now.
+
+So I'm just going to in the terminal
+change directory to go back twice.
+
+Yeah, maybe three times by counting it.
+
+And I'm just going to use the ls command
+to list and see the size of the of the
+
+files.
+
+So al to list all and ls for for the long
+version,
+
+I'm going to add the h flag to make
+it human readable.
+
+So as we can see,
+the our 8-bit quantize is 276 megabytes,
+
+whereas our original version is 1.1 GB.
+
+So that's a huge saving in file size and
+you can run that Python cell if you want
+
+to do it easy quickly.
+
+So now let's run it and see what
+performance we get.
+
+So I'm going to install the Python
+wrapper Llama.cpp Python,
+
+which enables us to a run,
+run llama model CPP from a Python
+
+environment.
+
+So as you can see,
+the source code to actually run the
+
+the model is very short.
+
+And again,
+we want to limit the number of tokens to
+
+30 to match our output.
+
+And we're also going to interestingly set
+the temperature to 0 to make sure that we
+
+get reproducible output.
+
+And we're just limiting the number of
+tokens we search for.
+
+So if we've quantized correctly,
+the output string for the prompt "Arm is a
+
+company that design..." should be exactly the
+same as when we were using PyTorch at
+
+both different quantization levels.
+
+Just going to wait for that Python wheel
+to build.
+
+All right, now we can run the cell.
+
+If you want to see all the arguments for
+the Llama API,
+
+you could just hover over to see the
+documentation,
+
+all the values you have available,
+right?
+
+So if our hypothesis is correct and we've
+quantized well,
+
+we should have exactly the same output.
+
+So we should have enabled the prompt to
+come back to the terminal.
+
+Yeah, as you can see, we've also clearly,
+clearly using the Neon SIMD as well as
+
+Arm's fuse multiply, add,
+which is used for equations such as y
+
+equals mx plus c. And to see the text,
+sorry,
+
+I just realized I need to click the cell
+below,
+
+but you can see the tokens per second
+and to see what the actual output was
+
+from our prompt.
+
+"Arm is a company that designs and
+manufacturers high performance,
+
+lightweight and compact electronic
+components."
+
+And this is exactly the same output as we
+had with the un-quantized model
+
+through Hugging Face and PyTorch.
+
+So really impressive actually.
+
+We're able to get the same performance
+through a model 1/4 the size.
+
+And now running, Sorry,
+we were actually running the original
+
+full precision version.
+
+Now just moving down to the quantized
+version,
+
+we can see we're getting far more tokens
+than we were previously.
+
+And if I pull out the output,
+it looks to be exactly the same as the
+
+the full 32 bit floating-point variance.
+
+And finally,
+just to see what the execution
+
+latencies were,
+we went down from 44 seconds with Hugging
+
+Face and eager execution.
+
+When we're using
+
+graph mode and compilation,
+we went down to 4 seconds and 1.6 seconds.
+
+So a huge improvement.
+
+Fantastic.
+
+I hope you enjoyed this lab.
+
+To recap,
+we started on focusing on the core
+
+operation of AI - matrix multiplication.
+
+We started by implementing these in C in
+the naive approach,
+
+then moved on to optimizing through Arm
+SIMD Neon instructions.
+
+We then learned how to benchmark the
+operations in PyTorch and finally we
+
+touched on certain basic quantisation
+techniques to reduce the model size and
+
+the tokens per second.
+
+Look forward to seeing you in the second
+lab. Thank you.

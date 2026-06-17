@@ -1,0 +1,234 @@
+﻿
+To evaluate the complexity of
+
+
+the deep learning models and in
+
+
+particular of Convolutional Neural
+
+
+Networks for computer vision,
+
+
+let's start with the well known
+
+
+example of a network proposed by Arm
+
+
+applied to the CIFAR-10 dataset.
+
+
+This dataset is comprised of 60,000
+
+
+color images of size 32x32.
+
+
+These images have three channels for red,
+
+
+green and blue.
+
+
+The data set is split into 10 classes and
+
+
+is balanced with 6,000 images per class.
+
+
+50,000 are training images and
+
+
+the remaining 10,000 test images.
+
+
+Arm's proposed neural network architecture
+
+
+includes 3 convolutional layers
+
+
+interspersed with the rectified linear
+
+
+activation function and max pooling layers.
+
+
+At the end of the network is
+
+
+a fully connected layer and a
+
+
+softmax activation function.
+
+
+The input of the network is a 32x32
+
+
+pixel color image with three channels,
+
+
+which will be classified into
+
+
+one of the 10 output classes.
+
+
+All the training process to
+
+
+decide the filter weights is done
+
+
+on the PC with the training data set.
+
+
+What is the complexity of the
+
+
+proposed architecture?
+
+
+The first layer performs 3D
+
+
+convolution with 32 filters,
+
+
+each with a shape of 5x5x3.
+
+
+Remember that the 3 is because
+
+
+of the red, green, and blue channels.
+
+
+Assume there is zero-padding so that
+
+
+the feature map has the same size:
+
+
+32x32 pixels.
+
+
+For each pixel of the 5x5x3
+
+
+feature map,
+
+
+the processor will perform a multiplication
+
+
+and a sum. Accounting for all the 32 filters,
+
+
+this will result in 4.9 million operations
+
+
+in the first convolutional layer.
+
+
+The second layer is less computationally
+
+
+intensive, as the max pooling layer has
+
+
+reduced the size of the output feature map.
+
+
+it requires about 73,7000 operations.
+
+
+The third layer is again
+
+
+a 3D convolutional layer,
+
+
+this time using a kernel size of
+
+
+five by 5x32 for 32 filters.
+
+
+This has an even larger number of operations —
+
+
+13 million —
+
+
+which once again are multiplications
+
+
+and additions.
+
+
+In total,
+
+
+the network has 24.7 million operations,
+
+
+of which 96% are due to the
+
+
+convolutional layers.
+
+
+These are typically the most computational
+
+
+intensive in the inference steps.
+
+
+How much memory is required to run
+
+
+the full network in a microcontroller?
+
+
+The weights of the filter are
+
+
+computed in the training steps,
+
+
+but they need to be stored in the
+
+
+memory, ready for the inference step.
+
+
+Assuming each weight requires 1 byte,
+
+
+the network will need 87 kilobytes
+
+
+to store them.
+
+
+The intermediate layers also need to be
+
+
+stored. If these require one byte per pixel,
+
+
+these layers will require
+
+
+55 kilobytes in total.
+
+
+The full memory requirement would
+
+
+be 143 kilobytes of memory.
+

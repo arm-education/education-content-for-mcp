@@ -1,0 +1,64 @@
+﻿Welcome to this module on Machine
+Learning Frameworks 
+
+and Optimized Libraries.
+
+In today's AI landscape,
+achieving high computational performance
+
+is essential—and CPUs play an essential role in
+
+delivering efficient machine learning
+solutions.
+
+CPUs are everywhere,
+from laptops to smartphones to data centers.
+
+And with the right tools and techniques,
+
+they can deliver fast,
+efficient inference without the extra
+
+cost or energy draw of more parallel
+systems.
+
+In this session,
+we'll explore how CPUs can be optimized
+
+for Generative AI inference.
+
+You'll begin by looking at the cost and
+energy advantages of using CPUs—
+
+especially when deploying at scale or on
+the edge.
+
+Then,
+we'll examine the growing challenges introduced
+
+by increasingly complex models,
+and how graph-based computation helps us
+
+manage and optimize their execution.
+
+From there,
+you'll learn about different execution modes—
+
+static graphs and eager mode—and how each one effects 
+
+performance and flexibility.
+
+Finally,
+we'll dive into the growing ecosystem of
+
+tools and frameworks like PyTorch,
+llama.cpp, and KleidiAI,
+
+all designed to get the most out of your
+CPU-based deployments.
+
+By the end of this module,
+you'll understand how and why CPUs remain
+
+a smart,
+scalable choice for running modern AI models.

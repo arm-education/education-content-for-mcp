@@ -1,0 +1,240 @@
+﻿Let's talk about memory,
+one of the biggest constraints when it
+
+comes to running Generative AI models on
+Edge devices.
+
+Generative AI models are huge.
+
+They contain billions of parameters—
+each one representing a piece of what the
+
+model has learned.
+
+When we run inference,
+the model needs to load those parameters
+
+into memory and perform operations on
+them.
+
+And here's the catch:
+
+Edge devices don't have much memory to
+work with.
+
+Take an example.
+
+A large language model with 70 billion
+parameters, stored using 16-bit floating
+
+point precision, would need 140 gigabytes
+of memory.
+
+But most Edge devices—like a Raspberry Pi
+or a smartphone—only have a few gigabytes,
+
+at best.
+
+So we can't just "load and run" these
+models like we do on Cloud servers.
+
+This creates a serious bottleneck 
+for inference performance on 
+
+constrained devices.
+
+During inference,
+most of what the model does comes down to
+
+matrix-matrix and matrix-vector
+multiplications.
+
+To perform those,
+we need to load the model parameters—
+
+often repeatedly—from memory.
+
+The memory bandwidth—that is,
+how quickly data can be moved in
+
+and out of memory—becomes 
+the limiting factor.
+
+If the model can't read weights quickly
+enough,
+
+the processor ends up sitting idle,
+waiting for data.
+
+So even if we have enough compute power,
+it doesn't help if memory access is 
+
+too slow.
+
+This is called being memory-bound—when
+performance is limited not by processing
+
+speed,
+but by how fast you can feed data
+
+to the processor.
+
+Now let's look at how we can work around
+these memory constraints.
+
+One of the most widely used strategies is
+quantization.
+
+This means reducing the precision of the
+numbers we use to represent the model's
+
+weights and/or activations.
+
+Instead of using 32-bit floating point
+numbers (FP32),
+
+we can switch to lower-precision formats
+like FP16, BF16, INT8, or even INT4.
+
+Each step down saves memory space and
+reduces the bandwidth needed to read the
+
+weights and/or activations.
+
+Let's break that down:
+
+FP32 takes four bytes per value.
+
+FP16 or BF16 only take two bytes.
+
+INT8 uses just one byte, INT4 half a
+byte.
+
+By cutting the bit-width, we reduce the
+size of the model significantly. And this
+
+also speeds up inference—because we're
+moving less data around and 
+
+performing simpler calculations.
+
+There are two main ways to apply
+quantization: post-training
+
+quantization, where you convert a trained
+model to a lower precision;
+
+and quantization-aware training, where the
+model is trained   
+
+to work with lower precision.
+
+Of course, there's a trade-off:
+as precision drops, you risk losing
+
+accuracy.
+So, the trick is to balance efficiency
+
+with acceptable performance.
+
+Another technique is knowledge
+distillation.
+
+This involves training a smaller "student"
+model to mimic a larger "teacher" model.
+
+The teacher is usually a big,
+powerful model that's too large to run on
+
+an Edge device.
+But instead of deploying it directly,
+
+we train a smaller model to reproduce its
+behavior—ideally, with similar accuracy.
+
+There are several types of knowledge
+transferred during distillation:
+
+Feature-based knowledge:
+Where the smaller student model is
+
+trained to imitate the intermediate
+activations from the teacher.
+
+Logit-based knowledge:
+the final outputs before any softmax
+
+layer—giving more information
+than just the 
+
+top class; and relation-based knowledge:
+the relationships between outputs for
+
+different classes or tokens.
+
+For example,
+
+this could include making the difference
+in features for the student between 
+
+two different inputs
+the same as the teacher.
+
+Distillation can dramatically reduce the
+size and memory needs of a model—
+
+making it much easier to run on smaller
+devices.
+
+The third major strategy is pruning.
+
+This means removing parts of the model
+that don't contribute much to the output—
+
+like small weights or unused neurons.
+
+There are multiple ways to prune a model:
+
+L1 or L2 norm pruning,
+which cuts out weights with the
+
+smallest magnitude;
+
+First-order pruning, which removes weights
+estimated to have the smallest impact on
+
+the loss function;
+and second-order pruning, which works 
+
+just like first-order pruning but uses a more
+accurate second-order approximation of the
+
+loss objective.
+
+By pruning carefully,
+we can slim down the model—
+
+reducing memory usage without sacrificing
+much performance.
+
+To recap:
+Memory is a major constraint on 
+
+Edge devices.
+
+Large Generative AI models can't fit in
+memory without optimization.
+
+Techniques like quantization,
+distillation,
+
+and pruning help reduce memory
+requirements and make Generative AI
+
+feasible in low-resource settings.
+
+In the next section,
+we'll explore computational constraints—
+
+and how device throughput and processing
+power affect AI model deployment.

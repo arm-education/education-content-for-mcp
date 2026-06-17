@@ -1,0 +1,252 @@
+﻿
+If you allow your model
+
+
+to become more complex,
+
+
+you expect that it could learn to
+
+
+make predictions even more accurately.
+
+
+However, this is not always the case.
+
+
+When a model is too simple,
+
+
+it is not able to fully describe the
+
+
+main patterns in the training data.
+
+
+This is known as underfitting.
+
+
+If a model is too complex,
+
+
+it will additionally describe peculiar
+
+
+details of the training data that
+
+
+do not generalise to the test data,
+
+
+and in fact make the accuracy worse.
+
+
+This is known as overfitting and is
+
+
+a major concern in machine learning.
+
+
+To evaluate a Machine Learning model,
+
+
+you can plot the prediction error against
+
+
+the complexity or model size as shown.
+
+
+The red curve is the error calculated on
+
+
+the test set and the blue curve is the
+
+
+error calculated on the training set.
+
+
+You can see that in the case of underfitting,
+
+
+both the training and test errors are large.
+
+
+In the case of overfitting,
+
+
+the training error is small,
+
+
+but the test error is again large.
+
+
+Ideally,
+
+
+you want the complexity to be
+
+
+medium to avoid both
+
+
+under and over fitting.
+
+
+On the microcontroller,
+
+
+the calculations will be performed
+
+
+on hardware with limited memory
+
+
+and computational resources.
+
+
+Thus,
+
+
+it is important to also consider the
+
+
+tradeoff between the accuracy of the
+
+
+model versus the physical constraints.
+
+
+As an example of a Machine
+
+
+Learning task that you might need
+
+
+to implement on audio data,
+
+
+suppose you wanted to identify where a
+
+
+certain keyword appears in the audio file,
+
+
+recall that the main computational
+
+
+work would be splitting the
+
+
+input signals into windows,
+
+
+performing a fast Fourier transform,
+
+
+calculating the Mel-frequency
+
+
+bank energies by integrating the
+
+
+spectral energy coefficients,
+
+
+performing a discrete cosine transform on
+
+
+the logarithms of the filterbank energies,
+
+
+appending the 1st order differentials,
+
+
+applying the model for the application
+
+
+specific tasks such as keyword spotting.
+
+
+Note that all these calculations need to
+
+
+run in real time on the microcontroller.
+
+
+Remember that the training steps are
+
+
+identical whether the inference will be
+
+
+done on a PC or on a microcontroller.
+
+
+However,
+
+
+the model for use on a microcontroller
+
+
+needs to fit the hardware constraints.
+
+
+For instance,
+
+
+using the software library
+
+
+CMSIS-NN from Arm.
+
+
+Some Machine Learning tasks
+
+
+require more work than others.
+
+
+For inertial sensors,
+
+
+only a few million operations
+
+
+per second are needed.
+
+
+For audio data,
+
+
+hundreds of millions of
+
+
+operations may be needed,
+
+
+and some image and video processing
+
+
+may require billions or trillions
+
+
+of operations per second.
+
+
+The requirements of memory also
+
+
+typically increase from a few
+
+
+kilobytes for the inertial sensors
+
+
+to several gigabytes
+
+
+for the more complex video
+
+
+processing algorithms.
+

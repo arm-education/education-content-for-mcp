@@ -1,0 +1,264 @@
+﻿
+How many operations are required to
+
+
+use an Artificial Neural Network?
+
+
+For instance, suppose you want to
+
+
+predict human activity using a smartphone
+
+
+accelerometer and gyroscope sensor data.
+
+
+This is exactly how your smartphone
+
+
+counts your steps using the
+
+
+sensor data and Machine Learning.
+
+
+The first step is to train and evaluate a
+
+
+Machine Learning model using a dataset.
+
+
+In this case, you could use an open dataset
+
+
+from a machine learning repository.
+
+
+This dataset includes data from 30
+
+
+volunteers aged between 19 and 48 years.
+
+
+Their activities are split into 12
+
+
+labeled classes, such as climbing stairs.
+
+
+The dataset is then divided into 2
+
+
+parts, which can be used separately.
+
+
+The first part contains the inertial
+
+
+sensor data for all of the participants
+
+
+in the trials.
+
+
+This includes raw triaxial linear
+
+
+acceleration from the accelerometer,
+
+
+and raw triaxial angular velocity
+
+
+from the gyroscope,
+
+
+both sampled at a constant rate of 50 Hertz.
+
+
+It also includes the labels
+
+
+of all performed activities.
+
+
+The second part contains the records
+
+
+of activity windows.
+
+
+Each one is composed of a 561-feature
+
+
+vector with time and frequency
+
+
+domain variables,
+
+
+its associated activity label,
+
+
+and an identifier of the subject
+
+
+who carried out the trial.
+
+
+As we focus only on the evaluation of the
+
+
+classifier using Artificial Neural Networks,
+
+
+we use the 561-feature vector as
+
+
+the input layer of our network.
+
+
+We will design and compare two
+
+
+Artificial Neural Networks —
+
+
+one small network and one larger network.
+
+
+In both cases we will have 561 input
+
+
+features in the input layer, and 12 output
+
+
+classes for the predicted activities.
+
+
+The smaller neural network
+
+
+will have two hidden layers.
+
+
+The first has five neurons and
+
+
+the second has two neurons.
+
+
+Evaluating the accuracy shows a
+
+
+very poor accuracy of only 17.24.
+
+
+The larger network could have 3
+
+
+hidden layers, with 50 neurons,
+
+
+20 neurons and 20 neurons,
+
+
+as well as the same 561 input
+
+
+neurons, and 12 neurons for the
+
+
+classes. With the same dataset,
+
+
+the accuracy improves to 92%.
+
+
+But is this feasible with the limited
+
+
+resources of a microcontroller?
+
+
+To answer this,
+
+
+you need to know how much more memory you need,
+
+
+and how many more computations.
+
+
+Most of the computation in this larger
+
+
+network is for the first layer.
+
+
+Therefore,
+
+
+to approximate the number of
+
+
+floating-point operations needed,
+
+
+we will consider only this first
+
+
+layer and we will only consider the
+
+
+linear part of the calculation,
+
+
+not the activation function.
+
+
+To keep this calculation general,
+
+
+suppose that there are N nodes
+
+
+in the input layer and M nodes in
+
+
+the first hidden layer.
+
+
+For each of the M nodes in
+
+
+the first hidden layer,
+
+
+the device must calculate N
+
+
+multiplications and N - 1 additions.
+
+
+Therefore,
+
+
+in total, for the M nodes together,
+
+
+this is M(2N - 1) floating-
+
+
+point operations, known as flops.
+
+
+In this case M equals 50 and N equals 561,
+
+
+so the total for the first
+
+
+layer is 56050 flops.
+

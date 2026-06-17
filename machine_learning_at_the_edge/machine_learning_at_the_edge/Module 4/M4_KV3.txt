@@ -1,0 +1,291 @@
+﻿
+You have seen the flow of a
+
+
+Convolutional Neural Network,
+
+
+including the fully connected layer.
+
+
+However, there are other different
+
+
+types of deep learning models.
+
+
+One is the standard Feed-Forward Neural
+
+
+Network made of a stack of fully
+
+
+connected layers and nonlinear activation
+
+
+layers, which you have also seen.
+
+
+Recurrent Neural Networks are neural
+
+
+networks that not only exploit the temporal
+
+
+relation between the input signal,
+
+
+but also capture the long-term
+
+
+dependencies using the gating mechanism.
+
+
+Unlike Feed-Forward Neural Networks,
+
+
+Recurrent Neural nNtworks have feedback
+
+
+connections and have shown good
+
+
+accuracy results for audio processing.
+
+
+Recurrent Neural Networks include
+
+
+the popular long short-term memory
+
+
+models and the gated recurrent units
+
+
+that are very similar to the
+
+
+long short-term memory models,
+
+
+but with a forgot gate.
+
+
+Depthwise
+
+
+Separable Convolutional Neural
+
+
+Networks are an extension to the
+
+
+standard Convolutional Neural Networks.
+
+
+These networks first convolute
+
+
+each channel in the input feature
+
+
+map with a separate 2D filter and
+
+
+then users pointwise convolutions:
+
+
+for instance,
+
+
+1 by 1 to combine the outputs
+
+
+in the depth dimension.
+
+
+The choice of model affects the
+
+
+accuracy of the audio processing.
+
+
+However,
+
+
+deployment of a neural network for
+
+
+audio processing on microcontrollers
+
+
+comes with additional challenges.
+
+
+Firstly,
+
+
+the processing must not require
+
+
+too much memory.
+
+
+Typical Arm Cortex-M family
+
+
+microcontroller systems have 10 to a
+
+
+few hundred kilobytes of memory available.
+
+
+The entire Artificial Neural Network model,
+
+
+(including the input data output,
+
+
+results, weights, and
+
+
+activations) has to fit within
+
+
+this limited memory budget.
+
+
+The other factor is the limited
+
+
+computational resources.
+
+
+Since audio processing should
+
+
+work in real time,
+
+
+this limits the total number of
+
+
+operations per prediction task
+
+
+performed by the neural network
+
+
+on the microcontrollers.
+
+
+These microcontroller resource constraints,
+
+
+in conjunction with the high accuracy and
+
+
+low latency requirements of audio processing,
+
+
+require the discovery of lean neural
+
+
+network structures suitable for these tasks.
+
+
+So there is a clear need for
+
+
+compact models that fit within
+
+
+the Cortex-M system memory.
+
+
+These models should minimize operations
+
+
+to achieve real-time performance.
+
+
+The memory and the number of operations are
+
+
+affected by the neural network architecture,
+
+
+the number of input features,
+
+
+the number of layers,
+
+
+the types of layers (such as
+
+
+convolutional or pooling),
+
+
+and the number of features per layer.
+
+
+So what is the current availability
+
+
+of such techniques?
+
+
+Let's look at some recent neural network
+
+
+models trained on Google Speech Commands
+
+
+Dataset.
+
+
+It can be seen that different models are
+
+
+achieving different levels of performance.
+
+
+The only networks capable of reaching
+
+
+above 90% accuracy are larger
+
+
+networks with at least 500 kilobytes
+
+
+of memory and a maximum speed of
+
+
+at least 80 million operations per
+
+
+second. On the other end of the scale,
+
+
+LTSM is the smallest
+
+
+network in our comparison. With
+
+
+less than 80 kilobytes of memory
+
+
+and a maximum speed of under 86
+
+
+million operations per second,
+
+
+it is possible to achieve
+
+
+a good 88% accuracy.
+

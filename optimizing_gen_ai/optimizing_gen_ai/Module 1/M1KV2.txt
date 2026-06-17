@@ -1,0 +1,206 @@
+﻿When we run a Generative AI model,
+the device it's running on 
+
+makes a huge difference in performance.
+
+And that's because not all processors are built the same.
+
+The two main types you'll see in AI
+workloads are CPUs and GPUs.
+
+Let's break down how each one works and
+how their design 
+
+impacts Generative AI inference.
+
+Let's start with CPUs—central processing units.
+
+CPUs are like the all-rounders of the
+computing world.
+
+They're built for flexibility,
+handling everything from running your
+
+operating system to browsing the web.
+
+This means they're optimized for low-latency,
+
+sequential tasks that require precise
+control.
+
+Inside a CPU, you'll find components like
+the arithmetic logic unit,
+
+which handles all the math and logic.
+
+The control logic manages how
+instructions flow, and registers provide
+
+high-speed temporary storage.
+
+But what makes CPUs particularly powerful
+for certain AI tasks is their ability to
+
+execute complex instructions efficiently—especially when latency is critical.
+
+Modern CPUs pack a surprising amount of
+intelligence into their design.
+
+Pipelining is where they divide the
+processing of an instruction into
+
+multiple stages, so that different stages
+of different instructions 
+
+can be processed concurrently.
+
+For example,
+while one instruction is being executed,
+
+another is being decoded, and another is
+being fetched.
+
+And branch prediction combined with
+speculative execution helps avoid
+
+pipeline stalls when the CPU branches to
+an address in memory.
+
+Arm CPUs in particular come with built-in
+SIMD extensions 
+
+like NEON and scalable matrix extension (SME).
+
+These allow a single instruction to act
+on multiple pieces of data at once—
+
+great for matrix operations, which are at
+the heart of Generative AI inference.
+
+All these features make CPUs very
+efficient at 
+
+juggling small, dependent tasks—
+
+perfect for control-heavy or latency-sensitive AI tasks.
+
+The Cortex A-76—used in devices like the
+Raspberry Pi 5—supports features like 
+
+low-power states, dynamic frequency scaling,
+and efficient vector processing.
+
+This makes it ideal for AI workloads that
+need to be fast but power-efficient.
+
+Now let's talk about GPUs—graphics processing units.
+
+GPUs were originally built for rendering
+graphics,
+
+which means pushing thousands of pixels
+to your screen in parallel.
+
+But it turns out the same architecture is
+great for parallelizing matrix
+
+computations—which also happen to be 
+
+the backbone of AI models.
+
+While CPUs have a handful of powerful
+cores,
+
+GPUs have hundreds or even thousands of
+smaller cores—designed to run the same
+
+operation on multiple data points at once.
+
+This makes them perfect for the "bulk math"
+side of AI: matrix multiplications,
+
+dot products, and activations.
+
+But GPUs aren't good at everything.
+
+They struggle with branching—things like
+"if" conditions 
+
+can seriously slow them down.
+
+They're also higher in latency
+
+when it comes to serial tasks.
+
+GPUs rely on a few key strategies to get maximum throughput.
+
+Thread management and occupancy
+optimization ensure the GPU is always busy,
+
+with lots of active threads per
+compute unit.
+
+Memory coalescing and shared memory
+utilization 
+
+help improve data access bandwidth.
+
+Precision scaling is another big one.
+
+GPUs can operate at different numerical
+precisions—such as 32-bit (FP32), 
+
+16-bit (FP16), or even lower precisions like INT8 and INT4—
+
+allowing a trade-off between accuracy and
+
+computational efficiency.
+
+Finally,
+matrix multiply accumulate (MMA) units like
+
+NVIDIA's tensor cores or Arm's SMEs
+
+are specialized hardware blocks
+designed to accelerate 
+
+matrix-heavy AI tasks.
+
+So what's the big take away?
+
+CPUs and GPUs are built for very
+different things.
+
+CPUs are optimized for latency,
+control and energy consumption—
+
+they're great for sequential, small-scale
+tasks and decision-making logic.
+
+GPUs, on the other hand, are optimized for
+throughput—
+
+handling massive amounts of parallel
+computations all at once whilst using
+
+significantly more power.
+
+Choosing between the two depends on your
+application.
+
+For example,
+if you're doing real-time voice
+
+recognition on a phone,
+a CPU might be more suitable.
+
+But if you're running batch inference in
+a data center, where power and
+
+connectivity are less constrained,
+a GPU could be the better choice.
+
+Understanding these differences is key to
+optimizing Generative AI workloads,
+
+especially when deploying to Edge devices.

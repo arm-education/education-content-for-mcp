@@ -1,0 +1,63 @@
+﻿Welcome to this module on Optimization
+for CPU Inference.
+
+In earlier modules,
+we explored how CPUs can be a 
+
+cost-effective and energy-efficient choice for
+running Generative AI.
+
+Now we'll shift our focus to the
+practical side—
+
+how to squeeze the most performance out
+of your CPU for inference.
+
+We'll begin with algorithmic
+optimizations, 
+
+like quantization and pruning.
+
+These techniques reduce the size and
+complexity of your models,
+
+making them faster and easier to run on
+resource-constrained hardware.
+
+Next,
+you'll learn how to optimize matrix
+
+multiplication—the computational core of most AI models—
+
+using techniques like cache aware tiling,
+loop reordering, unrolling,
+
+and multi-threading.
+
+From there,
+we'll explore how to leverage Arm CPU
+
+SIMD technologies, including NEON, SVE,
+I8MM, and SME.
+
+These specialized hardware instructions
+dramatically accelerate inference,
+
+especially when combined with low-precision formats.
+
+Finally,
+we'll show you how all these methods come
+
+together in KleidiAI,
+an open-source library of micro-kernels
+
+designed to run fast,
+efficient inference on Arm CPUs.
+
+By the end of this session,
+you'll be equipped with both the
+
+techniques and the tools to build
+optimized, 
+
+high-performance AI applications.

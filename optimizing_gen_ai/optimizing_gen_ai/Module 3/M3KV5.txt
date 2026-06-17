@@ -1,0 +1,190 @@
+﻿Now that we've looked at how computation
+graphs are executed,
+
+let's zoom out and explore the ecosystem
+that makes efficient 
+
+CPU inference possible.
+
+Specifically,
+we'll look at the frameworks and
+
+libraries that help deploy Generative AI
+models on Arm-based CPUs,
+
+from high-level interfaces like PyTorch
+to low-level optimizations provided by
+
+specialized libraries.
+
+Let's start at the top of the stack with
+PyTorch.
+
+PyTorch is one of the most widely used
+machine learning frameworks.
+
+It uses eager execution by default,
+which makes it intuitive to work with.
+
+On Arm CPUs,
+PyTorch is supported and optimized
+
+through a layered architecture.
+
+At the user level,
+you interact with simple Python functions,
+
+things like torch.add() or torch.matmul.
+
+These calls are routed by a central
+dispatcher, which decides how and where to
+
+run the operation, based on the device
+type, data type and tensor layout.
+
+Behind the scenes, PyTorch relies on Aten,
+its tensor library.
+
+Aten acts as the bridge between high-level
+Python code and the low-level 
+
+hardware-specific backend implementations.
+
+And that's where the real optimization
+magic happens.
+
+Backend libraries include open standards
+like OpenBlas,
+
+which provides efficient matrix
+operations.
+
+But on Arm, there's something even more
+specialized—a library called KleidiAI.
+
+KleidiAI is a suite of micro-kernels—
+ultra fast,
+
+low-level routines designed for key
+operations like matrix multiplication 
+
+and convolutions.
+
+These micro-kernels are optimized to run
+entirely within the CPU cache,
+
+avoiding slow memory access.
+
+They also leverage specialized extensions
+that are unique to Arm architectures—
+
+things like NEON, SVE, I8MM, and SME.
+
+By using these extensions,
+KleidiAI can process multiple 
+
+data elements in parallel.
+
+This makes a huge difference for
+inference,
+
+especially when speed and energy
+efficiency are critical.
+
+So to recap,
+user-level PyTorch functions call into 
+
+Aten, which dispatches to optimized backends
+like OpenBlas and KleidiAI.
+
+This structure ensures that even though
+you're writing high-level Python code,
+
+your model is running on highly tuned,
+hardware-aware routines.
+
+Now let's switch gears and look at llama.cpp.
+
+This project takes a very different
+approach.
+
+It's a lightweight pure C++ implementation
+designed specifically for running 
+
+large language model inference on CPUs, with no
+dependencies on large frameworks.
+
+Why does this matter?
+
+Because llama.cpp is engineered to run
+with minimal memory and compute footprint.
+
+It's perfect for resource-constrained
+environments, like mobile consumer laptops
+
+or Edge devices, where power and RAM are
+limited.
+
+Despite its simplicity,
+llama.cpp is no slouch.
+
+It integrates with KleidiAI and other
+Arm-optimized backends,
+
+ensuring it takes full advantage of
+hardware features.
+
+It supports INT4 and INT8 quantized
+models,
+
+making it incredibly efficient even for
+relatively large LLMS.
+
+This combination of simplicity,
+portability,
+
+and performance makes llama.cpp a
+standout option for developers deploying
+
+models in constrained environments.
+
+If we step back and look at the full
+ecosystem, here's what we see.
+
+At the high level,
+you've got frameworks like PyTorch—
+
+powerful, flexible,
+and widely supported—that can be used
+
+with either eager or graph modes.
+
+Underneath,
+you have specialized backends like OpenBlas
+
+and KleidiAI,
+optimized for Arm hardware.
+
+And for ultra-lightweight inference,
+you have minimalistic engines 
+
+like llama.cpp.
+
+Together,
+this stack provides a complete toolkit
+
+for running Generative AI on CPUs,
+whether you're building for Cloud-scale systems
+
+or deploying to low-power Edge
+devices.
+
+And the best part?
+
+These frameworks continue to evolve with
+ongoing improvements to libraries,
+
+compilers, and hardware instructions.
+
+CPU inference will only get faster and
+more efficient over time.

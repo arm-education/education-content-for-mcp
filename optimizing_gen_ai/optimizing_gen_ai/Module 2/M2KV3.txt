@@ -1,0 +1,225 @@
+﻿Now that we've trained a powerful
+language model,
+
+let's take a look at what happens when we
+actually use it—
+
+the inference phase.
+
+This is where the model generates
+responses, token by token, in real time.
+
+And while the training process is long
+and resource-intensive,
+
+inference has to be fast and efficient.
+
+At the heart of LLM inference is a method
+called autoregressive generation.
+
+This means that the model generates one
+token at a time,
+
+and each new token depends on all the
+tokens that came before it.
+
+If you've ever typed a message into a
+chatbot and watched it respond word by
+
+word, that's autoregression in action.
+
+The inference process begins with
+something called the prefill stage.
+
+In this stage,
+the model takes in the full prompt—
+
+let's say, a user's question—
+and runs it through all its layers.
+
+During this,
+the self-attention mechanism plays a
+
+key role.
+
+It looks at every token in the prompt and
+calculates how each one relates to the
+
+others, using its trained attention heads.
+
+This is where the model builds a rich
+internal representation of the 
+
+entire input.
+
+Now here's something important:
+
+every time the model generates a new
+token,
+
+it doesn't process the entire prompt from
+scratch.
+
+That would be incredibly wasteful.
+
+Instead,
+it uses a technique called KV caching—
+
+short for key-value caching.
+
+During the initial prompt processing,
+or prefill,
+
+the model computes attention keys and
+values for each token.
+
+These are stored in memory.
+
+Then,
+when it's time to generate the next token,
+
+the model can skip the earlier
+computations and simply reuse the cached
+
+keys and values.
+
+This saves an enormous amount of time and
+compute, especially for long prompts.
+
+Once the prompt has been processed and
+cached, we move into the decoding stage.
+
+This is where the model actually starts
+generating new tokens.
+
+At each step,
+it takes the previous tokens,
+
+uses the cache detention states,
+and outputs a probability distribution
+
+over all possible next tokens.
+
+The most likely token—or
+sometimes a sampled one—
+
+is selected and added to the sequence.
+
+This process repeats for every new token
+until the response is complete.
+
+During decoding,
+the model continues to update its cache
+
+with the new keys and values for each
+generated token.
+
+In this way,
+it maintains a growing window of context,
+
+letting it stay coherent as it generates
+longer outputs.
+
+But it never has to reprocess the entire
+prompt,
+
+which is what makes this technique so
+efficient.
+
+Let's bring this to life with an example.
+
+Suppose the user types in a question like,
+
+"What are the benefits of transformer
+models?";
+
+the prefill stage processes that entire
+sentence,
+
+calculates the attention structure,
+and stores the key and value matrices.
+
+When the model starts generating its
+response—
+
+maybe something like "Transformer models
+offer parallelism and 
+
+improved performance..."—
+
+it builds each word based on the words it
+has already generated,
+
+using the cached prompt context as a
+foundation.
+
+This efficient handling of prompt data is
+essential for deploying LLMs in the 
+
+real world.
+
+Whether it's a mobile app,
+a customer support bot,
+
+or a voice assistant,
+the model needs to respond in fractions
+
+of a second.
+
+Without techniques like KV caching,
+inference would be too slow and too
+
+costly to be practical.
+
+It's worth emphasizing that the
+generation is both sequential  
+
+and context-aware.
+
+Every word is chosen based on all the
+words before it,
+
+and the model must strike a balance
+between coherence and novelty.
+
+If it always picked the most likely next
+word,
+
+its responses would sound robotic and
+repetitive.
+
+That's why most models use sampling
+methods—like top-k or nucleus sampling—to
+
+inject a bit of unpredictability.
+
+To wrap up,
+inference in large language models
+
+involves two stages: prefill and decoding.
+
+During prefill,
+the model processes the prompt and stores
+
+useful computations.
+
+Then, in the decoding stage,
+it generates tokens one at a time,
+
+using cached information to stay
+efficient.
+
+KV caching makes this possible,
+allowing the model to deliver fast,
+
+fluent responses—even on long and complex
+prompts.
+
+And with that,
+you now understand how modern LLMs turn
+
+raw input into responsive,
+intelligent conversation—
+
+not just in theory,
+but in real world deployment.

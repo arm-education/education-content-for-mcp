@@ -1,0 +1,57 @@
+﻿Welcome to this module on optimizing
+Generative AI on ARM.
+
+Over the past few years,
+Generative AI has exploded—
+
+from massive language models answering questions,
+
+to real-time translation tools running on our phones.
+
+But as these models become larger and
+more powerful,
+
+they also demand more from the hardware
+they run on.
+
+Arm-based processors are everywhere,
+and optimizing Generative AI to run
+
+efficiently on them is a critical
+challenge.
+
+In this module,
+we'll explore how to make that happen.
+
+You'll begin by looking at how Generative
+AI models are growing in size
+
+and why that matters.
+
+Next,
+you'll dive into the differences between
+
+CPUs and GPUs and how their architectures
+shape performance.
+
+Then,
+we'll explore how memory and compute
+
+bottlenecks affect AI inference.
+
+Finally,
+you'll learn several techniques
+
+that engineers use to optimize these models,
+including quantization, pruning,
+
+and distillation.
+
+By the end,
+you'll be better equipped to understand
+
+what it really takes to run Generative AI
+on Arm devices
+
+efficiently and effectively.
+

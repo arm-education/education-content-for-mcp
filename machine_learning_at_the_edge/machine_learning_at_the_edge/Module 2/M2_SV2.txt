@@ -1,0 +1,348 @@
+﻿
+Now that you've prepared the dataset
+
+
+for training and testing,
+
+
+you can start building a Machine
+
+
+Learning model for activity recognition.
+
+
+In this lab we are going to use a Machine
+
+
+Learning Python package, scikit-learn.
+
+
+Since the test set must not be used
+
+
+until the very last step of testing,
+
+
+we are going to split the training set
+
+
+into training and validation sets.
+
+
+Also, we are going to use
+
+
+5-fold cross-validation,
+
+
+which means that we are going to partition
+
+
+the training set into 5 sub-datasets
+
+
+and use 4 sub-datasets for training
+
+
+and one sub data-set for validation.
+
+
+Let's start with the Linear
+
+
+Support Vector Classification.
+
+
+First declare the set of hyperparameter
+
+
+values we are going to try for Linear
+
+
+SVC we need to specify the regularization
+
+
+parameter C which indicates the
+
+
+amount of regularization since.
+
+
+We don't yet know what a
+
+
+suitable value would be for
+
+
+C
+
+
+we're going to try a set of values
+
+
+and pick the best one based on the results.
+
+
+Next, declare the classifier.
+
+
+This random state argument is used
+
+
+for shuffling the data,
+
+
+then train and validate the classifier.
+
+
+Note that the cross-validation
+
+
+parameter is set to 5 because we're
+
+
+using 5-fold cross-validation.
+
+
+Execute the code block.
+
+
+The execution is now finished.
+
+
+The training and validation scores are
+
+
+saved and train scores and val scores.
+
+
+Plots the training and validation
+
+
+accuracy with different parameter values.
+
+
+Execute the code block.
+
+
+The figure shows that the best
+
+
+parameter value is around 0.1,
+
+
+because the model obtains the
+
+
+best accuracy with this value.
+
+
+The mean validation score for the
+
+
+best parameter is 0.9331.
+
+
+Until now we've been using all the
+
+
+features that the dataset provides.
+
+
+Now we're going to reduce the
+
+
+number of features and see
+
+
+how this affects the accuracy.
+
+
+This is the list of all the
+
+
+features that the dataset provides.
+
+
+Try using only the first 40
+
+
+features from the dataset.
+
+
+Declare new train and test datasets
+
+
+so they only have 40 features.
+
+
+Then train and validate the
+
+
+classifier with this new dataset.
+
+
+Execute the code block.
+
+
+In this figure you can see the training
+
+
+and validation accuracy drop with the
+
+
+smaller number of features. Rather
+
+
+than using the first forty features,
+
+
+we are going to use the future
+
+
+selection API from scikit-learn,
+
+
+which helps choose the best K
+
+
+features from the dataset.
+
+
+First, declare the feature selector,
+
+
+which picks only the 20 best
+
+
+features from the train dataset.
+
+
+Based on the feature selector,
+
+
+define new train and test sets,
+
+
+train and validate the classifier
+
+
+with the 20 best features.
+
+
+Now you can see that this new set
+
+
+of features improves the training
+
+
+and validation accuracy.
+
+
+Although the performance of
+
+
+Linear SVC is already good,
+
+
+we're going to try other Machine Learning
+
+
+algorithms and compare them with each other.
+
+
+First, let's try the general Support
+
+
+Vector Classifier with grid search CV,
+
+
+which helps find the best parameter values.
+
+
+Declare a set of parameters to try for SVC.
+
+
+We can choose which type
+
+
+of kernel function to use.
+
+
+For example, the radial basis kernel
+
+
+RBF, or the polynomial kernel Poly.
+
+
+And similar to linear SVC,
+
+
+we can specify the regularisation
+
+
+parameter, C for the polynomial kernel.
+
+
+We can additionally specify
+
+
+its degree and coefficient,
+
+
+then declare SVC and grid search CV.
+
+
+Execute the code blocks.
+
+
+Let's check the best parameter values.
+
+
+The best set of parameters uses the
+
+
+RBF kernel and uses 1,000 for C.
+
+
+You've learned how to train,
+
+
+validate and test Machine Learning models.
+
+
+Let's try the last Machine
+
+
+Learning model: the decision tree.
+
+
+Import and declare the classifier. Train
+
+
+and validate the decision tree classifier
+
+
+with the validation curve function.
+
+
+You can see the decision tree
+
+
+model obtains the lower accuracy
+
+
+than SVC. Based on these results,
+
+
+Linear SVC is the best Machine Learning
+
+
+model for activity recognition
+
+
+among the three Machine Learning
+
+
+models you've explored today.
+

@@ -1,0 +1,193 @@
+﻿
+Data Science is a very large umbrella
+
+
+term that encompasses data analytics,
+
+
+data mining, Machine Learning,
+
+
+and several other related disciplines.
+
+
+In supervised Machine Learning, data
+
+
+scientists develop algorithms that
+
+
+need to be trained with labeled data,
+
+
+in which both the labeled inputs
+
+
+and the desired outputs are known.
+
+
+After the training, other unlabeled
+
+
+data are processed by the trained
+
+
+algorithm to predict the desired output.
+
+
+Supervised learning algorithms are
+
+
+suitable for the following tasks:
+
+
+binary classification, where the algorithm
+
+
+must divide the data into two categories —
+
+
+for example,
+
+
+images of apples, and images that don't
+
+
+contain apples. Multiclass classification,
+
+
+where there is a finite list of
+
+
+categories for dividing the data —
+
+
+for example, apples,
+
+
+bananas, oranges and pears.
+
+
+Regression modelling, used to
+
+
+predict continuous values,
+
+
+such as the weight of an apple.
+
+
+Ensembling,
+
+
+where predictions of multiple
+
+
+Machine Learning models are combined.
+
+
+The Machine Learning data path
+
+
+includes the generation of data
+
+
+from sensors such as cameras,
+
+
+microphones, accelerometers,
+
+
+or directly using datasets with stored data.
+
+
+The raw data is then preprocessed,
+
+
+including the feature extraction.
+
+37
+00:01:27:00 --> 00:01:27,900
+This is an important step in Machine Learning,
+
+
+as the quality of data and the
+
+
+useful information that can be
+
+
+derived from it directly affects
+
+
+the ability of our model to learn.
+
+
+Training is the process of developing
+
+
+the model by learning from the dataset.
+
+
+However,
+
+
+the dataset is also used to
+
+
+evaluate the model.
+
+
+Therefore, the whole dataset is
+
+
+split into two parts.
+
+
+One part —
+
+
+usually the majority of the
+
+
+data — is the training set,
+
+
+which is considered as observed data and
+
+
+used exclusively for the training set.
+
+
+The remainder is the testing set,
+
+
+which is considered as unobserved
+
+
+data, and used exclusively for
+
+
+evaluating the prediction step.
+
+
+After the model has been trained,
+
+
+the prediction or inference step can
+
+
+be performed on a digital machine,
+
+
+such as a PC or an Edge processor.
+
+
+This includes any preprocessing
+
+
+of the information as well as the
+
+
+calculations required by the model.
+

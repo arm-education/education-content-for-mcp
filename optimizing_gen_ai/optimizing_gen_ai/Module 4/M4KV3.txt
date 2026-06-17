@@ -1,0 +1,194 @@
+﻿So far,
+we've optimized models using smart
+
+algorithms and improved our code through
+loop and threading techniques.
+
+Now we're ready to go one level deeper
+into the hardware itself.
+
+This section is all about SIMD,
+or single instruction multiple data.
+
+It's a powerful feature found in modern
+CPUs,
+
+especially those based on Arm
+architecture.
+
+The idea behind SIMD is simple.
+
+Instead of applying an instruction to
+just one piece of data at a time,
+
+we apply it to multiple elements in
+parallel.
+
+For example,
+instead of multiplying 2 numbers,
+
+we multiply 8 or 16 numbers in a single
+instruction.
+
+That's a huge boost for performance,
+especially when you're doing matrix
+
+multiplication,
+which is just a bunch of 
+
+repeated arithmetic.
+
+On Arm processors.
+
+SIMD is implemented through several
+technologies.
+
+Let's go through them.
+
+The most widely supported SIMD feature on
+Arm CPUs is NEON.
+
+NEON allows you to perform operations on
+short vectors,
+
+like adding two arrays or multiplying
+batches of values all at once.
+
+It's been used in mobile phones and
+embedded systems for years,
+
+and is a key reason why Arm processors
+are so efficient at running 
+
+compute-heavy tasks.
+
+When you write code that's NEON enabled
+or use a library that does it for you,
+
+the CPU can execute instructions like
+vector multiplies or dot products much
+
+faster than if it were processing each
+number individually.
+
+Next we have I8MM,
+short for INT8 matrix multiply.
+
+This feature is specifically designed to
+speed up matrix multiplication for
+
+quantized models where numbers are stored
+as 8 bit integers.
+
+I8MM introduces dedicated instructions
+like SMMLA,
+
+which multiply matrix tiles directly in
+hardware.
+
+These instructions are optimized to
+deliver high throughput at least as much
+
+as using two regular vector operations.
+
+If your model is quantized to INT8,
+and many are for performance reasons,
+
+using I8MM makes a dramatic difference
+in inference speed.
+
+As we move into newer Arm architectures,
+we find even more advanced SIMD support.
+
+SVE,
+or Scalable Vector Extension, takes NEON
+
+a step further.
+
+SVE introduces a vector length agnostic
+model,
+
+meaning your code can scale automatically
+based on the CPU's vector size.
+
+Instead of writing different code for
+different hardware,
+
+SVE lets the processor decide how much
+data to handle per instruction.
+
+That makes it ideal for future-proofing
+your applications and improving
+
+cross-platform compatibility.
+
+SVE also includes predicate registers,
+which allow more flexible control 
+
+over which elements in a vector are active.
+
+This adds both speed and precision,
+particularly in complex AI workloads.
+
+Finally, we come to SME,
+or Scalable Matrix Extension.
+
+SME builds directly on top of SVE and
+introduces 2D vectorization, specifically
+
+for matrix operations.
+
+Instead of just dealing with vectors,
+SME adds support for matrix tiles,
+
+which can be loaded, stored,
+and manipulated as discrete units.
+
+It introduces a new memory region,
+the ZA array, to hold these matrix tiles.
+
+This lets the CPU operate on full submatrices rather than 
+
+stitching together vectors.
+
+In short,
+SME is built from the ground up 
+
+for AI inference.
+
+It delivers even better throughput,
+more predictable performance,
+
+and aligns perfectly with optimizations
+like loop tiling and quantization.
+
+If your CPU supports SME and your library
+takes advantage of it,
+
+you're getting top tier performance even
+without a GPU.
+
+So in summary, Arm SIMD capabilities,
+NEON, I8MM, SVE,
+
+and SME provide hardware acceleration for
+core AI operations 
+
+like matrix multiplication.
+
+They allow your code to run faster with
+less power by processing multiple data
+
+elements in a single instruction,
+and when you combine these with
+
+algorithmic and implementation-level
+optimizations, the result is fast,
+
+efficient inference even on lightweight
+hardware.
+
+In the final section,
+we'll look at how these all come together in practice
+
+using the KleidiAI micro-kernel.

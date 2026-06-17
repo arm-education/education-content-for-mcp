@@ -1,0 +1,423 @@
+﻿
+In this lab, you will learn an efficient
+
+
+method for processing audio recordings
+
+
+using mail frequency cepstral coefficients
+
+
+and a Convolutional Neural Network.
+
+
+The idea is to segment one slice
+
+
+of a continuous input signal into
+
+
+overlapping or non-overlapping segments,
+
+
+do some preprocessing on each
+
+
+input slice and stack the resulting
+
+
+process segments over each other
+
+
+to obtain a two-dimensional frame.
+
+
+This allows us to use some of
+
+
+the same tools that are used for
+
+
+Machine Learning on real images,
+
+
+such as using Convolutional Neural Networks.
+
+
+For this exercise,
+
+
+we are going to use the "Hey Snips"
+
+
+dataset from Couke and colleagues.
+
+
+The train dataset consists of
+
+
+utterances from 30 speakers,
+
+
+while the test dataset has
+
+
+utterances from 10 speakers.
+
+
+The length of each utterance ranges
+
+
+between about 3 and 9 seconds.
+
+
+The data is labeled 1
+
+
+if the phrase "hey snips" was
+
+
+uttered and 0 if not.
+
+
+Visit the dataset repository.
+
+
+Fill out the form to apply for the dataset
+
+
+and the download link will be provided.
+
+
+We've already done this previously and
+
+
+saved the dataset in the working directory.
+
+
+We can now proceed with loading the data.
+
+
+Here is an example of what
+
+
+a data sample looks like.
+
+
+ID is a unique identifier located in the
+
+
+audio files subdirectory of the dataset.
+
+
+As you can see here,
+
+
+the data is labeled 1
+
+
+if the phrase "hey snips" was
+
+
+uttered and zero if not.
+
+
+This acts as the label
+
+
+for the classification.
+
+
+Worker ID is a unique identifier
+
+
+of the contributor.
+
+
+Duration is the duration
+
+
+in seconds of the audio file, and
+
+
+audio file path is the file path
+
+
+to the respective audio sample.
+
+
+Now we need to convert the audio
+
+
+sample into a format that our Machine
+
+
+Learning model can actually use.
+
+
+The conversion is as follows:
+
+
+Read the WAV file under the audio path.
+
+
+This returns the sample rate
+
+
+and the data from the WAV file.
+
+
+Now we zero-stuff the training
+
+
+and test samples,
+
+
+so we have a constant slice
+
+
+length, as in the initial image.
+
+
+Now we segment the slices in
+
+
+this exercise. We will choose
+
+
+the segment overlap to be 0.
+
+
+We might also want our segments
+
+
+to have a certain length.
+
+
+For example, powers of two will enable us
+
+
+to do a faster fast Fourier transform.
+
+
+For time reasons we will also not
+
+
+load all training and test samples,
+
+
+but a smaller subset of them.
+
+
+Let's have a look at a single example.
+
+
+We'll perform the previously
+
+
+mentioned preprocessing steps
+
+
+by slicing the audio signal.
+
+
+We will hear a random WAV sample
+
+
+of the test set and see how we
+
+
+aggregate the data and the label.
+
+
+You can turn on your speakers
+
+
+to hear the data sample.
+
+
+"Play a 1997 record by Kenneth
+
+
+Neate on Deezer."
+
+
+You can see that the data sample
+
+
+is now in a 2D format and you
+
+
+can also notice the zero-stuffing.
+
+
+Each data sample is assigned a label.
+
+
+Now we define a helper function
+
+
+that performs the data loading.
+
+
+Next, we extract the features using
+
+
+Mel-frequency cepstral coefficients.
+
+
+This state of the art technique
+
+
+for the speech recognition is
+
+
+structured around these MFCC features,
+
+
+which is a nonlinear mapping
+
+
+of the frequency spectrum to
+
+
+considerably fewer features.
+
+
+It is an effective feature
+
+
+extractor for audio classification.
+
+
+It converts conventional frequency
+
+
+measurements to the Mel scale,
+
+
+which is a logarithmic transformation
+
+
+that takes into account human
+
+
+perception at different frequencies.
+
+
+As MFCC has proven to be a very
+
+
+good feature for such audio tasks,
+
+
+there is an integrated function
+
+
+for it in TensorFlow,
+
+
+which we'll be using here.
+
+
+If you'd like more details,
+
+
+please visit the TensorFlow documentation.
+
+
+Let's now define the compute MFCC function.
+
+
+We can now load the data
+
+
+and compute the MFCC.
+
+
+The data has been successfully
+
+
+loaded and you can see the data shape
+
+
+of the training and testing set.
+
+
+We can also visualize an MFCC frame.
+
+
+You can see on the Y axis we have
+
+
+the time segments, and on the
+
+
+X axis the MFCC coefficients.
+
+
+Now we define the hyperparameters for
+
+
+training the Convolutional Neural Network,
+
+
+such as the batch size,
+
+
+the number of epochs, and the learning rate,
+
+
+and apply a scaling to the MFCC features.
+
+
+Next, we define the neural network
+
+
+architecture.
+
+
+In the model summary,
+
+
+we can see that our model contains
+
+
+almost 20,000 parameters in total.
+
+
+Now, compile and train the model.
+
+
+Finally, we evaluate the trained
+
+
+model on the remaining test data.
+
+
+We obtain a test accuracy of 80%.
+
+
+You can now try to tune the hyperparameters
+
+
+to improve the model accuracy,
+
+
+for example by increasing the number of
+
+
+epochs or changing the learning rate.
+
+
+Once you are satisfied with the final model,
+
+
+you can save it and proceed with
+
+
+the deployment using Cube AI as
+
+
+explained in the previous exercise.
+

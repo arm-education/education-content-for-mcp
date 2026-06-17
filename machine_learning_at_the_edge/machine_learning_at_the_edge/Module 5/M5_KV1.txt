@@ -1,0 +1,288 @@
+﻿
+The main goal of Machine Learning on
+
+
+microcontrollers is to develop the neural
+
+
+network model trained on the desktop so
+
+
+that it can work on a microcontroller.
+
+
+After the hardware-constrained
+
+
+neural network model is designed to
+
+
+satisfy the requirement of accuracy,
+
+
+operations, and memory,
+
+
+the models can be translated onto the
+
+
+microcontroller to have a deployable
+
+
+solution that runs real-time
+
+
+on the inference step.
+
+
+It is also important to optimise
+
+
+the implementation onto the hardware
+
+
+platform by using optimized code
+
+
+designed for the target hardware.
+
+
+For Machine Learning on Arm
+
+
+Cortex-M family microcontrollers,
+
+
+this means using the CMSIS-NN library,
+
+
+which is part of the Common Microcontroller 
+
+
+Software Interface Standard.
+
+
+CMSIS is a vendor-independent abstraction
+
+
+layer for Arm Cortex-M processors.
+
+
+CMSIS is comprised of many
+
+
+libraries. For Machine Learning,
+
+
+the two most important libraries
+
+
+are CMSIS-DSP and CMSIS-NN.
+
+
+CMSIS-DSP
+
+
+is a rich collection of Digital
+
+
+Signal Processing functions that
+
+
+Arm has optimized for various
+
+
+Arm Cortex-M processors.
+
+
+For example,
+
+
+the Cortex M-4, Cortex M-7, Cortex M-33,
+
+
+Cortex M-35, and the Cortex M-55 processors.
+
+
+Arm has added new functions to
+
+
+the CMSIS-DSP library for
+
+
+classical Machine Learning,
+
+
+including for Support Vector Machines,
+
+
+naive Gaussian Bayes classifiers,
+
+
+and distances for clustering.
+
+
+The use of CMSIS-DSP can drastically
+
+
+reduce the requirements for the
+
+
+Machine Learning algorithms.
+
+
+CMSIS-NN is a collection of optimized
+
+
+neural network functions for Cortex-M cores,
+
+
+In particular,
+
+
+CMSIS-NN includes optimized functions
+
+
+for convolution activation, pooling, and
+
+
+fully connected network operations.
+
+
+It is important to keep in mind that
+
+
+CMSIS-NN improves the performance
+
+
+by exploiting single instruction
+
+
+multiple data instruction
+
+
+On Arm Cortex-M microcontrollers.
+
+
+This is very useful to accelerate
+
+
+Multiply-Accumulate Operations with
+
+
+16-bit or 8-bit operations which are
+
+
+common in Convolutional Neural Networks
+
+
+as you saw in the computer vision
+
+
+example. Using 8-bit and 16-bit operations
+
+
+also minimizes memory footprint.
+
+
+CMSIS-NN is a collection of efficient
+
+
+neural network kernels developed to
+
+
+maximize the performance and minimize
+
+
+the memory footprint of neural networks
+
+
+o Arm Cortex-M processor cores.
+
+
+These are targeted at intelligent Edge
+
+
+devices in the Internet of Things.
+
+
+A neural network based on CMSIS-NN
+
+
+kernels achieves a 4.6 times greater
+
+
+runtime or throughput and a 4.9 times
+
+
+improvement in energy efficiency.
+
+
+This is for the inference step,
+
+
+compared with the same model
+
+
+implemented only with CMSIS-DSP functions.
+
+
+In particular, CMSIS-NN optimizes the
+
+
+following operations. For convolution,
+
+
+it boosts compute density with
+
+
+general matrix multiplication,
+
+
+also known as a GEMM-based implementation,
+
+
+reduces data movement overhead with
+
+
+depth first data layout, and interleaves
+
+
+data movement and compute to minimize
+
+
+memory footprint. For pooling,
+
+
+it improves performance by splitting
+
+
+pooling into X and Y directions,
+
+
+and improves memory access and
+
+
+footprint with in-situ updates.
+
+
+Finally, for the activation functions,
+
+
+it improves parallelism for rectified
+
+
+linear units using branch-free
+
+
+implementation and calculates sigmoid
+
+
+and hyperbolic tan values more
+
+
+quickly, using a fast table-lookup
+
+
+instead of exponent computation.
+

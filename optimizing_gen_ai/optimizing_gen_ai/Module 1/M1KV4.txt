@@ -1,0 +1,186 @@
+﻿So far we've talked about memory—but
+that's only one side of the coin.
+
+The other major constraint in deploying
+Generative AI models on Edge devices is
+
+computation. Or more specifically,
+throughput—
+
+how much processing a device can do in a
+given amount of time.
+
+Let's start by understanding what
+Generative AI inference actually involves.
+
+During inference,
+the model processes input data through
+
+layers of matrix multiplications—operations
+like matrix-matrix
+
+or matrix-vector products.
+
+These are computationally heavy tasks,
+especially for models with billions
+
+of parameters.
+
+If the device can't perform these
+calculations fast enough,
+
+the inference becomes too slow to be
+useful—
+
+imagine waiting several seconds for every
+word a chatbot generates.
+
+That's not a good user experience.
+
+These computational requirements make it
+essential to match the model's demands
+
+with the device's capabilities.
+
+Depending on the hardware,
+an inference task can become either
+
+memory-bound—limited by
+how fast data can be fetched—
+
+or compute-bound—limited
+by how fast
+
+the processor can do math.
+
+On most Edge devices,
+we're typically compute-bound—
+
+meaning the bottleneck is the available
+FLOPS 
+
+(floating point operations per second).
+
+So how do we work around this?
+
+The answer lies in optimizing throughput—getting
+the most out of the compute 
+
+units available.
+
+Let's revisit the two main hardware types
+we discussed earlier: CPUs and GPUs.
+
+CPUs are optimized for single-thread
+performance.
+
+They can process complex logic with low
+latency.
+
+But they're not ideal for bulk matrix
+operations.
+
+That's where we lean on features like
+SIMD—single instruction, multiple data—
+
+which allows a CPU to operate on multiple
+data points in parallel.
+
+Examples of this idea supported by Arm
+CPUs include the scalable matrix extension
+
+(SME) and other SIMD
+technologies such as NEON
+
+and DotProd,
+which enhance matrix operation throughput.
+
+Another trick is frequency scaling—adjusting
+the CPU's clock speed
+
+dynamically to balance power and
+performance.
+
+This can help squeeze out more
+performance when needed
+
+without overheating or draining the
+battery too quickly.
+
+Now let's consider GPUs,
+which are built for throughput 
+
+from the ground up.
+
+GPUs have many small cores that can
+process massive workloads in parallel.
+
+Their performance shines when handling
+large batches of matrix operations. 
+
+To optimize throughput on GPUs:
+
+Thread management keeps all cores busy.
+
+Occupancy optimization ensures each
+compute unit is 
+
+filled with active threads.
+
+Memory coalescing minimizes delays from
+memory access. And precision scaling—like
+
+using FP16 instead of FP32—reduces
+computation time per operation.
+
+Some GPUs and NPUs also include
+specialized matrix acceleration units,
+
+like tensor cores or matrix multiply-accumulate
+(MMA) units.
+
+These are tailor-made for deep learning
+tasks and can dramatically boost
+
+throughput—especially for
+Generative AI inference.
+
+So, what does this mean for deployment?
+
+If your model needs high throughput but
+you're deploying on a constrained device,
+
+you may need to: Reduce model complexity
+with techniques like quantization,
+
+pruning or distillation;
+
+choose the right processor type—for example,
+
+using dedicated MMA instructions, if
+available.
+
+To sum up:
+Computational constraints on Edge devices
+
+can lead to throughput bottlenecks.
+
+Matching the model's compute needs with
+the device's FLOPS budget is essential.
+
+Techniques like SIMD acceleration,
+low-precision math,
+
+and matrix acceleration units can help
+optimize throughput and make Generative AI
+
+inference practical—even on tiny
+devices.
+
+By understanding both memory and compute
+limitations,
+
+you're now equipped to think critically
+about where and how to deploy Generative
+
+AI models in the real world.

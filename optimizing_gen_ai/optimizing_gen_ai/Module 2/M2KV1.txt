@@ -1,0 +1,341 @@
+﻿The transformer has become the go-to
+architecture for nearly every major advancement
+
+in Generative AI.
+From chat bots to image synthesis, it's the
+
+backbone of models like GPT,
+BERT, DALL·E, and Stable Diffusion.
+
+But what makes it so powerful?
+
+Unlike earlier neural networks,
+transformers don't rely on fixed
+
+assumptions like locality.
+
+They make very few assumptions—which
+is why we say they have
+
+no inductive biases.
+
+This generality lets them learn patterns
+in text, images,
+
+or code without being told what to look
+for.
+
+Transformers can model long-range
+dependencies,
+
+they're highly parallelizable,
+and when trained on enough data,
+
+they can produce very general
+representations.
+
+To understand why they're so effective,
+it's important to recognize that they are
+
+built from a series of innovative
+components.
+
+Let's unpack each one.
+
+Before residual connections,
+deep networks faced a serious issue:
+
+the vanishing gradient problem.
+
+When training very deep networks,
+gradients—
+
+the values used to update model weights—tend
+to get smaller and smaller as they
+
+move backward through the layers.
+
+If they shrink too much, early
+layers stop learning altogether.
+
+This problem was especially severe in
+older networks using saturating
+
+activation functions like sigmoid or tanh.
+
+The deeper the model,
+the harder it was to train.
+
+Enter residual connections.
+
+Residual connections skip over layers,
+allowing information to flow directly
+
+from one layer to another.
+
+During backpropagation,
+they ensure that gradients don't vanish,
+
+because part of the gradient is passed
+directly through an identity function—meaning
+
+it stays intact.
+
+These connections do three powerful
+things:
+
+Stabilize training by preserving
+gradients, even in very deep networks.
+
+Speed up convergence—
+
+The model trains faster and more reliably;
+and retain useful information—
+
+instead of transforming input data at
+each layer, the model refines it.
+
+This is why residual connections are now
+standard in all transformer architectures.
+
+Next, we have layer normalization.
+
+When training a neural network,
+one common problem is 
+
+internal covariate shift—where the distribution
+of inputs to each layer
+
+keeps changing.
+
+This can make training unstable and slow.
+
+Layer normalization fixes this by
+normalizing the inputs of each layer to
+
+have a consistent mean and variance.
+
+Unlike batch normalization, which relies
+on entire batches of data,
+
+layer norm works on individual data
+sequences—
+
+making it perfect for variable-length
+inputs like text.
+
+Layer norm: stabilizes training;
+keeps gradients well scaled;
+
+and works seamlessly with transformers
+and sequence models. 
+
+Before transformers became the go-to
+architecture for language and 
+
+vision models, recurrent neural networks,
+or RNNs, were the dominant approach for
+
+handling sequential data—like text, audio,
+or time series.
+
+In an RNN, data is processed step-by-step.
+
+At each time step,
+the model takes the current input and the
+
+previous hidden state and uses them to
+compute a new hidden state.
+
+To train an RNN,
+we use a method called back propagation
+
+through time, or BPTT.
+
+This involves computing gradients for
+each time step by chaining them backward
+
+through the network—much like
+unrolling a tape
+
+and updating weights at each point along
+the way.
+
+But this is where the problems begin.
+
+When the sequence is long,
+the repeated multiplication of weight
+
+matrices can cause gradients to either
+vanish—becoming too small to learn—
+
+or explode, leading to unstable updates.
+
+These issues stem from the eigenvalues of
+the weight matrix:
+
+if they're much smaller than 1,
+gradients vanish;
+
+if they're much larger, they explode.
+
+As a result,
+RNNs are difficult to train on 
+
+long sequences.
+
+They're also hard to scale and
+parallelize,
+
+since each time step depends on the
+previous one.
+
+All of these limitations led researchers
+to look for alternatives—
+
+and that search eventually led to the
+invention of the transformer.
+
+Now we come to the transformer's core
+innovation: self-attention.
+
+In traditional models like RNNs,
+the input is processed sequentially—
+
+one token at a time.
+
+That's slow and makes it hard to model
+long-range relationships.
+
+Self-attention solves this by allowing
+the model to look at all parts of the
+
+sequence at once.
+
+Each input token is projected into three
+representations:
+
+query, key, and value.
+
+These are used to calculate how much
+attention each token should pay to every other
+
+token in the sequence.
+
+This is done using scaled dot-product
+attention,
+
+which results in a weighted sum of the
+values.
+
+Self-attention gives the model two huge
+advantages.
+
+It can model relationships between
+distant words or elements; 
+
+and it can process all tokens in parallel—making
+it fast and scalable.
+
+The only downside? It has quadratic
+computational complexity
+
+with respect to sequence length—which
+becomes expensive for very 
+
+long inputs. 
+
+After self-attention, the output is passed 
+through a feedforward network, 
+
+applied independently to
+the input in each position.
+
+These networks use non-linear
+functions—often
+
+GeLU—a smooth version of ReLU—to
+enhance feature learning.
+
+Feedforward layers: add non-linearity to
+the model;
+
+learn abstract features at each position;
+and are fully parallelizable,
+
+just like self-attention.
+
+Together,
+the self-attention and feedforward
+
+blocks make up the transformer layer.
+
+But there's one problem left:
+
+if the model sees all tokens at once,
+how does it know their order?
+
+Transformers solve this with positional
+encodings—
+
+mathematical patterns that are added to
+the input embeddings.
+
+These encodings provide information about
+each token's position in the sequence.
+
+Some properties of positional encodings:
+They encode both relative 
+
+and absolute positions.
+
+This means that for an individual
+positional encoding, you can determine its
+
+position within a sequence.
+
+Additionally, given two different
+inputs—regardless of their
+
+order—you can determine
+how far apart they are.
+
+They also allow the model to generalize
+to sequences longer than it was trained on.
+
+Finally, they don't add extra
+parameters—they're fixed functions.
+
+To summarize,
+the transformer architecture introduces
+
+several key innovations.
+
+Residual connections for stable and deep
+training,
+
+layer normalization for consistent
+activations and stable gradients,
+
+self-attention for parallelism and
+modeling long-range dependencies,
+
+feedforward layers for token-wise
+feature extraction; and positional
+
+encodings to inject order information
+into sequences.
+
+These components come together to form a
+flexible and powerful model that has
+
+revolutionized how we approach
+Generative AI.
+
+In the next video,
+we'll see how this base architecture is
+
+transformed into a large language
+model—capable of generating fluent,
+
+coherent responses.

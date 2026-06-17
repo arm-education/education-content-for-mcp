@@ -1,0 +1,182 @@
+﻿Let's kick things off by looking at how
+Generative AI has exploded into our
+
+everyday world,
+and why that growth matters when we're
+
+trying to run these models efficiently.
+
+Today, Generative AI is everywhere.
+
+Think about real-time translators like
+TimeKettle's earbuds that can convert
+
+languages on the fly, or Apple's OpenELM — an on-device language model designed to
+
+run directly on your iPhone.
+
+Then there's Perplexity.ai—a Cloud-based system that responds to
+
+user queries like a turbo-charged search
+engine.
+
+All of these use Generative AI,
+but they're 
+
+running in very different environments.
+
+Some are in the Cloud, backed by huge data
+centers.
+
+Others are on Edge devices like
+smartphones or IoT devices.
+
+Each computational environment brings its
+own advantages and disadvantages.
+
+Running Generative AI in the Cloud seems
+easy.
+
+Tons of power, lots of memory,
+and scalable infrastructure.
+
+However, Cloud setups have downsides.
+
+They introduce network latency between
+the application and the Cloud,
+
+can be costly and raise data privacy
+concerns.
+
+On the flip side,
+Edge devices give us fast,
+
+localized processing.
+
+You don't need to upload data to a server,
+and latency is often much lower.
+
+But Edge devices are constrained,
+
+limited by memory, power, and computational capacity.
+
+That's where things start getting tricky.
+
+Let's talk scale.
+
+In just the past few years,
+the size of AI models has exploded.
+
+According to a 2024 report by Jaime
+Sevilla and Edu Roldan,
+
+the compute needed to train frontier
+models has been growing at a rate of four
+
+to five times per year.
+
+That's exponential growth.
+
+Early models had millions of parameters.
+
+Now we have models with tens or even
+hundreds of billions.
+
+These parameters,
+which basically represent the models'
+
+capacity,
+need to be stored 
+
+and processed during inference.
+
+And this brings us to Sutton's "Bitter
+Lesson."
+
+Back in 2019,
+Rich Sutton pointed out something key:
+
+many breakthroughs in AI have not stemmed
+from complex algorithms,
+
+but rather from scalable ones—those that leverage more compute and data.
+
+As a result,
+the trend towards increasingly large and
+
+powerful models is likely to continue.
+
+But here's the catch:
+
+inference—actually running the model—is
+increasingly performed on Edge devices
+
+like phones, cars, or drones,
+rather than in centralized data centers.
+
+This shift is driven by advantages such
+as reduced latency, improved data privacy,
+
+and lower energy costs.
+
+However,
+these Edge environments are fundamentally
+
+different from training setups.
+
+They are resource constrained.
+
+Let's say we're deploying a Generative AI
+model on an Edge device.
+
+That model might have billions of
+parameters.
+
+If it's using 16 bit floating point
+precision, every parameter takes two bytes—
+
+so a 70 billion parameter model would
+need
+
+140 gigabytes just to store the weights.
+
+Most Edge devices don't even come close
+to having that kind of memory.
+
+This means we need to think carefully
+about how and where we run these models,
+
+as memory access, power consumption,
+and processing speed 
+
+suddenly become major concerns.
+
+And this is what makes optimization so
+important.
+
+It's not just about making things faster:
+it's about making them possible.
+
+To summarize,
+Generative AI is growing rapidly in
+
+capability and complexity.
+
+These models require serious compute and
+memory.
+
+Running them on constrained devices
+requires a shift in focus—
+
+one that prioritizes efficient inference.
+
+In the next videos,
+we'll look at how different device
+
+architectures—CPUs and GPUs—handle these challenges;
+
+and later, we'll explore concrete
+techniques to help shrink and speed up
+
+these enormous models, so they can run
+smoothly even on tiny devices.

@@ -1,0 +1,213 @@
+﻿When we think about running AI models,
+especially large generative models,
+
+the default assumption is often: "Let's use
+a GPU."
+
+And for good reason—
+
+GPUs are powerful,
+especially when it comes to handling
+
+large-scale parallel computations.
+
+But here's something surprising: you don't
+always need one.
+
+In fact,
+optimizing inference to run on CPUs can
+
+offer major advantages in terms of cost,
+energy use, and deployment flexibility.
+
+Let's start with cost.
+
+CPUs are already present in nearly every
+device—
+
+from smartphones and laptops to edge
+gateways and cloud servers.
+
+That means there's no need to purchase
+expensive accelerators or build out
+
+specialized infrastructure.
+
+You can leverage the hardware you already
+have.
+
+For companies deploying at scale,
+that's a huge saving on both capital
+
+expenditure—meaning the upfront cost of hardware—
+
+and operational expenditure—meaning the cost of running and
+
+maintaining it.
+
+Consider an organization rolling out an
+AI-powered service 
+
+across thousands of devices.
+
+If each of those devices needs a high-end
+GPU,
+
+the costs quickly become astronomical.
+
+But if the same service can run
+efficiently on a CPU, using smart
+
+optimizations,
+that changes the equation completely.
+
+The deployment becomes affordable and
+much more scalable.
+
+Then there's the issue of energy.
+
+GPU's are powerful, yes—but they're also power-hungry.
+
+They consume a lot of electricity,
+which not only drives up energy bills,
+
+but also increases the thermal load.
+
+This can require more cooling
+infrastructure,
+
+especially in data centers or embedded
+environments.
+
+CPUs, on the other hand,
+are designed to be more energy efficient.
+
+They can be optimized to scale frequency,
+enter low-power states during idle
+
+periods, and run cooler overall.
+
+This matters a lot for edge deployment.
+
+Imagine an AI assistant running on a
+mobile phone 
+
+or a voice-controlled system in a car.
+
+These systems need to be fast,
+but they also need to conserve battery.
+
+CPU-based inference—especially when paired with low-precision
+
+operations or vectorized execution—strikes a good balance between
+
+performance and power draw.
+
+There's also a privacy angle.
+
+Running inference on-device—locally, on
+a CPU—reduces the need to send sensitive
+
+data to external servers.
+
+For applications in healthcare, finance,
+or any domain involving personal data,
+
+this has clear advantages.
+
+You improve user privacy,
+reduce regulatory complexity,
+
+and avoid potential latency introduced by
+uploading and downloading from the Cloud.
+
+Another key reason to optimize for CPU is
+ubiquity.
+
+CPUs are already everywhere.
+
+Whether you're deploying to consumer
+devices, cloud environments,
+
+or embedded industrial systems,
+you can count on a CPU being there.
+
+That means developers can build models
+and services that are broadly compatible
+
+and don't require special hardware to
+work.
+
+This is particularly useful for
+maintaining and scaling systems—
+
+since there's less fragmentation across
+deployment environments.
+
+Now,
+none of this means CPUs can match GPUs in
+
+raw throughput.
+
+But with the right optimizations—which we'll explore later in this module—
+
+they can deliver excellent performance
+for many real-world use cases.
+
+Especially when latency is more important
+than massive parallelism,
+
+or when power and cost are limiting
+factors.
+
+Let's take an example.
+
+Suppose you're deploying a real-time
+translation tool on a smartphone.
+
+You need low-latency responses,
+minimal power draw,
+
+and a small memory footprint.
+
+Running inference on a GPU isn't an
+option—the device doesn't have one.
+
+But with CPU-friendly optimizations, like
+quantization and vectorized execution
+
+with features such as Arm's scalable matrix
+extension,
+
+the model runs smoothly and efficiently.
+
+You get high-quality results with no
+reliance on cloud connectivity or
+
+external accelerators.
+
+So to summarize:
+using CPUs for inference is not just a
+
+fallback—it's often the most practical,
+cost-effective, and sustainable choice.
+
+By leveraging existing infrastructure,
+reducing energy costs,
+
+and maintaining privacy,
+CPU inference unlocks a wide range of 
+
+AI deployments that would otherwise be too
+expensive, complex,
+
+or power-hungry to deliver at scale.
+
+In the next video,
+we'll look at the growing challenges that
+
+make these optimizations increasingly
+necessary—
+
+including rising model complexity,
+bandwidth limits, and latency demands.

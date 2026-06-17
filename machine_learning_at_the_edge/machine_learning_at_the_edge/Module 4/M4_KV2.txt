@@ -1,0 +1,225 @@
+﻿
+Convolutional Neural Networks seem to work
+
+
+very well with images, as the input matrix
+
+
+can be directly associated with image pixels.
+
+
+But can we use them for audio processing?
+
+
+Yes, but it is important to extract
+
+
+features that look like images and
+
+
+shape them so that they can be fed
+
+
+into the input layer of the network.
+
+
+Audio data usually describes an input signal
+
+
+whose magnitude changes rapidly over time.
+
+
+Suppose you are working on a speech
+
+
+recognition task to recognize four words,
+
+
+such as yes, no, on, and off.
+
+
+This application is called keyword spotting.
+
+
+Assume that you have an audio file
+
+
+in which someone is speaking
+
+
+one of these words.
+
+
+The word yes, is shown as an input
+
+
+speech signal in the time domain
+
+
+In the figure. Using feature extraction,
+
+
+you can change the input data in the
+
+
+time domain to another dimension.
+
+
+For instance,
+
+
+you can calculate the fast Fourier transform
+
+
+to convert it to the frequency domain.
+
+
+However, when we applied the
+
+
+Fourier transform to our signal,
+
+
+the results were only frequency
+
+
+values, and the time information
+
+
+was lost.
+
+
+Moreover,
+
+
+we still do not have a matrix representation.
+
+
+So, in speech and audio recognition,
+
+
+we usually calculate features
+
+
+for the classification that have
+
+
+frequency values, along with the
+
+
+time at which they were observed.
+
+
+This data could be represented
+
+
+on a spectrogram as shown here.
+
+
+To summarize,
+
+
+audio processing has many stages.
+
+
+In particular, we can perform audio
+
+
+processing with deep learning as follows:
+
+
+pre-process the sound wave arriving
+
+
+from the microphone into a
+
+
+vector of acoustic coefficients.
+
+
+For instance, using a spectrogram and
+
+
+Mel-frequency cepstral coefficients.
+
+
+Use an acoustic deep learning model
+
+
+such as a Convolutional Neural
+
+
+Network with the feature vectors
+
+
+of the matrix to achieve the
+
+
+classification of the audio or speech
+
+
+stream. Today, deep neural networks
+
+
+have replaced the previous machine
+
+
+learning algorithms for speech
+
+
+recognition and audio detection.
+
+
+This example shows speech recognition
+
+
+with Convolutional Neural Networks.
+
+
+The audio data is pre-processed
+
+
+to generate the spectrogram
+
+
+as feature extraction steps.
+
+
+The spectrogram is then sent
+
+
+as an input to a Convolutional
+
+
+Neural Network with three layers.
+
+
+The first convolutional layer
+
+
+used eight filters, each 5x5,
+
+
+the second used 16 filters,
+
+
+also 5x5,
+
+
+and the third layer is another
+
+
+convolutional layer with eight
+
+
+3x3 filters.
+
+
+The final layer is connected
+
+
+to the four output classes,
+
+
+which are the four recognized speech words.
+

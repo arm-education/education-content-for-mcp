@@ -1,0 +1,222 @@
+﻿
+There are many advantages of performing
+
+
+machine learning "at the edge".
+
+
+In particular, lower latency and
+
+
+reliability, as the information is
+
+
+processed close to the sensors, without
+
+
+needing to transmit it to the cloud.
+
+
+The communication with the cloud
+
+
+would usually require milliseconds of
+
+
+latency, compared to the microsecond
+
+
+that can be achieved with a low
+
+
+power microcontroller. Improved data
+
+
+protection, as the data are not transferred
+
+
+to another computer through the Internet
+
+
+or by other wireless or wired communication.
+
+
+No wireless or wired communication is needed —
+
+
+or if it is needed —
+
+
+a much lower bandwidth is required, as
+
+
+the processed information is an order
+
+
+of magnitude less than the raw data.
+
+
+For example, several kilobytes would be
+
+
+needed to send an image of an apple,
+
+
+but after the image has been
+
+
+classified as an apple,
+
+
+the fact that it's an apple could
+
+
+be communicated to the cloud
+
+
+in just one byte.
+
+
+The Machine Learning can be processed
+
+
+in a low-power microcontroller,
+
+
+which consumes only milliwatts of power.
+
+
+Moving Machine Learning from the
+
+
+cloud, to the edge, and to the extreme
+
+
+edge, working with microcontrollers,
+
+
+means it can run inside small, low-energy,
+
+
+battery-operated devices,
+
+
+including wearables such as earbuds.
+
+
+However,
+
+
+despite the benefits, this requires
+
+
+us to work with processors that have
+
+
+vastly lower computation resources.
+
+
+Rather than several trillions
+
+
+of operations per second,
+
+
+a processor such as the Arm Cortex-
+
+
+M4 may only perform several million
+
+
+operations.
+
+
+What's more,
+
+
+the memory is also significantly
+
+
+reduced from several terabytes
+
+
+to a maximum of a few megabytes
+
+
+in the best case.
+
+
+It's important to note that in
+
+
+supervised Machine Learning the
+
+
+inference step might require millions
+
+
+of operations that are mainly
+
+
+multiplications and additions.
+
+
+So, memory is necessary to store the data,
+
+
+the parameters of learning, and the
+
+
+results of the run-time calculations.
+
+
+Running these operations on a high
+
+
+performance embedded processor,
+
+
+such as the Cortex-M4,
+
+
+minimizes the time for inference
+
+
+as much as possible by exploiting
+
+
+the core digital signal processor
+
+
+extension and the floating-point unit
+
+
+to run the model in the most efficient way.
+
+
+In this course, you will learn how
+
+
+to train Machine Learning models
+
+
+on a desktop computer and implement
+
+
+them in an optimized way to run
+
+
+inferences on a real embedded system.
+
+
+The main goal of Machine Learning
+
+
+on microcontrollers is to design a
+
+
+deployable and optimized solution on
+
+
+low-power resource-constrained hardware.
+

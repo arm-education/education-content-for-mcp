@@ -1,0 +1,444 @@
+﻿
+In this lab, we will optimize a neural
+
+
+network model using TensorFlow light
+
+
+and evaluate the model with the
+
+
+evaluation board in terms of latency,
+
+
+memory, and energy, using STM Cube MI.
+
+
+In this lab, you will learn how to measure
+
+
+the performance of neural network models,
+
+
+optimize a neural network model in order
+
+
+to improve its latency and to reduce
+
+
+its energy consumption, and implement
+
+
+a deep learning model on your own.
+
+
+You can select any dataset that may be
+
+
+suitable for Arm Cortex-M processors.
+
+
+Try to optimise your model as
+
+
+best as possible.
+
+
+First, open the lab5 notebook
+
+
+using Jupyter notebook.
+
+
+Executes the series of code blocks to
+
+
+import packages and load the data set.
+
+
+These code blocks are just
+
+
+the same as those of lab 4.
+
+
+Next, this code block will load
+
+
+the model trained with CIFAR-10.
+
+
+Here we use the provided model,
+
+
+but you can change the model
+
+
+path to load your own model.
+
+
+Now we are going to apply
+
+
+quantization to the model.
+
+
+Quantization is an optimization
+
+
+technique which changes the degree
+
+
+of precision by reducing the number
+
+
+of bits for representing data.
+
+
+For example,
+
+
+rather than using 32-bit floating-
+
+
+point numbers,
+
+
+we can change the model to use 8-
+
+
+bit integer numbers for calculation.
+
+
+Through quantization,
+
+
+we can reduce the amount of
+
+
+memory required for the model.
+
+
+Moreover,
+
+
+we can enhance the inference time because
+
+
+integer operations are cheaper than
+
+
+floating-point operations in general.
+
+
+We will use the TF light converter
+
+
+to apply intake quantization.
+
+
+Here you can see that we specified
+
+
+supported ops as TFLITE_BUILTINS_INT8.
+
+
+You can change this parameter
+
+
+to use a different precision.
+
+
+Execute this code block to
+
+
+generate the quantized model.
+
+
+Then, save the model with this code block.
+
+
+Let's check how the input and
+
+
+output changed with quantization.
+
+
+Execute this code block,
+
+
+so the types of input and
+
+
+output change to INT 8.
+
+
+You can retrieve the original
+
+
+value using the quantization
+
+
+scale and zero-point values.
+
+
+This is the formula to calculate
+
+
+the original value with the numbers.
+
+
+Next we will compare the original
+
+
+and quantized models in terms
+
+
+of model size and accuracy.
+
+
+This code block will show the sizes
+
+
+of the original and quantized models.
+
+
+Here you can see that the quantized
+
+
+model is about 11 times smaller
+
+
+than the original model.
+
+
+This means that we can save more than
+
+
+90% of memory when storing the model.
+
+
+Let's compare the accuracies of
+
+
+the original and quantized models.
+
+
+Since the quantized model uses
+
+
+fewer bits to represent data,
+
+
+it may lose some information.
+
+
+Therefore, quantization may degrade
+
+
+the accuracy to some extent.
+
+
+Execute this code block.
+
+
+Surprisingly,
+
+
+you can see that the quantized
+
+
+model obtained higher accuracy
+
+
+than the original model.
+
+
+So we've obtained the benefits of
+
+
+quantization without any downsides.
+
+
+Let's deploy the models to
+
+
+measure the latency on the board.
+
+
+Open STMCubeMX to create a
+
+
+Cube AI validation application.
+
+
+You should now be familiar
+
+
+with how to deploy a model.
+
+
+Click access to board selector,
+
+
+find the board and Click Start project.
+
+
+Go to Project Manager,
+
+
+select the project name.
+
+
+Configure the project location
+
+
+and the firmware version.
+
+
+Clear pinouts and enable Cube AI.
+
+
+Choose validation for device application.
+
+
+First, add the original model.
+
+
+We are going to measure the
+
+
+latency using validate on desktop.
+
+
+To do so, we need to first
+
+
+install the code to the board.
+
+
+So, click generate code.
+
+
+Open STMCubeIDE and import the project.
+
+
+Click run as to install the code.
+
+
+If you get this error, open Core > SRC
+
+
+main.C, and modify it
+
+
+as you were shown in lab 4.
+
+
+After the installation is finished,
+
+
+open the IOC file. Go to Cube AI
+
+
+menu and click validate on target.
+
+
+In this validation report, you can
+
+
+check the average number of cycles
+
+
+and the average inference time
+
+
+taken to process the 10 samples.
+
+
+Copy this result into a text file.
+
+
+Here, you can also check the complexity,
+
+
+flash occupation, and the amount
+
+
+of memory required for the model.
+
+
+Now the original model is validated,
+
+
+remove the original network
+
+
+and add the quantized model.
+
+
+Here, select the TF light option,
+
+
+because the quantized model
+
+
+is in TF light format.
+
+
+Press Ctrl + S to
+
+
+automatically update the code.
+
+
+Then modify the main file again and
+
+
+click run as to install the new model.
+
+
+The installation is done.
+
+
+Go back to the IOC file and click
+
+
+validate on target to get the report.
+
+
+This is the summary of the evaluation
+
+
+results obtained. First in terms of latency,
+
+
+the quantized model obtained 72% better
+
+
+latency than the original model.
+
+
+Second, the quantized model
+
+
+requires only 31% of memory
+
+
+compared to the original model.
+
+
+Finally, since energy consumption
+
+
+is proportional to the latency,
+
+
+the quantized model only required
+
+
+28% of the energy consumption
+
+
+compared to the original model.
+

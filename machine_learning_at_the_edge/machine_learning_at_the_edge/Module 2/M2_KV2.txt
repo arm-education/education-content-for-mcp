@@ -1,0 +1,333 @@
+﻿
+An example of raw data can be seen
+
+
+in this plot, which illustrates
+
+
+accelerometer data coming from an
+
+
+inertial sensor, similar to one
+
+
+inside smartwatches and smartphones.
+
+
+The plots show data during several
+
+
+activities, including walking, running,
+
+
+climbing up, climbing down, and so on.
+
+
+A supervised learning system could be
+
+
+trained to predict the activity from
+
+
+similar raw data. In Machine Learning,
+
+
+feature extraction is the process
+
+
+of deriving calculated values,
+
+
+known as features, from an initial
+
+
+set of measured raw data.
+
+
+Ideally, the chosen features are
+
+
+informative and non-redundant,
+
+
+helping the learning model
+
+
+to make better predictions.
+
+
+In particular, during feature extraction,
+
+
+the original data space is
+
+
+converted into the feature space
+
+
+which is further processed in
+
+
+the Machine Learning path. To calculate
+
+
+any features from this raw data,
+
+
+it is important to define a window size.
+
+
+This could range from a few
+
+
+milliseconds to a few seconds.
+
+
+It would also be useful to
+
+
+know the sampling rate,
+
+
+typically 10 to 100 hertz for such data.
+
+
+For each window,
+
+
+the features can be calculated.
+
+
+There is a huge range of possibilities
+
+
+for these features and they can be of
+
+
+several types such as statistical,
+
+
+temporal and frequency.
+
+
+For inertial sensors,
+
+
+the most popular are the area
+
+
+under the curve, the variance,
+
+
+the mean, the median —
+
+
+which is less sensitive
+
+
+to outliers than the mean —
+
+
+and the peaks of the fast Fourier transform.
+
+
+The process of selecting a subset
+
+
+of the possible features is called
+
+
+feature selection.
+
+
+The feature selection can significantly
+
+
+affect the final results of the
+
+
+learning model, and for this reason, the
+
+
+selection is typically made by an excerpt.
+
+
+The feature set depends greatly
+
+
+on the application.
+
+
+For example,
+
+
+suitable feature sets used for an
+
+
+audio signal would be very different
+
+
+from those for network traffic data.
+
+
+For example,
+
+
+for audio applications,
+
+
+the raw data from the microphone
+
+
+are converted from the time domain
+
+
+to the frequency space.
+
+
+The spectogram shown in the
+
+
+picture is a visual representation
+
+
+of the spectrum of frequencies of
+
+
+a signal as it varies with time.
+
+
+Brighter colors represent a greater
+
+
+intensity of certain frequencies
+
+
+measured on the vertical axis at
+
+
+a certain moment in time.
+
+
+The Mel-frequency Cepstral Coefficient
+
+
+is the most widely used
+
+
+feature in speech and speaker recognition.
+
+
+The following steps are required
+
+
+to calculate these.
+
+
+First,
+
+
+take a windowed expert of the signal
+
+
+in order to reduce spectral distortion.
+
+
+Then perform a fast Fourier
+
+
+transform on the input speech signal,
+
+
+to obtain the spectrum.
+
+
+Calculate the Mel-Frequency bank
+
+
+energies by integrating the spectral
+
+
+energy coefficients within triangular
+
+
+frequency bins arranged uniformly
+
+
+on the Mel-frequency scale.
+
+
+Perform the discrete cosine transform on
+
+
+the logarithms of the filter-bank energies.
+
+
+This de-correlates the filter-bank
+
+
+coefficients and yields a compressed
+
+
+representation of the filter banks.
+
+
+Finally, append first-order differentials.
+
+
+How can you classify the data
+
+
+after feature extraction?
+
+
+This is the job of the learning model.
+
+
+For instance,
+
+
+suppose you had calculated two
+
+
+features from the accelerometer
+
+
+data from walking and running,
+
+
+illustrated here in the two feature space,
+
+
+a classification model such as
+
+
+the linear model in the figure,
+
+
+is able to separate the two
+
+
+classes in the dataset.
+
+
+There are many learning models more
+
+
+complex than this linear model,
+
+
+to solve complex tasks from activities
+
+
+recognition to computer vision.
+
+
+The most popular trend today is
+
+
+toward Artificial Neural Networks
+
+
+and Convolutional Neural Networks.
+

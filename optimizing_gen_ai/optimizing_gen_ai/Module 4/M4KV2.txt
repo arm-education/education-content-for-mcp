@@ -1,0 +1,184 @@
+﻿Now that we've looked at algorithmic ways
+to shrink our models,
+
+let's turn our attention to how those
+models are actually executed—
+
+specifically,
+how we can make matrix multiplication
+
+run faster on CPUs.
+
+Matrix multiplication is everywhere in AI
+inference.
+
+Whether it's attention layers in
+transformers or 
+
+dense layers in classifiers,
+
+these operations dominate the
+computational cost.
+
+So even small optimizations here can make
+a huge difference.
+
+Let's begin with loop reordering.
+
+At the core of any matrix multiply
+operation, you've got three nested loops—
+
+one for rows, one for columns,
+and one for the depth of the matrix.
+
+The order in which these loops are
+written affects 
+
+how data is accessed in memory.
+
+And that's important, because CPUs like to
+access memory sequentially—
+
+it's much faster than jumping around
+randomly.
+
+By carefully choosing the loop order,
+we can align memory access with how the
+
+matrix is stored—usually in row-major format.
+
+This reduces cache misses,
+speeds up memory throughput,
+
+and gives the CPU fewer headaches when
+fetching data.
+
+Next up is loop tiling,
+also known as blocking.
+
+Here's the idea:
+
+instead of processing one entire row or
+column at a time,
+
+we break the matrices into smaller blocks—or tiles—that fit into the CPU's cache.
+
+This allows data to be reused while it's
+still in fast, on-chip memory,
+
+instead of fetching it again and again
+from slower off-chip DRAM.
+
+Tiling significantly reduces the
+amount of time spent waiting for memory
+
+and increases the ratio of useful
+computations to memory transfers.
+
+This is a crucial optimization,
+especially for large models where matrix
+
+dimensions can exceed a thousand or more.
+
+Another trick is loop unrolling.
+
+Normally,
+each iteration of a loop includes a check—
+
+are we at the end yet?
+
+Unrolling means we manually copy and
+repeat the loop body several times,
+
+reducing the number of checks.
+
+This speeds things up by minimizing
+branching overhead—
+
+the little delays introduced every time
+the CPU has to decide what to do next.
+
+But there's more.
+
+When we unroll loops,
+we expose more independent instructions.
+
+That gives the CPU's instruction
+scheduler more to work with.
+
+It can pipeline the work more efficiently,
+keeping the processor busy 
+
+and avoiding idle time.
+
+The result is better use of execution
+units and a higher throughput overall.
+
+Now if you want to take performance even
+further, you'll need to go parallel.
+
+Matrix multiplication is inherently
+parallelizable—
+
+different parts of the output matrix can
+be computed independently.
+
+That makes it a perfect candidate for
+multi-threading.
+
+On Arm CPUs, you can split the matrix into chunks and assign each chunk to a 
+
+different core or thread.
+
+The CPU then computes these in parallel,
+combining the results at the end.
+
+This works especially well on modern Arm
+processors,
+
+which often supports simultaneous multi-threading, or SMT.
+
+That means each core can run multiple
+threads at once, increasing utilization.
+
+But as always, there's a trade-off.
+
+Multi-threading adds some coordination
+overhead,
+
+so it's important to strike the right
+balance between thread count 
+
+and workload size.
+
+Still, with the right configuration,
+multi-threading can multiply your
+
+performance—literally.
+
+So to summarize:
+we started with loop reordering,
+
+which improves memory access.
+
+Then we looked at tiling, which keeps data
+in cache.
+
+After that we used loop unrolling to
+reduce branching 
+
+and expose parallel instructions.
+
+And finally, we added multi-threading to
+harness all available cores.
+
+These implementation-level techniques—when combined—
+
+turn matrix multiplication from a
+bottleneck into a performance win.
+
+And they set the stage for the next layer
+of optimization:
+
+taking full advantage of specialized
+hardware instructions built into Arm CPUs.

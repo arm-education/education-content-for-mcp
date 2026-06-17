@@ -1,0 +1,258 @@
+﻿
+So far you have only seen how
+
+
+a single node — or neuron — works.
+
+
+However, Artificial Neural Networks
+
+
+are composed of a multitude of
+
+
+neurons connected together.
+
+
+For example, in multi-layer feed-forward
+
+
+Artificial Neural Networks,
+
+
+the neurons are ordered together in
+
+
+layers. As the feed-forward networks
+
+
+are an aggregation of several nodes,
+
+
+they consist of the following components:
+
+
+an input layer, X, hidden layers H, an
+
+
+output layer Y, weights, W, for each
+
+
+synapse, biases, B, for each node,
+
+
+and an activation function such as
+
+
+the sigmoid function. As can be seen,
+
+
+the connections between the nodes
+
+
+do not form a cycle.
+
+
+But how can you train an
+
+
+Artificial Neural Network?
+
+
+In supervised learning,
+
+
+a relatively large dataset is used
+
+
+to train and evaluate the model.
+
+
+The training process includes
+
+
+the following steps 
+
+
+At the beginning of the training process,
+
+
+the weights and biases can
+
+
+be randomised or predefined.
+
+
+However,
+
+
+the goal of the training is to
+
+
+update these weights and biases to
+
+
+obtain the final trained model.
+
+
+Feed all the data samples from
+
+
+the training dataset as inputs,
+
+
+to get an output that is known,
+
+
+since the data set includes labels.
+
+
+This step is called forward propagation.
+
+
+The result, y-hat, is compared
+
+
+with the expected output, y, known
+
+
+from the training dataset.
+
+
+The goal, of course,
+
+
+is to choose weights and biases
+
+
+to reduce the error between the
+
+
+predicted outputs and the expected
+
+
+outputs. To improve the accuracy,
+
+
+the weights need to be adjusted.
+
+
+This is called back propagation.
+
+
+You can then perform forward
+
+
+propagation again,
+
+
+which should result in a reduced
+
+
+error between the predicted
+
+
+output and the expected output.
+
+
+These steps of forward and
+
+
+back propagation can be repeated many
+
+
+times to reduce the error incrementally.
+
+
+To do this mathematically,
+
+
+we define the cost function to be
+
+
+the average squared error between
+
+
+the predicted and expected outputs.
+
+
+This cost function has a minimum
+
+
+value, which corresponds to the optimal
+
+
+weights that give the best prediction.
+
+
+To find the minimal cost function
+
+
+we could use brute force.
+
+
+This would mean trying all the
+
+
+possible combinations of weights.
+
+
+You could then use the weights
+
+
+which result in smallest error.
+
+
+However, due to the number of combinations,
+
+
+this task would take hundreds of years,
+
+
+even with modern GPU servers.
+
+
+The most common method is to minimize the
+
+
+cost function by using gradient descent.
+
+
+This involves using a calculus
+
+
+technique to determine how best
+
+
+to modify all of the weight
+
+
+simultaneously to reduce the cost
+
+
+function. When successive iterations
+
+
+no longer provide much improvement,
+
+
+the weights at this iteration are used as
+
+
+an approximation to the optimal weights.
+
+
+Due to the many iterations,
+
+
+running a huge amount of data,
+
+
+the learning is considered a very
+
+
+time intensive task, and needs
+
+
+to run on PC or GPU servers.
+

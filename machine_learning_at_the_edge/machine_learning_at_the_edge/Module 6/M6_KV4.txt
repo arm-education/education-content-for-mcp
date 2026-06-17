@@ -1,0 +1,297 @@
+﻿
+In quantization, the precise float
+
+
+values from the data are mapped to
+
+
+quantized values. In particular,
+
+
+a minimum value is mapped on the minimal
+
+
+quantized value and a maximum value is
+
+
+mapped on the maximum quantized value.
+
+
+The quantized values are usually integers,
+
+
+which are stored as binary.
+
+
+Depending on the number of digits
+
+
+used for each quantized value,
+
+
+it can be represented in different forms.
+
+
+The most important are 8-bit integers,
+
+
+whose values range from minus 128
+
+
+to positive 127; unsigned 8-bit
+
+
+integers, ranging from 0 to 255,
+
+
+16-bit integers, ranging from
+
+
+around -30,000 to positive
+
+
+30,000, and unsigned
+
+
+16 bit integers,
+
+
+which range from zero to over 65,000.
+
+
+In the figure,
+
+
+we use unsigned 8-bit integers.
+
+
+When we map the data to quantized values,
+
+
+some values remain the same
+
+
+while others need to be rounded
+
+
+to the nearest quantized number.
+
+
+Values greater than the value
+
+
+that was mapped to the maximum
+
+
+also get mapped to the maximum.
+
+
+Likewise for values lesser than the minimum.
+
+
+De-quantizing any value simply maps
+
+
+them back onto the corresponding
+
+
+specific original values,
+
+
+which may be slightly different
+
+
+in the case of rounding.
+
+
+For this reason,
+
+
+changing a float from representation
+
+
+to a quantized version requires
+
+
+more than simply changing float
+
+
+to int everywhere in your code,
+
+
+as the results of your integer
+
+
+computations can overflow,
+
+
+especially when storing intermediate
+
+
+results in accumulators.
+
+
+See what happens for the quantization
+
+
+in a microcontroller when using a
+
+
+neural network to perform inference.
+
+
+The weights fall in a well-nown range
+
+
+that can be calculated beforehand,
+
+
+so quantization will be straightforward
+
+
+and accurate.
+
+
+The input data arrives in real-time from
+
+
+sensors such as a camera or a microphone.
+
+
+They are also in a confined range.
+
+
+This range is different from
+
+
+the range for the weight,
+
+
+but you can find appropriate minimal
+
+
+and maximum values when evaluating the
+
+
+training step with a recorded dataset.
+
+
+During the inference step,
+
+
+the neural network needs to perform
+
+
+many multiplications between the input
+
+
+data and the weights of the model.
+
+
+These are performed in the quantized
+
+
+space using fixed-point arithmetic.
+
+
+To account for the overflow,
+
+
+it is important to use an integer
+
+
+type with a wider range.
+
+
+For instance,
+
+
+if the data and weights are 8-bit integers,
+
+
+you should use 16-bit integers.
+
+
+As for the input,
+
+
+each layer's output will also
+
+
+lie in a confined range.
+
+
+To maintain accuracy,
+
+
+it is important to find the range
+
+
+of the output values from the layer
+
+
+in the training and then re-quantize
+
+
+this output according to this range.
+
+
+Popular frameworks, for example TensorFlow,
+
+
+PyTorch, and Caffe are designed differently.
+
+
+There is not a unified method for converting
+
+
+neural networks for a range of applications
+
+
+across all of these frameworks to run on
+
+
+Arm Cortex-M microprocessors to address
+
+
+the problem of quantizing a network,
+
+
+you can either train with a quantized
+
+
+network or quantize an existing network.
+
+
+The first solution should give better
+
+
+results since the network is trained with the
+
+
+truncation noise and the saturation effects.
+
+
+But it is also more complex than the
+
+
+second method. With the second strategy,
+
+
+quantizing the weights and biases
+
+
+as simple as the values are known,
+
+
+it is easy to find the fixed-point format
+
+
+as soon as the word size is chosen.
+
+
+For CMSIS-NN, the word size
+
+
+can either be 8 bits or 16 bits.
+

@@ -1,0 +1,201 @@
+﻿
+Artificial Intelligence is an
+
+
+umbrella term for all the studies that
+
+
+aim to replicate human reasoning
+
+
+with computer systems.
+
+
+You use aspects of this technology every day
+
+
+in a wide range of applications,
+
+
+such as facial recognition and voice recognition,
+
+
+autonomous driving,
+
+
+stock market trading,
+
+
+disease symptom detection,
+
+
+predictive maintenance,
+
+
+handwriting recognition,
+
+
+content distribution on social media,
+
+
+detection of fraudulent
+
+
+credit card transactions,
+
+
+machine translation and
+
+
+shopping recommendations.
+
+
+Machine Learning is a subset of
+
+
+Artificial Intelligence that
+
+
+refers to a computerized system
+
+
+capable of using relevant data
+
+
+to improve at a specific task.
+
+
+Machine Learning involves two steps,
+
+
+the training step and the inference step.
+
+
+During the training step,
+
+
+the machine uses past or known data
+
+
+to train a model and calculate the
+
+
+"learning" parameters of the model.
+
+
+During the prediction or inference step,
+
+
+the machine uses the trained model
+
+
+with the trained parameters to make
+
+
+predictions from new data that were
+
+
+unavailable when the machine was trained.
+
+
+This new data could be arriving in real time,
+
+
+for example as new images from a camera
+
+
+or as an audio stream from a microphone.
+
+
+This course will focus only
+
+
+on supervised learning,
+
+
+which is a subcategory of Machine
+
+
+Learning. In supervised learning,
+
+
+labeled datasets — such as images
+
+
+of fruit labeled with the type of
+
+
+fruit — are used to train the models.
+
+
+The algorithms then learn how
+
+
+to classify the new data.
+
+
+In this case, images to predict
+
+
+outcomes accurately.
+
+
+The inference step uses the previously
+
+
+trained model and predicts the output,
+
+
+ideally in real time.
+
+
+In this example,
+
+
+it is predicting the type of fruit
+
+
+shown in each new image.
+
+
+The model can also include the
+
+
+feature extraction that is processed
+
+
+on the input data.
+
+
+Usually, the training step must be
+
+
+performed on a desktop computer as it
+
+
+is the most computationally intensive task.
+
+
+On the other hand,
+
+
+the inference step can be performed on
+
+
+a smaller, low-powered processor such
+
+
+as the Arm Cortex-M family processors
+
+
+that will be used in this course.
+
+
+In this case,
+
+
+the Machine Learning is "at the
+
+
+edge" as opposed to "in the cloud".
+

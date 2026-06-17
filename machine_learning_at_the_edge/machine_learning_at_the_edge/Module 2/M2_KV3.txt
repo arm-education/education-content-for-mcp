@@ -1,0 +1,243 @@
+﻿
+After you have trained your
+
+
+model using supervised learning,
+
+
+how can you evaluate how well it is working?
+
+
+For instance, look at the binary
+
+
+classification example shown here.
+
+
+The goal is to find a model that can
+
+
+identify whether an unknown data point
+
+
+belongs to Class A or Class B, based on
+
+
+its values for feature 1 and feature 2.
+
+
+The model illustrated defines a line,
+
+
+and predicts that a data item belongs
+
+
+to Class A if it is above this line.
+
+
+You can evaluate this model by
+
+
+running the prediction step on some
+
+
+new, labeled, data, and measuring the
+
+
+proportion of data points that the
+
+
+model places in the correct class.
+
+
+The accuracy of your trained model, when
+
+
+used to make predictions on the same
+
+
+training data, should be high, as the model
+
+
+was trained specifically with this data.
+
+
+However, this accuracy is not a good
+
+
+indicator of performance on future data.
+
+
+It is important to evaluate your
+
+
+model using different data to
+
+
+those used to train the model.
+
+
+This can be done using the hold-out method.
+
+
+In this method, you split the dataset into a
+
+
+training set and a test set, used for testing.
+
+
+The training set is usually two-thirds
+
+
+of the dataset, and the remaining
+
+
+third is used for testing.
+
+
+The hold-out method is usually used
+
+
+when we have thousands of instances,
+
+
+including several hundred instances
+
+
+from each class.
+
+
+The more data you have to train the model,
+
+
+the better
+
+
+the model is likely to be.
+
+
+This should be seen when
+
+
+evaluating using the test data.
+
+
+However,
+
+
+it is not always possible
+
+
+to obtain more data.
+
+
+When splitting the training
+
+
+data freely at random,
+
+
+if the data is unbalanced in some way,
+
+
+the samples might not be representative.
+
+
+For example,
+
+
+there might be few or no instances of
+
+
+some classes. An advanced way to split the
+
+
+data is to create a stratified sample.
+
+
+This ensures that each class is
+
+
+represented with approximately
+
+
+equal proportions in both subsets.
+
+
+One problem with this hold-out method
+
+
+is that the test data is wasted, in the
+
+
+sense that it cannot be used for training.
+
+
+One solution is to use k-fold
+
+
+cross-validation.
+
+
+Split the data into k subsets
+
+
+of approximately equal size.
+
+
+For each subset,
+
+
+train a fresh model using the
+
+
+remainder, and use this subset for
+
+
+testing known as cross-validation.
+
+
+The average of these k models is
+
+
+then used as the final model.
+
+
+The standard evaluation method
+
+
+is stratified 10-fold
+
+
+cross-validation. 10 folds are used,
+
+
+as extensive experiments have
+
+
+shown that this is the best choice
+
+
+to get an accurate estimate.
+
+
+Stratification reduces the estimate's
+
+
+variance. An even better approach is repeated
+
+
+stratified cross-validation,
+
+
+where this process is repeated
+
+
+multiple times, and the results
+
+
+are averaged, to further reduce
+
+
+the variation in results.
+

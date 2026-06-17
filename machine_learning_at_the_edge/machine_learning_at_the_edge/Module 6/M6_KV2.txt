@@ -1,0 +1,258 @@
+﻿
+TinyML is a promising and
+
+
+cutting-edge field to exploit the
+
+
+transformative power of Machine
+
+
+Learning to tiny devices, which have
+
+
+constraints on performance and power.
+
+
+There are many novel shrinking
+
+
+techniques for Machine Learning to
+
+
+satisfy the resource constraints of a
+
+
+microcontroller. Model optimization or
+
+
+size reduction can refer to many things:
+
+
+You can reduce the number of
+
+
+weights, to reduce both memory
+
+
+and computational resources.
+
+
+You can reduce the number of bits
+
+
+per weight to reduce the memory
+
+
+requirement, and enable faster
+
+
+processing of the same operation.
+
+
+This can be achieved by single instruction
+
+
+multiple data, available on
+
+
+Arm Cortex-M microcontrollers.
+
+
+You can also reduce the number of layers,
+
+
+which reduces the number of
+
+
+operations required and therefore the
+
+
+computational resource requirements.
+
+
+Let's take a deeper look into the
+
+
+main techniques to achieve a reduced
+
+
+requirement of memory and operations.
+
+
+Pruning and distillation are two very
+
+
+important steps for tiny Machine Learning.
+
+
+Pruning means trimming or cutting
+
+
+away the excess. In the context of
+
+
+Machine Learning, it removes the
+
+
+connections in the neural network,
+
+
+so the number of weights falls
+
+
+below a certain threshold,
+
+
+since these excess connections provide
+
+
+low or no utility to the output and
+
+
+may even lead to overfitting. the
+
+
+resulting sparse neural network needs
+
+
+to be retrained after this process,
+
+
+but of course fewer connections
+
+
+mean smaller requirements of memory
+
+
+and computations.
+
+
+So what is knowledge distillation?
+
+
+Neural networks often have a lot
+
+
+of meaningful connections, and
+
+
+others that are redundant.
+
+
+The information in the final model
+
+
+(the teacher model) that has been trained is
+
+
+transferred to a smaller network model
+
+
+(the student model) with fewer parameters.
+
+
+This compresses part of the network
+
+
+knowledge into a smaller network,
+
+
+allowing you to reduce the size of
+
+
+the model that is deployed in the
+
+
+resources-constrained microcontrollers.
+
+
+It is important to notice the difference
+
+
+between pruning and distillation.
+
+
+Both aim to reduce the size of the model,
+
+
+however,
+
+
+while knowledge distillation reduces the
+
+
+model size by changing model structure,
+
+
+pruning reduces the model size by discarding
+
+
+unnecessary weights in the model.
+
+
+Another trick for tiny Machine
+
+
+Learning is quantization.
+
+
+There are several advantages to moving
+
+
+the Machine Learning models that are
+
+
+trained with the floating-point data on GPU
+
+
+graphic cards or servers, to fixed points
+
+
+in an embedded system, or in particular,
+
+
+on microcontrollers. First of all,
+
+
+not all microcontrollers and embedded
+
+
+system processes have a floating-point unit.
+
+
+Second,
+
+
+even with a floating point unit, as
+
+
+on Arm Cortex-M controllers fixed-
+
+
+point quantization helps to avoid the
+
+
+costly floating-point computations
+
+
+and reduce the computational time.
+
+
+So in general, quantization reduces
+
+
+the memory footprint for storing
+
+
+both weights and activations,
+
+
+which is critical for resource.
+
+
+Constrained platforms and also can
+
+
+reduce the computational time.
+

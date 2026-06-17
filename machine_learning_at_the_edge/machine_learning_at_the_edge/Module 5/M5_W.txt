@@ -1,0 +1,54 @@
+﻿
+The algorithms used in modern Machine
+
+
+Learning can be very complex, and
+
+
+require many iterations of innovation
+
+
+and testing by computer scientists.
+
+
+This is especially true for optimized
+
+
+algorithms required by microprocessors.
+
+
+Thankfully, you do not need to
+
+
+implement these algorithms yourself,
+
+
+as they are available in libraries
+
+
+such as CMSIS-NN, developed by Arm.
+
+
+This module shows you how this library
+
+
+can be used for Machine Learning —
+
+
+for example for image
+
+
+processing using Convolutional
+
+
+Neural Networks. In the lab exercise,
+
+
+you also have the opportunity to use
+
+
+CMSIS-NN to develop a simple model
+
+
+for CIFAR-10 data set, using CUBE AI.
+

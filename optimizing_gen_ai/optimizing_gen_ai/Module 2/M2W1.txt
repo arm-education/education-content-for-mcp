@@ -1,0 +1,55 @@
+﻿Welcome to this module on Generative AI
+Models.
+
+Over the past few years,
+transformers have reshaped the landscape
+
+of artificial intelligence,
+powering everything from chat bots to
+
+image generators.
+
+But what exactly makes transformers so
+powerful,
+
+and how do they become large language
+models like ChatGPT?
+
+In this session,
+we'll take a deep dive into the
+
+architecture that underpins modern AI.
+
+You'll learn how key innovations—like
+residual connections, self attention,
+
+and positional encodings—allow
+transformers to model complex patterns
+
+across language, vision, and more.
+
+We'll then look at how a basic
+transformer becomes a full-fledged LLM.
+
+From massive self-supervised pre-training
+to fine-tuning with human-labeled data
+
+and reinforcement learning,
+you'll get a complete picture of the
+
+training pipeline.
+
+Finally,
+we'll explore how inference works—
+
+how models generate responses in real
+time, process prompts,
+
+and use KV caching to do it all
+efficiently.
+
+By the end of this module,
+you'll understand the structure, training,
+
+and inference strategies behind the most
+influential AI models of our time.

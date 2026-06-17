@@ -1,0 +1,87 @@
+﻿
+Historically, weather forecasting was done
+
+
+by experienced scientists, working with a
+
+
+limited supply of data. In the modern era,
+
+
+computers can collect and analyze
+
+
+huge quantities of data, using Machine
+
+
+Learning models, making this task
+
+
+more accurate, and much more automatic!
+
+
+However, these models require large,
+
+
+powerful computers and are not
+
+
+suitable for small devices, such as
+
+
+smartphones and wireless headphones.
+
+
+But would it be somehow
+
+
+possible to run these models
+
+
+on smaller microprocessors?
+
+
+In fact it is —
+
+
+and this course explains the trends
+
+
+and cutting-edge techniques that allow
+
+
+your smartphone and other portable
+
+
+devices to perform Machine Learning
+
+
+tasks such as facial recognition.
+
+
+During this course, you'll accomplish
+
+
+this yourself in a series of labs,
+
+
+using modern software libraries
+
+
+and the latest microprocessors.
+
+
+This course will begin with a module
+
+
+that introduces some key concepts in
+
+
+Machine Learning and illustrates why
+
+
+businesses now need this technology to
+
+
+be available on low-power devices.
+

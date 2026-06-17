@@ -1,0 +1,189 @@
+﻿
+In this figure, there are several
+
+
+different models based on the neural
+
+
+networks that were proposed in the
+
+
+last decade. On the vertical axis is
+
+
+the achieved accuracy, all for the
+
+
+same computer vision application task.
+
+
+The plot shows the top 1 one-crop
+
+
+accuracy versus the number of
+
+
+operations required — on the horizontal
+
+
+axis — for a single forward pass,
+
+
+then the operations on the inference
+
+
+step to perform classification.
+
+
+The size of the circles for each
+
+
+network mode is proportional to
+
+
+the number of network parameters.
+
+
+These range from 5 million
+
+
+to 155 million parameters.
+
+
+It is important to notice that the most
+
+
+accurate algorithms are not always the
+
+
+highest in computational requirements.
+
+
+In this comparison, Inception-v4
+
+
+is the best in terms of accuracy achieved.
+
+
+However,
+
+
+it is much smaller in terms of parameters
+
+
+and computational resources required.
+
+
+When you're working with tiny Machine
+
+
+Learning for microcontrollers,
+
+
+the aim is to optimize the model, subject
+
+
+to some constraints on the number
+
+
+of operations and the memory use.
+
+
+For instance,
+
+
+let's suppose you want a model that
+
+
+requires fewer than 1 billion operations.
+
+
+The only possible model in this
+
+
+comparison is the one on the
+
+
+left side of the marked line.
+
+
+In particular,
+
+
+you can use MobileNet-v2 as it
+
+
+achieves a higher accuracy than Mobile
+
+
+Net-v1 using similar parameters,
+
+
+but it is less demanding in
+
+
+terms of computational resources.
+
+
+Assuming MobileNet-v1 and
+
+
+v2 have a memory requirement of 5
+
+
+MBs when implemented in a processor,
+
+
+but the maximum memory you can
+
+
+use is only 1MB,
+
+
+you need either to optimize the model to
+
+
+further reduce the memory requirement,
+
+
+including the quantization,
+
+
+or change the model architecture.
+
+
+For example,
+
+
+you could use fd-MobileNet as a
+
+
+variation of the original network.
+
+
+Those changes usually affect the accuracy.
+
+
+In this case,
+
+
+the accuracy drops to a little over 60%.
+
+
+So there is always a tradeoff
+
+
+between the accuracy,
+
+
+the memory requirement and the
+
+
+number of operations,
+
+
+and this needs to be considered
+
+
+when building the final model.
+

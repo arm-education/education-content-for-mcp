@@ -1,0 +1,1283 @@
+Hi.
+
+In this second lab,
+we'll be building upon what we learnt in
+
+the first lab, and going into more
+advanced topics such as CPU intrinsics
+
+and the KleidiAI library from Arm.
+
+Moreover,
+we'll be we'll be targeting the Arm
+
+Neoverse platform which are available
+from cloud service providers such as AWS.
+
+So we'll be targeting the AWS Graviton
+range,
+
+but this could also be applied on other
+cloud service providers that use Arm
+
+based processors.
+
+So the first thing is to make sure that
+you have access to an AWS instance
+
+through an AWS account.
+
+First,
+we need to navigate to the AWS console.
+
+So this dashboard is used to set up an
+instance.
+
+We're just going to call this Lab 2.
+
+Next we need to choose the operating
+system.
+
+So I'm going to select Ubuntu,
+
+then we can select the different versions
+of the operating system.
+
+So I'm going to select 22 dot 04,
+which is the calendar versioning for that
+
+operating system, so 2022 in April.
+
+And of course we need to select the Arm
+architecture.
+
+Now we need to select the instance type
+for the lab.
+
+We require an m7g,
+so G stands for Graviton and 7th is the
+
+7th generation.
+
+The 7th version.
+
+Of course we need the standard public and
+private key,
+
+and we need at least 32 gigabytes of
+storage just using their general purpose
+
+SSD.
+
+When you click launch, you should see the
+top bar turn green showing everything has
+
+gone OK.
+
+To view the Jupyter notebook I'm going to
+use Visual Studio Code,
+
+but another IDE should also work. 
+So I've connected to my instance.
+
+To do this I'm using the Remote Explorer
+feature.
+
+So if you click on Remote Explorer as the
+the extension and select,
+
+you're able to connect to an instance
+using that through Visual Studio Code,
+
+just using the SSH command available from
+the AWS console.
+
+This will be different depending on
+
+your own system; you might have a
+different IP address as such.
+
+So typing in lscpu which is list CPU,
+we can see we have 4 Arm cores.
+
+You can also see what flags are enabled.
+
+These are CPU extensions that offer
+acceleration for specific workloads.
+
+For example, we have asimd for Advanced
+SIMD.
+
+We also have Advanced SIMD at double
+precision,
+
+scalable vector extensions, sve,
+as well as sve for 8 bit integers and
+
+brain float 16, and these,
+as we'll see later,
+
+are all useful for accelerating ML
+workloads on CPU.
+
+Just going to clear my screen.
+
+The next thing we need to do is clone the
+repository with the lab inside.
+
+So navigate to the Arm University GitHub.
+
+You can just search for this through any
+search engine and scroll until you see
+
+the lab.
+
+Then the standard flow is to copy the
+code via HTTPS,
+
+and going into your Visual Studio Code,
+you can type in git clone,
+
+and clone that repository,
+and now within that directory there will
+
+be a folder named after the project.
+
+If you press file open,
+you're able to navigate to that folder
+
+and see all the files in the repository.
+
+Now, before we can start Lab 2,
+we should read the README file.
+
+We're looking at the raw markdown here,
+but under Lab 2 we can see that we
+
+correctly set up the correct instance.
+
+We've also connected via Visual Studio
+Code.
+
+We've cloned the repository, as we just
+did that now.
+
+And now we need to use the setup script.
+
+So this setup script performs all the
+prerequisites for this specific instance.
+
+It installs the development packages,
+installs Linux perf and checks that is
+
+available, which is used for profiling and
+application,
+
+installs the Python environment,
+all the specific versions of the
+
+libraries.
+
+It also clones the Torch AO which stands
+for Architecture Optimization, and it gets
+
+a specific patch and applies it that
+enables KleidiAI support.
+
+This actually currently is not needed as
+this has been upstreamed,
+
+but we're just going to use the
+regular setup script and not use the
+
+latest version of Torch AO or any other
+PyTorch libraries.
+
+So run the bash command with dot/ and
+then the name of setup graviton dot sh.
+
+After a while you can see it successfully
+completed and we can enter our Python
+
+environment with that command there.
+
+And as you can see here,
+we now are in that environment.
+
+So in Lab 2,
+we're going to be optimizing Gen
+
+AI workloads on Arm servers.
+
+So we're going to introduce some specific
+intrinsics and CPU extensions.
+
+We all we previously talked about Neon in
+lab one,
+
+but also be introducing the dot product
+extension as well as 8 bit matrix
+
+multiplication for integers.
+
+We'll also be looking at Arm's accelerated
+micro kernel library called KleidiAI and
+
+benchmarking this against common open
+linear algebra libraries such as BLAS,
+
+which stands for Basic Linear Algebra
+Subroutines.
+
+So, the lab objectives are to understand
+what intrinsics are, how they work,
+
+introduce the KleidiAI library and how
+that fits into frameworks.
+
+We're going to benchmark that library
+against other similar libraries.
+
+We also have some prerequisite skills
+which you can pause and read there.
+
+So this lab has been tested on Graviton 3
+and Graviton 4.
+
+The first thing we need to do is download
+the model.
+
+And to do that we need to use Hugging
+Face.
+
+So like the previous lab,
+I'm just going to check if I'm already
+
+logged in using Hugging Face cli,
+who am I?
+
+And I'm already logged in.
+
+If you aren't logged in,
+you can navigate to 
+
+your Hugging Face account.
+
+You will need a Hugging Face account to
+start this lab and you can create a new
+
+token, perhaps a read token.
+
+Once you click that,
+they'll give you a private key to copy
+
+and paste into your login screen.
+
+So using that command there, 
+if you're not already logged in,
+
+you may also need to require access to
+that model,
+
+navigating to the URL and filling in the
+form.
+
+So to start this lab,
+we're going to use Jupyter Lab rather
+
+than the inbuilt Python,
+the inbuilt lab from VS Code.
+
+So typing that command and then copying
+in that URL,
+
+that'll take us to our local host on port
+8888 and fill in the token we need.
+
+So clicking that you should be you should
+see the actual lab.
+
+It's a bit small,
+so I'm just going to increase the size. So
+
+now we can begin the lab itself.
+
+So the first thing is to actually
+download the models.
+
+We're downloading the 7 billion parameter
+model from Hugging Face and the three
+
+billion OpenELM one from Apple with the
+instruction, with instruct, so it can be
+
+used as an effective chat bot.
+
+Might take a little while because the 
+file size is larger.
+
+Whilst we wait for that to download,
+we can look into the next cell.
+
+So we're going to collect the largest
+weight matrix multiplication in Apple's
+
+OpenELM.
+
+And as we learned in the previous lab and
+the videos,
+
+the time complexity can be n cubed,
+which is related to the sequence length,
+
+times the input channels, times the output
+channels.
+
+So in this Python cell,
+we are going to extract and find the
+
+dimensions of the matrix modification.
+
+And in this model,
+it happens that the largest matmul is
+
+just after the last normalization.
+
+So we're going to use the previously used
+hook function that was used in the
+
+previous lab to extract the dimensions of
+the weight matrix.
+
+As you can see we have an example prompt
+that string at the top and we use the
+
+tokenizer from OpenELM to tokenize it.
+
+We then extract the shape and print it
+out.
+
+So running the cell,
+we can see we have a 32,000
+
+by 3000 weight matrix and an
+activation tensor of 23 by 3072.
+
+So what does this mean?
+
+So we take our input string and that is
+tokenized into 23 tokens and each token
+
+has 3072 vectors.
+
+So that's the dimensional embedding
+space by that transformer.
+
+So each vector could be for how green
+this token is, the structure of the token,
+
+those kind of meanings and semantics.
+
+So we also have the weight matrix which
+is 32,000 by 3072 and this 32,000
+
+is the dimensional vector.
+
+So each of the 32, 000 dimensional vectors are the logits.
+
+So logit is the input before a bounded
+probability for the possible tokens in
+
+the vocabulary.
+
+So let's benchmark the torch dot mm,
+which is what most developers would
+
+interact with and see what the
+latency or the lapse time is for that.
+
+I'm just going to run that cell and I get
+95 milliseconds.
+
+But of course, we have no reference.
+
+Is this a good number or this a slow
+number?
+
+So we're going to just stall and write
+the activation tensor and the 
+
+weight tensor to disk.
+
+Now let's implement naive matrix
+multiplication just as we did in the
+
+first lab.
+
+So one subtle difference now is that we
+are doing matrix multiplication on a non-
+
+square matrix.
+
+So we have MK and N which are inputs to
+our functions that allow for allow for
+
+this.
+
+So for matmul we need to multiply our
+rows by columns, and for this the most
+
+innermost loop, we increment k and as
+you can see M times k gives us the correct
+
+row,
+whereas k times uppercase K gives us the right
+
+column.
+
+So if you go back to lab 1 we see we need
+to do a dot product on the row by the
+
+column to get a scalar single value.
+
+I'm just going to go back to lab 2.
+
+So M times K goes to the correct row and then
+we go K numbers across.
+
+So as we increment K,
+we're going across a row, whereas for B,
+
+as we increment K,
+we're going down a column, and this is the
+
+lowercase k.
+
+So now that we've written the file,
+
+let's actually benchmark it.
+
+So this is actually running a different
+file that does similar warm up code.
+
+And this Python script simply measures
+the time to run.
+
+So we first compile it,
+and it will pause for a little bit while
+
+whilst our kernel's still running.
+
+And for this naive implementation with no
+automation, it takes us 11 seconds,
+
+so a lot slower than PyTorch.
+
+So let's think about how we can
+accelerate this.
+
+And we're going to use the KleidiAI Micro
+kernel library from Arm.
+
+So this is available on Arm's GitLab,
+which going to clone that repository.
+
+And just so you can see what it's about,
+you can Google for it and click on the
+
+the suitable link, make it slightly
+bigger.
+
+So it's an open source library that
+provide optimized routines.
+
+And we call this micro kernels.
+
+And these are integrated into ML
+frameworks such as PyTorch.
+
+So we're going to clone that repository.
+
+So what is KleidiAI?
+
+So KleidiAI is a highly optimized micro
+kernel.
+
+To explain what a micro kernel is,
+imagine a full matrix multiplication of
+
+two matrices.
+
+You could break this down into the dot
+product of several rows and columns, and
+
+each dot product could run on a
+specific core and a many core system.
+
+To understand what highly optimized
+actually means, I quickly will go to the
+
+repository,
+
+going into the KleidiAI and the matmul
+folder.
+
+You can see all the different levels of
+precision and operations and micro
+
+operations that we specify, and we can see
+we actually provide assembly files that
+
+have been optimized specifically for Arm-
+based CPUs.
+
+As you may have seen the naming scheme
+can be slightly confusing.
+
+The full information is on the repository
+documentation,
+
+but we have things like fused operations,
+for example, clamp, the destination,
+
+the left hand side precision levels, are
+all incorporated into the name of the
+
+file and folder.
+
+So now let's create our own kernel.
+
+So we'll be creating a kernel for the
+multiply and accumulate operation for 32
+
+bit floating-point numbers in Neon.
+
+So multiply and accumulate is whereby you
+increment a value by the multiplication
+
+of two other values.
+
+Think of accumulate equals accumulate
+plus a times b,
+
+which is what we use in our naive
+implementation for the accumulator part.
+
+So this snippet of C++ simply is a
+function pointed to lots of different
+
+functions defined in the KleidiAI Micro
+kernel library.
+
+One thing to note with this particular
+kernel, is that we are using the packed
+
+method,
+so the functions are appended with p on
+
+the right hand side.
+
+So this improves memory alignment
+for things like vectorisation.
+
+So now let's build the example and run it.
+
+So this is our KleidiAI floating 32 point
+bit integer, and we've gone down from 12
+
+seconds to 11 milliseconds.
+
+So that's three orders of magnitude
+greater - 1000 times improvement,
+
+which is incredible.
+
+So let's understand what is causing this
+improvement.
+
+So we know we're using inline assembly,
+but we're going to use a tool called
+
+Process Watch and I'm just navigating to
+a tutorial available on
+
+Learning Paths learn.arm.com if you'd like to learn more about
+
+about Process Watch.
+
+This essentially profiles the type of
+instructions being used by Process ID.
+
+So we're just going to run this cell
+which creates and runs that previous
+
+kernel indefinitely.
+
+And copying, pasting the PID,
+the process ID,
+
+into the Process Watch command, will
+output a rolling summary of the types of
+
+instructions being used from Neon,
+SVE and SVE2.
+
+And as you can see,
+over 71% of instructions are Neon
+
+instructions.
+
+So we have a high proportion being
+vectorized. Just going to run that cell to
+
+kill that process.
+
+So now let's go a level lower and go from
+32-bit to 16 point floating-point for the
+
+same multiply and accumulate.
+
+And again, this is very similar,
+but just mapping to the 16-bit
+
+floating-point functions. And again
+recompiling and running this benchmark, we
+
+can see as you remember,
+we were previously at 11 milliseconds and
+
+by halving the precision we almost half
+the, we over halved the execution time
+
+down to five milliseconds or six
+milliseconds.
+
+And again,
+let's run Process Watch on this binary.
+
+So running the 16-bit version
+indefinitely and putting in the Process
+
+ID, when we run Process Watch,
+we can see that we've improved the
+
+percentage of Neon instructions up to 85%,
+so even better vectorization by using 16-
+
+bit floating-point.
+
+We're also able to reduce the bandwidth
+by going down to a low-level position.
+
+So next we'll introduce the dot prod
+extension.
+
+And unsurprisingly, as the name suggests,
+this extension is used to accelerate dot
+
+products within matrix modification.
+
+So there's two types,
+signed and unsigned as you can see there.
+
+And these operate on 32 bit elements
+within your SIMD register, your vector.
+
+So for example,
+if we have 32-bit elements,
+
+32-bit register,
+we can fit eight 4-bit sub elements and the
+
+dot product processes these by
+multiplying one vector by another vector
+
+and the corresponding elements with those.
+
+And then it can accumulate which results
+in the sum of all the elements and
+
+that formula
+
+there - you can see you are summing the
+multiplication of two different vectors
+
+A and B their corresponding positions.
+
+So we're just going to create another
+function pointer structure and we don't
+
+really need to go into all the left hand
+and right hand side.
+
+But if you want to read them thoroughly,
+please do that in your own time.
+
+So we're just going to run the example
+again,
+
+so building it and benchmarking the time
+elapsed.
+
+So for KleidiAI with int8
+dot prod, we get 12 milliseconds,
+
+and this isn't as quick as it was
+previously.
+
+So let's see what's causing this.
+
+So we can see we are using the dot prod
+extension.
+
+Now we'll go from Neon to,
+but we're only using around 7% with the
+
+majority still being Neon.
+
+So now we'll move on to the I8MM,
+which is the 8 bit integer matrix
+
+multiplication which leverages
+instructions such as SMMLA.
+
+So just like the previous section,
+MLA stands for multiply and cumulate
+
+where the M,
+the additional M is for the matrix.
+
+So a similar example where we are,
+if you look at the function here on the
+
+right hand side, the name we see neon_i8,
+mm.
+
+And again,
+we can run this example and let's see
+
+what the time is.
+
+So we've dropped down to 8 milliseconds
+and we should expect that we see a sum
+
+percentage being of instruction using the
+the I8MM extensions.
+
+So as you can see here, the matrix month,
+the full name's being chopped off,
+
+but we see six point,
+roughly 2% is of operations are being
+
+using that extension.
+
+So you may have heard of other
+libraries that aim to do this,
+
+such as openBLAS.
+
+And I'll just this is like the name suggests - 
+
+it's just an open source linear algebra
+library.
+
+I'm just navigating to their GitHub
+repository here.
+
+And it describes itself as an optimized
+basic linear algebra subprogram.
+
+So in this next step,
+we'll benchmark them Kleidi,
+
+against these open libraries.
+
+So we're just creating an array of
+integers going in,
+
+in number in powers of two up to 2048.
+
+And similarly,
+I am running some pre-canned benchmarks.
+
+I'm just going to build them first.
+
+And here we can plot the results to see
+what the relative performance is.
+
+And if you want to see how we're
+benchmarking that,
+
+that will be available in the folders
+described there.
+
+So on the x-axis we have the matrix size
+going all the way up to 2048,
+
+and on the y-axis we have the latency in
+the logarithmic plot.
+
+And as you can see,
+the dotted purple line corresponds to the
+
+BLAS.
+
+That's the OpenBLAS 32-bit floating-point.
+
+Comparing that to the Neon implementation,
+which is the blue which is overlapping
+
+with the green,
+there's a significant performance
+
+increase and unsurprisingly,
+going into lower levels of position
+
+improves that further.
+
+The previous cells will be useful if
+you're a developer working on ML
+
+frameworks themselves.
+
+But for rapid development,
+most developers will use higher level
+
+languages like Python and libraries like
+PyTorch.
+
+So now we're going to quantize a large
+language model with KleidiAI.
+
+So these higher level frameworks will
+dispatch and actually use the operations
+
+implemented in Kleidi.
+
+So first, I'm going to import some
+dependencies.
+
+and as you can see from the Torch AO
+library,
+
+we're importing the prepare int for
+weight and scales of zeros.
+
+So I'm just going to set some hyper
+parameters here that make sense.
+
+The group size parameter we'll discuss
+shortly.
+
+OK, so I'm now just going to create a random
+
+network, a random tensor of 32-bit float data
+
+types, and then I'm here going to create another
+
+x for the input.
+
+So in the previous labs we discussed
+tensor wise and per channel quantization,
+
+where a channel was a row.
+
+We're now going to introduce an
+intermediate alternative called per group,
+
+where we group independent channels and
+rows together so each group has its own
+
+specific scale factor, shown here.
+
+You may remember this from the previous
+lab,
+
+and again we need to both think about the
+quantization and de-quantization.
+
+So in quantization,
+we're rounding and dividing that value by
+
+the scale factor.
+
+So fortunately Torch AO already has this
+function.
+
+So we're just going to run that cell to
+to do the quantization group wise.
+
+And next I'm just going to print the
+shape.
+
+Something that might be slightly
+confusing at first is how the shape
+
+changes.
+
+The full explanation is here below,
+
+but in essence, now that we're quantizing,
+we also have to store the scale factor
+
+and we need to store the scale factor in
+a certain level of precision.
+
+And as a result this leads to a
+difference in the dimensions of the
+
+matrix.
+
+The full explanation is there.
+
+As you can see we're still in the scale
+factors in 16-bit floating-point number.
+
+So we do observe that the shape of the
+matrix can change.
+
+As we learnt previously,
+architectures are often byte-addressable,
+
+which means they can access 8 bits at a
+time.
+
+The obvious issue is that now that we
+have four 4-bit integers,
+
+we need to pack the integers and 
+consider that.
+
+So this function here is simply actually
+performing the matrix multiplication on
+
+that C equals torch line and then we
+reshape and return that variable.
+
+So the cell beneath that I just ran will
+do that.
+
+So let's look at the quantization error.
+
+And what I'm doing is I'm performing the
+the original float 32 version and then
+
+the quantized version.
+
+And I'm printing out the first five
+elements,
+
+then you can see the values there
+differ slightly. Since we only had five
+
+data elements,
+
+this matplotlib graph is plotting the
+distribution of error.
+
+So on the x-axis we have the actual value
+of the error one through eight, and I've
+
+clipped it there and the density.
+
+So as you can see,
+there's a distribution slanted towards
+
+very low levels of quantization.
+
+So now we're going to apply this to an
+actual large language model using the
+
+OpenELM model from Apple.
+
+So like the previous labs,
+we have our own class that inherits from
+
+the neural networks dot module,
+
+and we need to define here the forward
+function for the forward pass.
+
+And we're going to use the previous
+function we declared in the previous cell.
+
+So the forward pass on our custom
+class needs to input a tensor x there and
+
+output the tensor that we're going to
+call y.
+
+As you can see,
+we're going to call out, as you can see
+
+here.
+
+So we previously declared the
+function to do this.
+
+So we just need to type that in here and
+think about what arguments we need to
+
+pass in.
+
+If you look at the top near our
+constructor,
+
+we have our input and output features and
+we also have our input x to the forward
+
+function.
+
+So our weights matrix is the one that has
+been quantized and packed,
+
+so we need to input that.
+
+So just using the function arguments
+in the previous cell,
+
+we're taking x, the input to the forward
+function.
+
+We're taking our weights,
+which are the quantized 4-bit weights,
+
+we're then taking our output features, and
+then finally our input features.
+
+We also need to consider the bias term.
+
+So we know that Apple's OpenELM doesn't
+use a bias term.
+
+So if we say something like, 'if there's a
+bias and it's not none',
+
+we can just out add the bias to our
+output tensor.
+
+All right,
+and return the output tensor,
+
+of course.
+
+So if I haven't spelled anything
+incorrect,
+
+I should be able to run this cell and
+move on to the next.
+
+So this simply does a test checking
+the shape of both the data type and
+
+the shape of our output and see if it's
+correct.
+
+I seem to have made an error,
+most likely a typo somewhere.
+
+I'm just going to scroll up and see if
+I've I didn't too many underscores on the
+
+int4.
+
+So, rerunning that cell and running the
+test again, 
+
+let's see if we pass.
+
+Yes, we've passed.
+
+In this cell, we're ready to write a
+function that actually does the
+
+quantization, the group wise quantization.
+
+So we do this in four steps.
+
+First we quantize the weight using the
+function provided by KleidiAI there.
+
+We next need to pack the weights,
+
+so taking those 4 bit integers and
+packing them into our structure.
+
+Then we create our layers and copy the
+layers into a new layer to quantize our
+
+layer.
+
+So once we've done that,
+we simply need to go through the
+
+layers within our model,
+the weight layers and quantize them,
+
+which is what the function below does.
+
+It recursively applies it to the child
+modules.
+
+This next cell simply downloads OpenELM's 
+3 billion instruction model as well
+
+as Meta Llama's 7 billion model.
+
+It then takes the input prompt and
+tokenizes it using the OpenELM
+
+tokenizer.
+
+So you can see our prompt there around
+explaining quantization.
+
+So whilst we wait for that to provide the
+output as it's taking
+
+several seconds,
+
+we can also print the size of the 
+model in gigabytes.
+
+So we just see our output from the 
+model there.
+
+And as you can see the baseline
+memory consumption is over 11 gigabytes.
+
+So for example, on a Raspberry Pi,
+we don't have enough memory and we'd have
+
+to use swap space,
+which would severely impact performance.
+
+We can also measure the latency.
+
+So this cell runs it three times and
+calculates the mean latency.
+
+And remember,
+this is using the 32-bit floating-point
+
+representation and let's later see how
+that compares with KleidiAI.
+
+Finally, we can see what the performance we can
+
+get from 4-bit KleidiAI kernels is.
+
+So we're going to run our quantized
+model that iterates and quantizes all the
+
+the relevant layers.
+
+And you can see it might take a little
+while to do this, but once it's done,
+
+we should be able to inspect and see if
+our feedforward layers and our
+
+projection layers are actually using the
+KleidiAI library.
+
+I'm just going to wait for this to
+complete.
+
+So now we can see our OpenELM model.
+
+If you go to our feedforward network
+layer, we can see our projection.
+
+Our two projection layers are now using 4
+bit integers for the weight-only group wise
+
+quantization, which is excellent.
+
+And we can see this throughout all the
+feedforward network layers.
+
+All right,
+now we can run the same cells,
+
+but now on the quantize model,
+immediately we can see that the
+
+memory size has dropped significantly.
+
+So that could fit within a Raspberry Pi
+or a mobile device.
+
+And again,
+running it three times and taking the
+
+mean,
+we can see the average time my kernel was
+
+still running.
+
+So we'll see that in a second.
+
+The results are in and the mean time with
+4-bit KleidiAI kernels is 5 point 
+
+28 seconds,
+which is significant reduction compared
+
+to the 12 seconds previously.
+
+So finally,
+let's actually run the model and see if
+
+it's all gibberish or it actually
+has high accuracy.
+
+And from the quantization error plots we
+did previously,
+
+we expect there to be very little
+difference.
+
+So our output is continuing from the
+language model phrase in
+
+the second line.
+
+And as you can see it has gone on a slight
+tangent,
+
+but generally the wording is coherent
+and suggests that the we haven't severely
+
+degraded the accuracy of our model.
+
+I hope you enjoyed this second lab.
+
+To recap,
+we started off by going through the Arm
+
+intrinsics as well as the SIMD
+instructions all the way from Neon to 
+
+I8MM.
+
+We then introduced the KleidiAI library
+that provides optimized micro kernels
+
+that can go into frameworks such as 
+PyTorch.
+
+And finally to cap it off,
+we did group wise quantization on the 
+
+OpenELM model showing a reduction in latency.
+
+That's the execution time as well as the
+amount of memory required.
+
+So now you should be in a good position
+to optimize your own models on resource
+
+constrained devices and get the most
+performance out of your Arm hardware.

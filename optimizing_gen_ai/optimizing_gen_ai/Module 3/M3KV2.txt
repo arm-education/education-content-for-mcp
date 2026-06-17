@@ -1,0 +1,188 @@
+﻿In the previous video,
+we explored how CPUs offer a cost-effective
+
+and power-efficient way to run
+AI inference.
+
+But we also hinted at the growing
+challenges that come with deploying
+
+modern AI models,
+especially generative AI, on CPUs.
+
+In this video,
+we'll dig deeper into those challenges
+
+and understand why optimization is so
+important.
+
+Let's start with model complexity.
+
+Generative AI models are getting much
+bigger.
+
+According to recent research by Jaime
+Sevilla and Edu Roldan,
+
+the compute used to train top-tier AI
+models is increasing by a factor of 
+
+four to five every single year.
+
+That's exponential growth.
+
+These models now often include tens or
+even hundreds of billions of parameters.
+
+Each parameter adds to the computational
+workload during inference.
+
+For CPUs, which weren't originally
+designed for this kind of scale,
+
+that growth presents a serious hurdle.
+
+You're asking a general-purpose chip to
+handle workloads that are constantly
+
+increasing in size and complexity.
+
+Without serious optimization,
+the performance gap only gets wider.
+
+Then there's memory-bandwidth.
+
+Even if your CPU can technically perform
+the necessary computations,
+
+it still needs to fetch the model weights,
+and that means moving data from memory to
+
+the processor.
+
+The larger the model,
+the more data needs to be transferred,
+
+and the faster that transfer needs to be.
+
+But memory-bandwidth is limited.
+
+If the processor has to wait for data,
+you get bottlenecks.
+
+It's a bit like having a fast car stuck
+in a traffic jam,
+
+the engine might be powerful,
+but it can't move until the road clears.
+
+And on CPUs,
+which have relatively smaller caches and
+
+narrower memory channels compared to GPUs,
+this becomes a critical constraint.
+
+This problem is even worse if the model
+isn't optimized.
+
+Unnecessary memory reads,
+poorly aligned data,
+
+or redundant operations all slow things
+down, not just slightly, but dramatically.
+
+Next comes the issue of latency.
+
+In many real-world applications,
+speed isn't just a bonus,
+
+it's a necessity.
+
+Take voice assistance,
+real-time translation apps,
+
+or interactive chatbots.
+
+These systems need to respond within
+milliseconds.
+
+If your model takes too long to generate
+a result, the user experience breaks down.
+
+CPUs without acceleration, may struggle to
+meet these low latency requirements,
+
+especially if the model is large and the
+inference path is unoptimized.
+
+This is one reason why optimizations like
+operator fusion, quantization,
+
+and vectorization are so important,
+
+they help squeeze more performance out of
+the CPU pipeline and reduce latency.
+
+We also need to talk about scalability.
+
+Working with smaller models is one thing.
+
+Scaling to larger,
+more complex models 
+
+introduces new challenges.
+
+As model size grows,
+you need to manage thread scheduling,
+
+balance the load, and make sure you're not
+wasting cycles waiting for memory.
+
+Efficient multi-threading is tough to get
+right,
+
+especially on CPUs with limited parallel
+compute resources compared to GPUs.
+
+Finally,
+there's the stress on memory hierarchies.
+
+CPUs have multiple layers of cache,
+L1,L2,L3,
+
+and optimizing how data moves between
+these levels is essential.
+
+If your model constantly accesses main
+memory instead of staying within the
+
+cache, you lose performance.
+
+That's why memory-aware scheduling and
+layout transformations are becoming such
+
+a big part of CPU-based inference work.
+
+So let's step back and recap.
+
+AI models are growing fast.
+
+That growth puts increasing pressure on
+CPU compute capacity, memory-bandwidth,
+
+and response time.
+
+Without optimization, performance suffers.
+
+But if you understand where these
+bottlenecks come from,
+
+you can begin to address them.
+
+And that's exactly what we'll look at
+next,
+
+how to model AI computations using graphs,
+and how that opens the door to powerful
+
+optimization techniques.

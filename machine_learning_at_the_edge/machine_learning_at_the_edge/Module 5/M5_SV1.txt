@@ -1,0 +1,423 @@
+﻿
+In this lab we will build a Convolutional
+
+
+Neural network for image classification.
+
+
+We'll train the model with the
+
+
+CFAR-10 dataset, which is one of
+
+
+the most popular image datasets,
+
+
+and contains 60,000 images
+
+
+with ten different categories.
+
+
+The model takes an RGB image and
+
+
+predicts the category of the image.
+
+
+The main objective of this lab
+
+
+is to develop a simple model for
+
+
+CIFAR-10 using STM32 Cube AI.
+
+
+First, open Jupyter notebook
+
+
+through Anaconda prompt.
+
+
+Execute the first code block
+
+
+to import packages.
+
+
+Next, we're going to load CIFAR-10 dataset.
+
+
+We can easily get the dataset
+
+
+because TensorFlow provides an API
+
+
+for loading well known datasets
+
+
+such as CIFAR-10 and MNIST.
+
+
+Execute this code block to get the dataset.
+
+
+Save one image per class from the test
+
+
+set for testing with the board later.
+
+
+Execute the code block to save the images.
+
+
+This code block will visualize
+
+
+the saved images.
+
+
+Next,
+
+
+we normalize all the training and testing
+
+
+data to have values between zero and one.
+
+
+This normalization
+
+
+facilitates Machine Learning.
+
+
+Each RGB value ranges from 0 to 255,
+
+
+so we divide the training
+
+
+and testing data by 255.
+
+
+Will now create a small Convolutional
+
+
+Neural Network for the dataset.
+
+
+The image size of CIFAR-10 is 32x32
+
+
+and the number of colour channels is 3,
+
+
+so the input shape of the first
+
+
+convolutional layer is 32, 32, 3,
+
+
+and the number of classes is 10,
+
+
+so the last dense layer should have 10 units.
+
+
+Execute the code blocks
+
+
+and then compile the model.
+
+
+This training could take more than
+
+
+10 hours because the dataset has
+
+
+50,000 training images, so we also
+
+
+provide our trained model for testing.
+
+
+You can use this model if you don't have
+
+
+enough time to train your own model.
+
+
+In this video we will set the
+
+
+number of epochs as 1.
+
+
+Now, the training is finished.
+
+
+Let's save the model and evaluate the model.
+
+
+Since we trained the
+
+
+model for one epoch only,
+
+
+the accuracy is not that good.
+
+
+We need to save the validation
+
+
+data and the labels for testing.
+
+
+This code block will sample 50 images from
+
+
+the dataset and save them in CSV format.
+
+
+Execute the code block to save
+
+
+the validation data.
+
+
+This code block will save the
+
+
+list of image classes.
+
+
+Execute the code block
+
+
+to save the label file.
+
+
+Now we are ready to deploy the model on
+
+
+the evaluation board using STM Cube AI.
+
+
+Let's deploy the model on the board,
+
+
+open STM Cube MX, click access to board selector,
+
+
+find the board and click Start project.
+
+
+Go to project Manager,
+
+
+write the project name and
+
+
+configure the project location
+
+
+where the project will be saved.
+
+
+Select the firmware version to use.
+
+
+Go back to pinout and configuration
+
+
+and clear the pinouts.
+
+
+On the software packs menu,
+
+
+click select components.
+
+
+Enable Cube AI. For device
+
+
+application choose validation.
+
+
+Click add network. Load the model we
+
+
+provided or the model you trained.
+
+
+Click analyse to check the model.
+
+
+Generate the validation code for the
+
+
+model. The code generation is done.
+
+
+Open the STM Cube IDE here.
+
+
+Choose this option to import the project.
+
+
+Go to the project folder
+
+
+and open the IOC file.
+
+
+Now make sure that the board
+
+
+is connected to your computer.
+
+
+If it is correctly connected,
+
+
+install the code by clicking run as.
+
+
+If you get the same error,
+
+
+go to Core > Src > main.c. Here,
+
+
+remove static from this function
+
+
+and also from this definition.
+
+
+Then try runners again. Now the
+
+
+code is running on your board.
+
+
+For testing, we're going to use a custom
+
+
+tool for sending images to the board.
+
+
+This tool is provided by ST
+
+
+Microelectronics. Open Anaconda
+
+
+prompt and activate your environment
+
+
+for the lab. We need to install
+
+
+several packages to run the tool.
+
+
+python -m pip install -U
+
+
+opencv-python protobuf tqdm
+
+
+== 4.50.2.
+
+
+Navigate to the lab4 folder.
+
+
+Enter the misc folder.
+
+
+Then you can execute the tool by
+
+
+typing python ui python ai runner. py
+
+
+Click the back button on the
+
+
+board to reset the board and
+
+
+check refresh NN and camera.
+
+
+Here you can see the list of
+
+
+models deployed on the board.
+
+
+Select the network,
+
+
+open the label file.
+
+
+Open an image to test.
+
+
+Here we will open an airplane image.
+
+
+The tool automatically shows the
+
+
+inference result so we can see that the
+
+
+model correctly predicted the label.
+
+
+Also, it took just over one
+
+
+second to finish the prediction.
+
+
+You can also use your own camera
+
+
+to test image classification.
+
+
+We will test whether the model can
+
+
+detect this small parrot if you press S,
+
+
+the tool captures the image
+
+
+and sends it to the board.
+
+
+The model failed to detect the parrot,
+
+
+so let's try again.
+
+
+Now you can see that the model correctly
+
+
+predicted the label for this small parrot.
+

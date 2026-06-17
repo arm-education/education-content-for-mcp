@@ -1,0 +1,270 @@
+﻿
+When you run Machine Learning on
+
+
+embedded systems with a microcontroller,
+
+
+you need to remember that there is a
+
+
+small processor that is processing
+
+
+the Machine Learning algorithms.
+
+
+For example, if the Machine Learning is
+
+
+a neural network and the small processor
+
+
+is an Arm Cortex-M4 microcontroller,
+
+
+all the operations will run on the
+
+
+CPU with a Digital Signal Processor
+
+
+extension, and using the floating-point
+
+
+unit for the floating-point operations.
+
+
+Arm Cortex-M family microcontrollers
+
+
+are resource-constrained processors,
+
+
+where the main constraints are
+
+
+memory and operations per second.
+
+
+For the memory,
+
+
+they typically have only a few
+
+
+kilobytes of RAM, and a little
+
+
+more for the flash memory.
+
+
+They are capable of only a few million
+
+
+operations per second as they are
+
+
+running at a few 100 megahertz, with
+
+
+only a single core to process the data.
+
+
+For instance,
+
+
+assuming that an Arm Cortex-M
+
+
+microcontroller runs at 80 megahertz, and
+
+
+it can perform one operation per cycle,
+
+
+we will have 80 million operations
+
+
+per second for such a processor.
+
+
+Moreover, the balance between the
+
+
+performance and the execution time
+
+
+needs to be carefully analyzed to
+
+
+find the best compromise to achieve
+
+
+the lowest energy consumption.
+
+
+In fact, it is important to highlight
+
+
+that when a microcontroller is
+
+
+performing Machine Learning,
+
+
+it needs to be in active mode
+
+
+to process the data.
+
+
+The time to perform an inference
+
+
+in Machine Learning is called
+
+
+the latency of the inference.
+
+
+For instance,
+
+
+this would be the delay in having
+
+
+the results of the classification
+
+
+of an image with a neural network.
+
+
+An additional benefit of a shorter
+
+
+latency is the reduced energy consumption.
+
+
+In fact,
+
+
+the energy per inference can be
+
+
+calculated as the power consumed
+
+
+in active mode multiplied by the
+
+
+time for completing the inference.
+
+
+Moreover,
+
+
+the embedded system can perform
+
+
+duty cycling by sending the CPU
+
+
+into sleep mode until the next
+
+
+inference needs to start again.
+
+
+The less time spent in active mode,
+
+
+the lower the total energy consumed.
+
+
+In Machine Learning on a microcontroller,
+
+
+there is a need to find optimized
+
+
+solutions to improve accuracy,
+
+
+latency,
+
+
+memory requirements and energy
+
+
+spent for the overall process.
+
+
+There are many different Machine
+
+
+Learning and neural network models and
+
+
+their accuracy can vary substantially.
+
+
+The figure shows a few of the
+
+
+most popular in recent years.
+
+
+Even if it is not always true,
+
+
+bigger neural networks tend
+
+
+to achieve bigger accuracy.
+
+
+However,
+
+
+they contain more layers and these
+
+
+layers and filters will be larger.
+
+
+This affects the number of operations
+
+
+to perform the calculations.
+
+
+Recall that convolutional layers
+
+
+and neural networks are performing
+
+
+as multiply-accumulate operations.
+
+
+Notice in the table that the
+
+
+LeNet 5 is a network suitable
+
+
+for microcontrollers, as it requires
+
+
+memory in the range of kilobytes,
+
+
+and 3,410,000 operations,
+
+
+while all the others have higher
+
+
+requirements in memory, operations, or both.
+

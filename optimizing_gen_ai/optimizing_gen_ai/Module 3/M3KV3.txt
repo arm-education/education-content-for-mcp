@@ -1,0 +1,171 @@
+﻿When we think about running an AI model,
+
+it's easy to picture it as a series of steps—
+
+inputs go in, operations happen,
+and outputs come out.
+
+But under the hood,
+what we're really dealing with is a graph.
+
+Specifically, a computation graph—
+
+and understanding how this graph is
+structured is key to optimizing inference performance,
+
+especially on CPUs.
+
+Let's break that down.
+
+A computation graph is a way of
+representing the operations and data
+
+dependencies in a model.
+
+Each node in the graph represents an
+operation—that could be a matrix
+
+multiplication, an activation function,
+or a convolution.
+
+The edges between the nodes represent
+data flow—
+
+in other words,
+how the output of one operation becomes
+
+the input to the next.
+
+Now, for this system to work smoothly and
+without endless loops,
+
+the graph must be a directed acyclic
+graph, or DAG.
+
+"Directed" means each edge has a direction—from input to output.
+
+"Acyclic" means there are no circular
+dependencies.
+
+Data flows forward only, never looping back on itself.
+
+This structure is what allows AI models
+to run in a well-defined,
+
+orderly sequence—from the very first
+layer all the way to the output.
+
+But more than that,
+it's what enables optimizations.
+
+And that's where things get interesting.
+
+Let's take a practical example.
+
+Say you have a model with a convolutional
+layer,
+
+followed by a batch normalization, and
+then an activation.
+
+In a basic implementation,
+these are treated as separate operations.
+
+Each one runs,
+stores its result in memory, 
+
+and passes it to the next.
+
+But if we look at this as a graph,
+we can analyze the entire path—
+
+and that allows us to fuse these
+operations into a single, 
+
+more efficient one.
+
+This is called operator fusion,
+and it's just one of many optimizations
+
+enabled by the graph view of computation.
+
+By seeing the entire structure—rather
+than just isolated steps—
+
+we can remove redundant operations,
+streamline memory access,
+
+and even reorder instructions to improve
+performance.
+
+Graphs also make it easier to visualize
+and debug models.
+
+When something goes wrong in a neural
+network,
+
+it's often hard to pinpoint the issue
+just by looking at raw code or logs.
+
+But with a graph,
+you can actually see how data moves
+
+through the model.
+
+You can identify bottlenecks,
+trace data dependencies,
+
+and inspect which operations are slowing
+things down.
+
+Another benefit of using computation
+graphs is parallelism.
+
+Because the graph shows which operations
+depend on each other—and which don't—
+
+we can schedule independent operations to
+run in parallel.
+
+This is especially important for CPUs,
+where maximizing core utilization 
+
+is key to good performance.
+
+And finally,
+graphs provide a foundation for compilation.
+
+Once we've defined the structure of a
+model as a graph,
+
+we can apply transformations to that
+graph—
+
+like constant folding or memory layout
+adjustments—
+
+and compile it into optimized code.
+
+This is what many modern frameworks do
+behind the scenes.
+
+So, to summarize: computation graphs—especially DAGs—
+
+give us a way to represent the operations
+and dependencies in an AI model.
+
+They help us understand how data flows,
+identify opportunities for optimization,
+
+support parallel execution,
+and make it easier to debug 
+
+and visualize our models.
+
+In the next section,
+we'll look at how these graphs are
+
+actually executed—including the difference between static
+
+compilation and dynamic, on the fly
+execution.

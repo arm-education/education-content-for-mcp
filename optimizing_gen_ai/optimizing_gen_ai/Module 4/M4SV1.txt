@@ -1,0 +1,1161 @@
+In this final lab,
+we'll be comparing the characteristics of
+
+ML inference on the Raspberry Pi and the
+AWS Graviton instance.
+
+We'll also look at the frameworks and how
+to quantize models using the inbuilt
+
+functionality of the Llama.cpp framework.
+
+So this lab assumes you've done the
+previous two labs and have set up the
+
+Raspberry Pi AWS instance respectively.
+
+If you need help in doing this,
+please refer to the starting sections
+
+of the previous lab.
+
+So here you can see the Visual Studio
+Code and I've clicked on Lab 3 and I'm
+
+currently on my Raspberry Pi device.
+
+As you can see test at Raspberry Pi there
+in the terminal.
+
+So in this lab,
+we're going to compare performance
+
+metrics on the Raspberry Pi and then AWS
+Graviton instance.
+
+So we've deliberately chosen both the
+Raspberry Pi with four cores and the
+
+Graviton instance with four cores as well,
+
+but there are of course additional
+differences.
+
+The processor cores on the AWS instance
+are far more powerful and it has higher
+
+bandwidth memory to play with.
+
+So running the free dash h command on the
+Raspberry Pi,
+
+we have we have 8 gigabytes of memory and
+this is the limitation of our model
+
+size.
+
+So you can pause this bit to see all the
+lab objectives,
+
+but we're going to essentially measure
+the latency, the elapsed time,
+
+the time to first token and compare these
+against the Graviton instance.
+
+And the prerequisite, of course,
+is to have completed Lab 1 and 2.
+
+We strongly recommend doing this.
+
+I've already set up my Raspberry Pi,
+but just going to run through the steps.
+
+The first thing is to make sure you've
+run the setup script.
+
+I'm just going to quickly do that here.
+
+It should be a lot quicker if you've
+already done it once.
+
+And again, just like the first lab,
+we're going to enter
+
+our Python environment with the
+command there.
+
+So you should see the Pi 5 environment in
+the terminal now.
+
+So the first thing to do is clone the 
+llama.cpp framework.
+
+As you can see I already have it here
+from the previous lab.
+
+You can run the git clone command there,
+but we've already done that.
+
+As you can see 
+
+I already have the llama.cpp folder
+installed. So to check that I have built
+
+it correctly, 
+
+you can navigate to the build bin and
+then go to that directory and run the
+
+llama-cli tool using the command as you
+can see here.
+
+So we have lots of binaries available,
+but running the cli and then using the
+
+version command,
+you can just check that you have
+
+installed that binary correctly.
+
+So we can skip the configure and compile
+since we've done these steps already.
+
+Next,
+we need to again download Apple's OpenELM, 
+
+the 3 billion parameter model.
+
+To do this,
+we need to create a Python script that's
+
+there below.
+
+So I'm just going to change back into my
+home directory and using the touch
+
+command.
+
+Actually, firstly,
+we just need to make sure that we're we
+
+are logged into Hugging Face.
+
+So using the 'Who am I?' command,
+we can see that I'm already logged in.
+
+If not,
+you can type in login and enter your 
+
+key.
+
+Right, now to create the Python script,
+we can just touch that file.
+
+So touch creates a new file in your
+working directory.
+
+And you can see there on the left hand
+side,
+
+we now have a download of OpenELM Python
+script.
+
+So copy and paste that Python there.
+
+I'm looking at the raw markdown file. And
+paste it in.
+
+You may need to make sure there's no
+indentation as it will throw an error.
+
+And it looks like I haven't copied all
+the script.
+
+So I'm just going to take align the 
+content,
+
+then quickly going back and taking in the
+the final variable I forgot.
+
+So you may notice we are we are cloning
+the main branch,
+
+the main revision of Hugging Face.
+
+This is to get the most up to date
+version of the model.
+
+Right now we can just run the Python
+script where it's Python 3 or is it
+
+regular Python?
+
+So we're just using regular Python as the
+instructions show and download OpenELM.
+
+So this could take a little while to
+download depending on your Internet speed,
+
+but I'm just going to pause the video and
+restart once it's all downloaded.
+
+So we finished downloading the model of
+Hugging Face.
+
+The next step is simply to create models
+GGUF directory and GGUF is the file
+
+format used by llama.cpp.
+
+So type in make directory,
+then dash p for make parent directory.
+
+I don't think we actually need this given
+we already have the models directory,
+
+but you may not on your own system.
+
+So in Llama.cpp models are stored in their own format
+
+called GGUF. GG is actually the 
+initials of the founder of the
+
+project.
+
+So we need to convert the model from the
+Hugging Face format to the GGUF format.
+
+And fortunately there's a Python script
+to do this as this is quite a common
+
+thing.
+
+And simply we need to point to the path
+for the OpenELM instruct model and then
+
+what we want to call the GGUF version.
+
+And we're going to put the output format
+type to f16.
+
+You may be wondering why we're
+doing that?
+
+This is for hardware compatibility on the
+Raspberry Pi since we don't support brain
+
+float 16.
+
+So when we run the command,
+you'll get some useful feedback of all
+
+the individual layers that have been
+quantized,
+
+and you can see here we're changing from
+B float 16 to f32 or f16.
+
+So you may recall from the videos
+that brain float 16 has more bits
+
+assigned to the exponent,
+whereas f the regular IEEE floating-point
+
+16 has fewer.
+
+And this is mainly for machine learning
+as some variables are very large and this
+
+will cause a slight reduction in accuracy,
+most likely.
+
+So once it's done,
+you should see a model successfully
+
+exported.
+
+And as you can see on the left hand side,
+we now have the model in that directory.
+
+So we're going to quantize the model to
+both 8 bit and 4 bit quantization.
+
+And fortunately again the framework
+provides a Python script to do this,
+
+or a binary rather called Llama-quantize
+and it's very simple to use.
+
+You just point to your GGUF model and
+specify the quantization schema.
+
+So we're going to go from 16 bit floating-point down to 
+
+8-bit integer. Copy and paste the
+command there.
+
+Again,
+we can validate that it's doing the
+
+correct thing, since the weight matrices
+should be moving down to Q8_0,
+
+and you can see that there.
+
+And interestingly also prints for each
+layer the reduction in size,
+
+which is quite useful.
+
+So might take a little while to do that,
+but we've successfully quantized and we
+
+can see an additional file within our
+folder.
+
+We're just going to repeat this now for
+4-bit quantization.
+
+Now we're ready to run inference on our
+model.
+
+So the llama-cli provides a way to point
+to a model and a string prompt a really
+
+easy way to run inference.
+
+So here we're using the model we just
+downloaded,
+
+of course, the 8-bit quantized instruct
+model.
+
+So instruct simply means that it's been
+fine-tuned to take human interaction
+
+rather than just predicting the next
+token 
+
+it can have more of a conversation.
+
+I don't know what happened there,
+but I just need to remove those excess
+
+dashes and our prompt will be,
+
+"Could you write a very simple 'Hello, World'
+in C++?"
+
+So there's plenty of training data,
+as you can imagine on the Internet,
+
+so it's a very simple task.
+
+I'm just going to quickly look at some of
+the sample parameters. As we inputted the
+
+default arguments, 
+
+first thing to notice in this bunch of
+texts is the temperature is 0.8.
+
+So compared to the previous labs,
+there will be some variability run
+
+between run.
+
+We're also using top K of 40,
+so looking at limiting the top most
+
+likely tokens and we have a top P which
+is choosing top tokens whose cumulative
+
+probability is less than 0.95.
+
+So here we have our output and it looks
+like it was able to correctly have a
+
+Hello, World.
+
+I'm not going to run that snippet of code,
+but it looks to be correct. And also
+
+prints some very useful metrics at the
+bottom there - the tokens per second,
+
+which is currently only 1.92,
+so slightly slower than the human
+
+readable speed.
+
+So now I'm just going to type in exactly
+the same command except using the 
+
+4-bit quantized model to see what
+performance we can get on our Raspberry
+
+Pi.
+
+So running the 4-bit model,
+we should see our tokens begin to 
+
+output the terminal.
+
+As you can see here, 
+
+if you're unfamiliar with C++,
+it looks to have made a good start
+
+including the relevant libraries,
+and it's quite hard to tell visually,
+
+but it seems to be the tokens are ever so
+slightly quicker than the previous
+
+version - 
+roughly 2 tokens per second it looks like.
+
+But the accuracy I'm not so sure of.
+
+So just cancelling and seeing the tokens.
+
+So evaluation time,
+we get over 2 tokens per second,
+
+which is slightly higher than the
+previous example.
+
+So llama.cpp also has its own
+benchmarking functionality.
+
+So in the next section we're going to
+actually benchmark across and sweep
+
+across different number of threads and
+the different models that we have
+
+quantized - the f16, Q8, and Q4.
+
+So that utility is called Llama dash
+Bench and this cell here simply runs it
+
+on the Raspberry Pi.
+
+It might take a little while for it to
+complete,
+
+but I'll fast forward through that
+bit.
+
+So this was actually for just a single
+quantized model and it will run the PP4
+
+test which stands for prompt processing
+and TG2 stands for token generation.
+
+And here we can see the prompt
+processing and the token generation speed,
+
+so four for the prompt processing,
+but only one for the token generation
+
+speed with four threads.
+
+So in the next cell,
+we're going to run a slightly more in-
+
+depth test whereby we sweep over a
+different number of threads from one to
+
+four for both the 4 and the 8-bit quantized
+
+model. Just running that cell and changing the
+
+access specifiers before running it.
+
+We will observe the results shortly.
+
+So it's been a few minutes and the
+results are in.
+
+So this top set of rows of the 4-bit
+quantized model and the bottom set for
+
+the 8-bit weight quantized model.
+
+And as you can see,
+we swept through for each prompt
+
+processing and token generation test,
+the number of threads from one to four.
+
+But, unfortunately, the token
+generation speed for both tests doesn't
+
+seem to have increased significantly.
+
+We've got some increase in the prompt
+processing time,
+
+as you can see, perhaps on the bottom row,
+but the token generation speed hasn't
+
+increased.
+
+Great.
+
+So we're able to quantize our model from
+the initial brain float 16 down to
+
+floating-point 16, 8-bit, then 4-bit.
+
+And when we compared 8-bit quantization
+to 4-bit quantization on Raspberry Pi,
+
+we didn't see twice the improvement.
+
+There's a slight increase.
+
+And to think about that,
+we're going to next run the exact same
+
+experiment on a Graviton instance with
+greater memory bandwidth and higher
+
+compute capability.
+
+So that's a hint as to what the root
+cause could be.
+
+We're going to think about if it was
+compute bound or maybe memory bound as
+
+quantizing the model mod may not lead to
+the most effective performance increase.
+
+So I've now SSH'd into the Graviton
+instance from Lab 2 and running lscpu, 
+
+we can see that we have the same number of cores on Graviton - 4
+
+cores.
+
+But since we have more powerful compute,
+we also support advanced extensions,
+
+as you can see there.
+
+I'm just going to clear my screen.
+I'm just going to run the setup script
+
+again.
+
+This should be far quicker than the
+initial time you do it.
+
+This is just to make sure that we have
+all the latest packages that we need.
+
+Even if we ran it the previous day,
+there may be some things - newer
+
+packages that we could install.
+
+After a few minutes,
+this should be completed and again,
+
+like the second lab,
+we can enter our Python environment with
+
+the source command there.
+
+We're just going to run it to and you
+can see we are now in our Python
+
+environment.
+
+So continuing the lab,
+once we've run the setup script,
+
+we have to clone and build llama.cpp on
+the AWS Graviton instance.
+
+I don't currently have it installed,
+so I'm just going to navigate to the
+
+GitHub repository to explain a little
+about what the Llama.cpp framework is.
+
+We've mentioned previous frameworks like
+PyTorch, but why are we using llama.cpp?
+
+So this is a runtime for large language
+models with no dependencies produced in
+
+C++ rather than Python.
+
+So why does it exist and when would you
+choose Llama.cpp?
+
+So this could be applicable if you are
+running in an environment where you
+
+didn't have enough resources for a Python
+interpreter.
+
+Think of a potential IoT Internet of
+Things device.
+
+And it has, as you can see there,
+support for Arm through Neon as well as
+
+other platforms such as Apple's Metal.
+
+So we're going to use the cmake command
+to generate a make file.
+
+This will build a specific make file for
+our system.
+
+And as you can see we are passing in the
+CPU of native which essentially says
+
+optimize for this Graviton instance.
+
+Look at all the available CPU features
+and build with that context.
+
+And unfortunately we've hit an error of
+not finding the curl utility which is for
+
+downloading files.
+
+It seems as though I already have it installed.
+
+Let me try again.
+
+It looks like I could disable this
+feature,
+
+but I think I might need to use it later
+on.
+
+You can also see all the CPU features
+that we are building with including dot
+
+prod,
+IM88 and SVE that we learnt in the
+
+previous section.
+
+So if you encounter this issue you will
+need to install the package.
+
+You can see there libcurl 4.
+
+This is so that we can include the
+relevant header files to download models
+
+using curl.
+
+So I was able to correctly run that
+command.
+
+Rerunning the same command we can see we
+were able to build correctly and we can
+
+see all the Arm features that we were
+able to identify and build with.
+
+So we now have our make file.
+
+Now we need to actually build the
+binary.
+
+So going back to the lab,
+we can scroll down to compile and
+
+build the framework. And notice we're
+using nprop to use all the threads
+
+available on our CPU.
+
+This might take 30 seconds or a minute as
+we build all the files.
+
+So it should be finished shortly,
+
+and you can see we have 100% build with
+no visible issues.
+
+So I'm going to clear my screen and the
+binary should be available in the build
+
+bin directory.
+
+So just as we did for the Raspberry Pi,
+we can check perhaps the version to see
+
+that those binaries are working.
+
+Maybe just run a test command such as
+Llama cli Dash Dash version.
+
+Yeah, and it looks to be running fine,
+
+so we can proceed.
+
+Just going to move back to the original
+directory as well.
+
+OK, I don't have the model installed,
+
+so similarly you need to create an that
+Python script and run it again.
+
+So that Python script was higher up.
+
+I'm just going to copy paste that in.
+
+Using the touch command,
+it will create a new file.
+
+Just before running the script, I'm going
+to make sure I'm still logged in.
+
+So running the Hugging Face cli, who am I?
+
+I can see that for this instance I'm
+still logged in.
+
+I'm just going to run that script and
+hopefully it should begin downloading the
+
+model.
+
+So I look to have an indentation issue.
+
+I'll go back to the file.
+
+So it looks like the tabs in the markdown
+were copied across,
+
+so I just need to remove those tabs and
+it should run fine.
+
+All right, perfect.
+
+Now again rerunning,
+you can begin to download the model and
+
+again,
+depending on your Internet connection,
+
+this might take a little while.
+
+Just like in the Raspberry Pi example,
+we're going to make the GGUF models
+
+directory and then use the inbuilt
+Python strip to convert from Hugging Face
+
+models to GGUF.
+
+So quickly just making that directory and
+then I'm going to copy and paste the 
+
+command to convert the file.
+
+And this is exactly the same command that
+we ran on the Raspberry Pi.
+
+Again running the conversion script to
+convert from Hugging Face to GGUF, just as
+
+we did on the Raspberry Pi.
+
+And if we run the ls dash alh, we can see
+the file size which is 5.2 gigabytes.
+
+Now running the same script as we did on
+the Raspberry Pi to quantize the model,
+
+the weights tensor to 8 bit integers.
+
+You can see here all the individual
+layers and the size they have been
+
+reduced to, which is quite insightful.
+
+And finally doing exactly the same but
+for 4-bit integers.
+
+So if we run the ls command, which lists
+the files within that directory,
+
+we can see that our floating-point
+16 model takes up 5.7 gigabytes.
+
+The lowest quantized 4-bit takes up 1.7 and in the middle we have the 8-bit
+
+quantized at 3.1.
+
+So on our Graviton instance we run the
+free command.
+
+We see we have 16 gigabytes of total RAM
+memory and 13 available.
+
+So all three models are available to fit
+within memory.
+
+So we don't need to allocate any swap
+space which uses the hard drive.
+
+Finally, we can actually run our model.
+
+So in this example we've got a slightly
+different prompt of, "Could you write a
+
+very simple program in C++?"
+
+So I'm going to try and run it, and I can
+see that it didn't like this exclamation mark. 
+
+I might need to use an escape character
+on this part.
+
+I'm just going to cancel and paste
+it in again and then going quickly to
+
+that exclamation mark.
+
+I can't remember which one's the escape
+character.
+
+If it's not that one, let's try again.
+
+Just exit and try again.
+
+Now putting in the correct escape
+character should be able to run. Perfect.
+
+So scrolling to the bottom,
+we can see the output and it's far faster
+
+on this Graviton instance,
+far faster than the human,
+
+the speed of human reading.
+
+So we can see we're able to achieve 15.6 tokens per second.
+
+And in a minute,
+we'll look at the different metrics
+
+reported by llama.cpp.
+
+So now doing exactly the same command,
+but with the 4-bit quantized version,
+
+we can see what the speed is.
+
+So now it's the token generation speed is
+even quicker.
+
+And I'm not fast forwarding this video.
+
+I'm going to press Control C to cancel
+and see what the speed is.
+
+So we're getting over 29 tokens per
+second, which is very fast.
+
+But as you can see,
+we don't actually have the Hello, World
+
+solution.
+
+Rather it's looks to be hallucinating
+random quotes.
+
+So it's going to run it again and see we
+can get the actual answer we're looking
+
+for and do it one more time.
+
+Seems to go on a tangent again.
+
+So, third time's a charm.
+
+And as you can see,
+this time it's able to correct the output.
+
+C++ source code, also find the commands to
+compile.
+
+So by the fact that it took a few times
+to get it right, we can see that,
+
+of course, quantizing does lead to some 
+reduction in perplexity and accuracy,
+
+but at least a significant improvement
+in tokens
+
+per second,
+which is incredible considering that we
+
+are running just on 4 CPU cores.
+
+I'm going to briefly discuss some of the
+metrics.
+
+So when you input a prompt that's a
+string,
+
+it first needs to be tokenized and then
+your large language model and the
+
+transformer needs to imbue all the
+context between the different tokens and
+
+this is called the prompt processing rate
+and it corresponds to the time to first
+
+token.
+
+It takes a long time to process the input
+prompt.
+
+Your first token output might take a
+while.
+
+The equation here is a use to derive that
+equation from llama.cpp's metrics.
+
+So we divide the number of prompt tokens
+by the top prompt processing rate and
+
+then add that to the reciprocal of one
+over the token generation rate,
+
+which gives us the time to first token.
+
+Secondly,
+the total inference latency is the same
+
+number of prompt tokens divided by the
+prompt processing rate,
+
+but then added to the number of output
+tokens, divided by token generation rate.
+
+So this is all related to the
+responsiveness of the system.
+
+Even if you have a really fast token
+generation rate,
+
+if the preprocessing time takes a while
+and your time to first token is too long,
+
+it won't be very useful.
+
+Now we're ready to run the benchmark,
+so I'm just going to use the Llama bench
+
+tool.
+
+I'm going to copy and paste the commands
+we have there into the actual file.
+
+In the instructions.
+
+it asks us to use the nano in terminal
+editor, but because we're using BS code,
+
+we can simply navigate to that file,
+paste it in.
+
+Going back to the instructions,
+we can see that we just need to run that
+
+script.
+
+Don't forget,
+we need to make sure we can execute this
+
+script so we can add in the dot x command,
+so that this particular user can run the
+
+script, like so.
+Then we should be able to run our
+
+script through the command
+
+here. It seems like I'm unable to
+recognise it.
+
+I might have to give additional
+permissions.
+
+Given this is an isolated sandbox
+environment,
+
+it's OK to give the 755 permissions which
+corresponds to the Unix access specifiers.
+
+So just running that and then running the
+script we should begin our benchmark.
+
+Once it's complete,
+you should see if you scroll up,
+
+you should see we've iterated through
+both the fp16,
+
+the 8-bits and the 4-bit weight
+quant size model.
+
+You can see the size reduction there and
+they all use 3 billion parameters.
+
+These also have scaled and swept through
+the number of threads,
+
+running two different tests each and we
+output the token generation speed and
+
+tokens per second.
+
+The obvious thing to note is that using
+more threads we observe a higher token
+
+rate going up to 14 for the base 16
+condition,
+
+and then quantizing it to 8-bit we get up
+to 16,
+
+and then finally to 4-bit, we see 32.
+
+So it looks to be roughly linear
+progression.
+
+So next we need to copy the results from
+our Graviton instance to the Raspberry Pi.
+
+This assumes you're on the same network
+and you have permissions to do a secure
+
+copy.
+
+But if not, you may have to manually enter the 
+
+digits or find another way.
+
+For this example, I'm just going to use 
+the output cells that are already
+
+generated.
+
+But you can run the results on your
+own system, you may see very subtle
+
+variations.
+
+So we have this past result scripts that
+can be used to filter and do
+
+some data aggregation on the CSV file.
+
+Just going to scroll to where we are.
+
+So this cell simply opens the files
+in the pandas data frame.
+
+We then plot it on matplotlib. So we
+can scroll down to the actual graph.
+
+So the dotted lines are for the Graviton instance and the solid lines
+
+for the Raspberry Pi.
+
+The first thing to know is that for the
+Graviton instance,
+
+using 4-bit quantization,
+we have a linear scaling with the number
+
+of threads.
+
+This is suggesting that we are compute
+bound rather than memory bound, and
+
+doubling the number of cores leads
+directly to a double improvement in
+
+performance.
+
+Conversely, for the Raspberry Pi,
+you can see that we hit a
+
+plateau, suggesting that is memory bound
+that is causing the issue.
+
+And this text here simply explains that.
+
+So that was for the pre fill stage where
+we take our prompt, tokenize and imbue
+
+the information in the KV cache on our
+transformer.
+
+So the next graph is for the token
+generation speed.
+
+So the number of tokens you perceive
+on the output.
+
+I'm just going to so this matplotlib 
+cell simply plots the graph.
+
+And again it's a very similar story for
+the token generation speed.
+
+The four bit quantized Graviton instance
+scales linearly, getting well above the
+
+human readable speed at over 30 tokens
+per second for four threads.
+
+Whereas on the Raspberry Pi, we look to be
+memory bandwidth bound,
+
+having plateaued quite early on.
+
+So in this lab,
+we've understood how quantization and the
+
+number of threads can affect the prompt
+processing and the token generation speed
+
+of a model.
+
+We've tried this on both the Raspberry Pi
+as well as the Graviton instance,
+
+and it's given us some insights as to the
+hardware platform and how that can
+
+benefit from quantization.
+
+So hopefully the information you've
+learned here will help you assess which
+
+platforms to target and which
+quantization schemes can help you
+
+accelerate your model.

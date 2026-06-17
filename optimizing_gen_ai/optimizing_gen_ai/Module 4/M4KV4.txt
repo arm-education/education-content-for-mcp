@@ -1,0 +1,159 @@
+﻿Throughout this module,
+we've explored several powerful ways to
+
+optimize AI inference on CPUs.
+
+We've looked at quantization and pruning
+to shrink model complexity.
+
+We've fine-tuned matrix multiplication
+with loop tiling, unrolling,
+
+and parallelism.
+
+And we've tapped into hardware
+acceleration with SIMD technologies like
+
+NEON, SVE, I8MM, and SME.
+
+Now, let's look at how these optimizations
+are combined in practice through a
+
+performance-focused library called KleidiAI.
+
+KleidiAI is an open-source collection of
+hand-tuned micro-kernels designed
+
+specifically for Arm CPUs.
+
+These micro-kernels are small,
+highly optimized functions that handle
+
+critical operations like matrix
+multiplication with minimal overhead.
+
+They're the final piece of the
+optimization puzzle,
+
+translating everything we've discussed so
+far into actual speedups
+
+during model inference.
+
+So how does KleidiAI work? 
+
+At a high level, KleidiAI provides a set of low-level matrix operations that are tightly
+
+integrated with the CPU's architecture.
+
+Each micro-kernel is implemented in
+assembly, not just compiled from C or C++,
+
+which allows it to squeeze out every last
+bit of performance.
+
+But these micro-kernels aren't just
+generic functions.
+
+They come in different variants,
+each optimized for a specific combination
+
+of data type and hardware feature.
+
+For example,
+there's a kernel that's optimized with I8MM,
+
+perfect for models using 
+
+INT8 quantization.
+
+Another kernel might be built using SVE
+or SME.
+
+When you call one of these kernels,
+usually through a high-level framework or
+
+a C++ wrapper,
+you're triggering a sequence of
+
+operations that have been painstakingly
+tuned for performance.
+
+That includes memory-access patterns,
+register usage, and parallel scheduling.
+
+Let's look at a practical example.
+
+Before calling the micro-kernel,
+you typically pack the weight matrix,
+
+also known as the right-hand-side matrix,
+into a memory layout 
+
+that's cache-friendly.
+
+This ensures the CPU can access it
+quickly and reuse it efficiently 
+
+during computation.
+
+Then, you pass the input matrix and the
+packed weights into the micro-kernel, 
+
+which performs the multiplication using vector
+instructions and, optionally, 
+
+multi-threading for even greater speed.
+
+This integration of techniques,
+algorithmic implementation level and
+
+hardware-aware is what makes KleidiAI so
+effective.
+
+Instead of writing and optimizing each
+operation by hand,
+
+you leverage a library that already knows
+how to make the most  
+
+of your processor's capabilities.
+
+If you're building a performance-sensitive AI system,
+
+especially on Arm-based hardware,
+KleidiAI is a game-changer.
+
+It's used under the hood in several
+frameworks and inference engines,
+
+including lightweight tools like llama.cpp,
+
+and it plays a key role in getting real-
+time inference running on Edge devices.
+
+To wrap things up,
+KleidiAI is where everything we've
+
+learned comes together.
+
+It combines matrix math optimizations, and
+advanced SIMD instructions into 
+
+one unified tool.
+
+When used with quantization and/or
+pruning, the result is highly efficient,
+
+low-latency Generative AI inference
+running directly on CPUs with no need for
+
+external accelerators.
+
+It proves that with the right
+optimizations,
+
+CPUs aren't just viable for AI,
+they're powerful, scalable,
+
+and ready for production.

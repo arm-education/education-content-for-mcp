@@ -1,0 +1,264 @@
+﻿
+Only a few years ago, the design of computer
+
+
+vision with Machine Learning looked
+
+
+remarkably different from today's systems.
+
+
+For instance, if the task was
+
+
+to recognize a cat in an image,
+
+
+the Machine Learning algorithms tried
+
+
+to see the cat as an amalgamation
+
+
+of several different "features",
+
+
+which represented the shapes of the head,
+
+
+ears, body, four legs,
+
+
+and tail, and so on.
+
+
+Early computer vision Machine Learning
+
+
+techniques relied on extensive
+
+
+manual effort to build rules-based
+
+
+classification algorithms to detect and
+
+
+classify certain groups of these pixel
+
+
+arrangements, after extracting features.
+
+
+Today, deep learning,
+
+
+and in particular Convolutional
+
+
+Neural Networks,
+
+
+are making vision algorithms highly
+
+
+effective in the real world.
+
+
+The advent of Convolutional
+
+
+Neural Networks made computer
+
+
+vision feasible for industrial
+
+
+applications using this technology.
+
+
+Convolutional Neural Networks are capable
+
+
+of extracting the features of images
+
+
+in the convolutional layers directly.
+
+
+This means the model can learn directly
+
+
+from the raw data, as seen in this figure,
+
+
+where a cat can be recognized
+
+
+with three convolutional layers
+
+
+and a fully connected layer.
+
+
+This system can then classify
+
+
+images into those that do and
+
+
+those that don't contain a cat,
+
+
+a single channel grayscale image of size
+
+
+244x324 pixels can be represented
+
+
+as an input matrix of this size.
+
+
+Suppose a neural network needs to
+
+
+classify the images from zero faces to 7,
+
+
+then it will have 8 output classes.
+
+
+You could build a deep learning model
+
+
+that includes 3 convolutional layers,
+
+
+for instance, using 5x5 filters and
+
+
+the rectified linear activation function.
+
+
+In this example,
+
+
+the first convolutional layer is done
+
+
+using 16 different 5x5 filters.
+
+
+The first two convolutional layers
+
+
+are each followed by a 4x4 max
+
+
+pooling layer and the last convolution
+
+
+is followed by one of 5x5.
+
+
+The model then operates a global average
+
+
+pooling of 16x6 to build the
+
+
+input of the full connected neural network,
+
+
+which ends with eight output nodes.
+
+
+These are the eight classes that identify
+
+
+the number of faces in the image.
+
+
+During the training process,
+
+
+the kernel weights are evaluated
+
+
+and during the inference step,
+
+
+the kernel weights of all the
+
+
+16 filters are fixed.
+
+
+The first feature map can be represented
+
+
+as an array of size 16x240x320.
+
+
+16 is the number of filter and feature maps.
+
+
+The feature map has size 240x320.
+
+
+This is slightly smaller than the
+
+
+original image size because the
+
+
+convolution does not use padding
+
+
+and the algorithm pixel by pixel
+
+
+as the stride length is 1.
+
+
+After the first convolution,
+
+
+the model applies a max pooling
+
+
+of size 4x4.
+
+
+This takes the maximum value of each 4x4
+
+
+group of elements of the feature map.
+
+
+This reduces the feature map to
+
+
+16 matrices of size 60x80.
+
+
+The other layers operate in a similar manner.
+
+
+This diagram shows one specific possible
+
+
+architecture for the neural network.
+
+
+There are many alternative possibilities,
+
+
+and these different models can
+
+
+have different computational
+
+
+performance and different accuracy.
+

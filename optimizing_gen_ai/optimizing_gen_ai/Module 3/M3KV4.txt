@@ -1,0 +1,218 @@
+﻿Once we understand models as computation
+graphs,
+
+the next question is: How are those graphs
+executed?
+
+That brings us to two important modes of
+execution in machine learning frameworks—
+
+graph mode and eager mode.
+
+These represent two very different
+philosophies when it comes to how
+
+operations are handled under the hood.
+
+Let's start with graph mode,
+also known as static or 
+
+compiled execution.
+
+In graph mode,
+the entire computation graph is defined
+
+before the model starts running.
+
+It's like drawing a complete blueprint in
+advance.
+
+Once the graph is finalized,
+the framework can apply 
+
+a series of optimizations.
+
+It might merge multiple operations
+together, fold constant values,
+
+or rearrange instructions for better
+memory use.
+
+Once all of that is done,
+the graph is compiled into efficient
+
+machine code and then executed.
+
+This approach offers several benefits.
+
+First, it's highly optimized.
+
+Because the framework sees the entire
+graph ahead of time,
+
+it can perform global analysis and tuning.
+
+That leads to faster execution,
+especially for stable workloads.
+
+Second, it's predictable.
+
+Since the graph is fixed,
+performance is consistent,
+
+a key advantage in production systems.
+
+Static graph compilation goes even
+further by compiling the graph 
+
+ahead of time, before inference even begins.
+
+Frameworks like XLA or llama.cpp use
+this method to generate specialized code
+
+that makes full use of the hardware's
+capabilities.
+
+On CPUs,
+this includes tuning memory layouts and
+
+leveraging low-level extensions like NEON
+or SVE.
+
+However, the trade-off is flexibility.
+
+Graph mode is not well-suited for models
+that change shape dynamically or include
+
+conditional logic.
+
+If your input data varies in unexpected
+ways,
+
+the graph may have to be recompiled, or
+might not run at all.
+
+Now let's look at the other side,
+eager mode, also called dynamic execution.
+
+In eager mode,
+operations are executed immediately,
+
+as they are called.
+
+There's no need to define the full graph
+ahead of time.
+
+Instead,
+you just write regular Python code, and
+
+the framework runs it line by line.
+
+This makes eager mode much easier to
+prototype and debug.
+
+You can use print statements,
+inspect tensors,
+
+and test ideas interactively.
+
+It feels more intuitive,
+especially for newcomers 
+
+to machine learning.
+
+The downside is performance.
+
+Because operations are handled one at a
+time, and the framework doesn't see the
+
+big picture,
+it can't apply the same 
+
+level of optimization.
+
+There's more overhead,
+and runtime is usually slower,
+
+especially for large models.
+
+Some frameworks try to get the best of
+both worlds with 
+
+dynamic graph compilation.
+
+Here the framework begins in eager mode,
+then traces the operations and builds a
+
+partial graph during execution.
+
+This graph is compiled just-in-time,
+meaning right when it's needed.
+
+PyTorch's torch.jit.trace is a
+good example of this approach.
+
+The benefit of this hybrid model is
+adaptability.
+
+You can handle dynamic input shapes and
+control flow, while still getting some of
+
+the speed gains from compilation.
+
+But again, there's a trade-off:
+
+dynamic compilation can introduce runtime
+overhead,
+
+especially on the first few runs, when the
+graph is still being built and optimized.
+
+So how do these two modes compare?
+
+Static compilation is fast and stable.
+
+It works best for production environments
+where inputs are consistent and
+
+performance matters.
+
+Dynamic or eager execution is flexible
+and developer-friendly,
+
+better for experimentation and quick
+iteration.
+
+Dynamic graph compilation lands somewhere
+in between,
+
+offering a blend of performance and
+flexibility,
+
+but with some runtime complexity.
+
+In summary,
+graph mode defines everything upfront and
+
+optimizes for speed.
+
+Eager mode runs code as it's written,
+which is simpler to work with 
+
+but less efficient.
+
+Knowing which mode to use and when to
+switch is essential for balancing
+
+development speed and runtime performance,
+especially when deploying to 
+
+resource-constrained CPUs.
+
+Next, we'll explore the real-world tools that
+
+bring these techniques to life,
+including frameworks like PyTorch and
+
+llama.cpp and hardware specific
+libraries like KleidiAI.

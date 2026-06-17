@@ -1,0 +1,540 @@
+﻿
+In this lab, we will build our first neural
+
+
+network model with TensorFlow and deploy the
+
+
+model on the embedded board with STM Cube AI.
+
+
+We will implement a letter recognition model
+
+
+which takes accelerometer data from the board
+
+
+and predicts the letter based on that data.
+
+
+For example, if you draw the letter O
+
+
+with the board, then the model will
+
+
+predict which letter you drew.
+
+
+You will also train your first neural
+
+
+network model with TensorFlow and
+
+
+deploy the inference with STM Cube AI.
+
+
+You will implement the activity
+
+
+recognition application using a multilayer
+
+
+perceptron and compare the model accuracy
+
+
+with and without feature extraction.
+
+
+Finally, you will evaluate the
+
+
+performance on an STM32 microcontroller.
+
+
+In this lab,
+
+
+we're going to use TensorFlow to train
+
+
+multilayer perceptron models and use STM
+
+
+Cube AI to deploy the model on the board.
+
+
+Let's install necessary conda packages
+
+
+for data collection and machine learning.
+
+
+First, open Anaconda prompt.
+
+
+Activate your environment by
+
+
+typing conda activate ml_lab.
+
+
+Add conda-forge channel to install packages.
+
+
+Conda config --
+
+
+add channels conda-forge,
+
+
+then install Python packages,
+
+
+conda install jupyter pandas
+
+
+pyserial scikit-learn
+
+
+tensorflow matplotlib.
+
+
+Next you need to program the board
+
+
+to acquire accelerometer data.
+
+
+We already implemented the data
+
+
+collection code for the lab,
+
+
+so you can just import the code and
+
+
+program the board on the STM code IDE.
+
+
+Open the STM
+
+
+code IDE. You can download this software from
+
+
+the STM microelectronics official website.
+
+
+Click import project and select
+
+
+the MCU dataset creation
+
+
+folder inside the Lab 2 folder.
+
+
+Plug the board into your
+
+
+computer with a USB cable.
+
+
+You may need to reset your board
+
+
+before you program the board.
+
+
+So, click the back button on
+
+
+the board for the reset.
+
+
+Right click the project, and
+
+
+select run as, then it compiles and
+
+
+installs the code into your board.
+
+
+Now your board is ready to
+
+
+collect the sensor data.
+
+
+In the same environment,
+
+
+navigate to the lab2 folder,
+
+
+cd Documents/lab2.
+
+
+Open Jupyter notebook by typing
+
+
+jupyter notebook.
+
+
+Execute the first code block
+
+
+by pressing Shift plus enter
+
+
+to import the packages. Next,
+
+
+connect the board for data collection.
+
+
+Make sure that you plug the
+
+
+board into your computer.
+
+
+Execute this code block and check
+
+
+which port the board is connected to.
+
+
+The board is connected to the COM 3 port.
+
+
+Enter the port number.
+
+
+Now we have the serial
+
+
+connection with the board.
+
+
+This code block contains several
+
+
+helper functions for computation.
+
+
+Execute the code block to have
+
+
+these functions available.
+
+
+Now we are ready to acquire the dataset.
+
+
+Execute this code block.
+
+
+It acquires sensor data from the board and
+
+
+saves training samples for Machine Learning.
+
+
+Enter any lowercase letter that
+
+
+you want to collect samples for.
+
+
+This is going to be the label of the samples.
+
+
+Then draw the letter with the board and
+
+
+press the blue button on the board.
+
+
+Enter 1 in the box to save
+
+
+the accelerometer data.
+
+
+You may repeat this process
+
+
+until you get enough samples.
+
+
+The more data samples you collect,
+
+
+the better model you will probably get.
+
+
+Enter 2 when you want to
+
+
+finish this data collection.
+
+
+You can execute this code
+
+
+block again for other letters,
+
+
+so try collecting the accelerometer
+
+
+data for other letters such as A and U.
+
+
+Let's check the dataset you collected.
+
+
+Execute this code block to load
+
+
+the dataset. In this dataset
+
+
+we have letter O and letter S.
+
+
+The label for letter O is 0
+
+
+and the label for letter S is 1.
+
+
+This code block will show
+
+
+one training sample.
+
+
+This is the accelerometer
+
+
+data of one training sample.
+
+
+Now we are going to train a multilayer
+
+
+perceptron model with the dataset.
+
+
+First,
+
+
+define a multilayer perceptron
+
+
+model with three dense layers.
+
+
+Compile the model.
+
+
+You will then see the model
+
+
+has 3,392 parameters in total.
+
+
+Train the model for 200 epochs.
+
+
+You will soon see why 200 was
+
+
+chosen for the number of epochs.
+
+
+Now the training is finished.
+
+
+Here you can check the training
+
+
+and validation accuracy.
+
+
+Let's plot the training and
+
+
+validation accuracy against epochs.
+
+
+You can see that the training and
+
+
+validation accuracies start to
+
+
+converge after around 150 epochs.
+
+
+This means that the 200 epochs
+
+
+are enough to train the model.
+
+
+If we train the model for too many epochs,
+
+
+the validation accuracy may
+
+
+drop due to overfitting.
+
+
+For the training,
+
+
+we used the default learning
+
+
+rate for the model,
+
+
+but how would the model change
+
+
+with different learning rates if
+
+
+the learning rate is too high?
+
+
+The model is more likely
+
+
+to overshoot the minima,
+
+
+meaning that the model cannot
+
+
+converge to the minima.
+
+
+On the other hand,
+
+
+if the learning rate is too low,
+
+
+the model reaches the minima too slowly,
+
+
+requiring more training time.
+
+
+Let's first try a high learning rate.
+
+
+Here the learning rate of
+
+
+the optimizer is set as 1,000.
+
+
+Execute the code block.
+
+
+This graph shows the training and
+
+
+validation loss values against epochs.
+
+
+You can see that the loss
+
+
+values fluctuate a lot,
+
+
+so the model has difficulty
+
+
+in reaching the minima.
+
+
+Let's try a lower learning
+
+
+rate such as 0.0001.
+
+
+Execute the code block.
+
+
+The graph shows that the training
+
+
+and validation loss values
+
+
+decrease much more slowly,
+
+
+so it is important to use a proper
+
+
+learning rate for training.
+
+
+Now that we have trained a model,
+
+
+it's time to test it.
+
+
+Execute this code block, press enter
+
+
+when you're ready to draw a letter.
+
+
+Draw a letter and press the
+
+
+blue button on the board.
+
+
+Check whether the prediction
+
+
+is correct or not.
+
+
+Here we have a letter S and
+
+
+the predicted label is 0.
+
+
+The true label of the letter S is 1,
+
+
+so the model prediction was incorrect.
+
+
+Now we have a letter O.
+
+
+You can see the predicted label is 0 again,
+
+
+so this time model inference was correct.
+

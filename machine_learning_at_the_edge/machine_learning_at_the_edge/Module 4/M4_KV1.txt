@@ -1,0 +1,300 @@
+﻿
+Deep learning is a subset of Machine
+
+
+Learning where the Artificial Neural
+
+
+Network has three or more layers.
+
+
+As we know, Artificial Neural
+
+
+Networks attempt to simulate the
+
+
+behaviour of the human brain,
+
+
+albeit far from matching its ability,
+
+
+enabling the network to learn from
+
+
+large amounts of data called datasets.
+
+
+While an Artificial Neural Network
+
+
+with one or two layers can still
+
+
+make approximate predictions,
+
+
+additional hidden layers allow for a more
+
+
+refined model with greater accuracy.
+
+
+Convolutional Neural Networks
+
+
+are a variation of feedforward
+
+
+Artificial Neural Networks.
+
+
+They are also feedforward, meaning it is
+
+
+not possible to have a loop or cycle.
+
+
+Although they are inspired by
+
+
+the animal visual cortex and are
+
+
+very popular in computer vision,
+
+
+for applications including
+
+
+handwritten text recognition,
+
+
+segmentation and object classification.
+
+
+Convolutional Neural Networks are also
+
+
+very popular in audio processing,
+
+
+especially for audio event
+
+
+recognition and speech recognition.
+
+
+They can also use inertial data
+
+
+for applications such as human
+
+
+activity recognition.
+
+
+Convolutional Neural Networks are deep
+
+
+learning neural networks designed to
+
+
+process structured arrays and matrices
+
+
+of data such as images or audio data
+
+
+after a Mel-frequency
+
+
+cepstral coefficients
+
+
+feature extraction.
+
+
+In particular,
+
+
+the data can be seen as a matrix and
+
+
+a filter or kernel is convoluted to
+
+
+all the input data to generate the
+
+
+resulting feature map. The output in
+
+
+the feature map is the sum of all
+
+
+the dot products between the filter
+
+
+values and the input values, forming
+
+
+a convolution layer.
+
+
+The values in the filter matrix are
+
+
+updated in the training process
+
+
+during backpropagation.
+
+
+However,
+
+
+the dimensions of the filter matrix
+
+
+are determined explicitly by the programmer.
+
+
+For example,
+
+
+here we have a 3x3 filter.
+
+
+A typical filter size is 3x3
+
+
+or 5x5.
+
+
+The feature maps compromise many outputs
+
+
+resulting from using more than one filter,
+
+
+so the Convolutional Neural Network is
+
+
+able to preserve the spatial dimensions
+
+
+better.
+
+
+A developer using a Convolutional
+
+
+Neural Network should also decide
+
+
+how to use striding and padding.
+
+
+The stride is the number of pixels,
+
+
+or other units, if the data is not
+
+
+an image by which the filter matrix
+
+
+is moved over the input matrix
+
+
+between consecutive calculations.
+
+
+Having a larger stride will
+
+
+produce smaller feature maps.
+
+
+Sometimes it is convenient to pad
+
+
+the input matrix with zeros around
+
+
+the border so that we can apply
+
+
+the filter to bordering elements
+
+
+of our input image matrix.
+
+
+This is known as zero padding.
+
+
+Similarly to Artificial Neural Networks,
+
+
+we need to include some nonlinearity
+
+
+to enable learning. Nonlinear
+
+
+activation functions are needed for
+
+
+the universal approximation theorem
+
+
+for neural networks to be valid, and
+
+
+function in Convolutional Neural
+
+
+Networks is the rectified linear unit
+
+
+which replaces all negative pixel
+
+
+values in the feature map with zero.
+
+
+Another type of layer in the Convolutional
+
+
+Neural Network is the pooling layers.
+
+
+They reduce the number of parameters in
+
+
+the model by a process called downsampling.
+
+
+By summarizing the presence
+
+
+of features in patches of the
+
+
+feature map. Two common pooling methods
+
+
+are average pooling and Max pooling,
+
+
+which summarize the average presence
+
+
+of a feature and the most activated
+
+
+presence of a feature, respectively.
+

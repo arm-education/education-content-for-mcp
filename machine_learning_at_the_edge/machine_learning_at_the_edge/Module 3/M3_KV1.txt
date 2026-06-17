@@ -1,0 +1,276 @@
+﻿
+Just as Machine Learning is a
+
+
+subset of Artificial Intelligence,
+
+
+brain inspired algorithms are
+
+
+a subset of Machine Learning.
+
+
+These are algorithms inspired by our
+
+
+understanding of how the brain operates.
+
+
+But how does our brain work?
+
+
+The basic computational unit
+
+
+of the brain is a neuron.
+
+
+There are approximately 80 to 100
+
+
+billion neurons in a human brain.
+
+
+These neurons are connected by hundreds
+
+
+of trillions of links known as synapses.
+
+
+Dendrites are the input of neurons.
+
+
+Neurons receive input signals from
+
+
+dendrites, and produce an output
+
+
+signal along the axon which interacts
+
+
+with the dendrites of other neurons.
+
+
+The strength of a synapse is
+
+
+called its synaptic weight.
+
+
+The values of these weights are
+
+
+responsible for defining the
+
+
+behaviours learned by the brain.
+
+
+Brain-inspired techniques try to replicate
+
+
+how the brain works using algorithms.
+
+
+These include Artificial Neural
+
+
+networks, abbreviated as ANNS, which
+
+
+mimic the neural network of the
+
+
+human brain. At a basic level,
+
+
+an Artificial Neural Network is
+
+
+composed of many computational
+
+
+nodes which behave like biological
+
+
+neurons, connected in different ways.
+
+
+These artificial neurons are also
+
+
+composed of four main components: inputs,
+
+
+weights, a bias or threshold, and an output.
+
+
+The artificial neuron,
+
+
+also called a perceptron,
+
+
+is at the heart of Artificial
+
+
+Neural Networks.
+
+
+It combines the values, X, of each
+
+
+input with the related synapse
+
+
+weights, W, in a linear combination
+
+
+similar to linear regression.
+
+
+In particular,
+
+
+the calculated value F of X is
+
+
+equal to the sum over the inputs
+
+
+of W-I-X-I, a constant bias term.
+
+
+These weights and the bias term
+
+
+are part of the model and are
+
+
+determined during the training step.
+
+
+This output could be any real number,
+
+
+so it is mapped onto a more relevant
+
+
+domain using a nonlinear activation function.
+
+
+This enables the network to detect
+
+
+more complex patterns of the data.
+
+
+In the figure,
+
+
+the threshold activation function is used.
+
+
+This gives the output 0 if F
+
+
+of X is above a threshold.
+
+
+0 in this case, or 1 otherwise.
+
+
+While the linear neuron function
+
+
+is always the same,
+
+
+many activation functions can be
+
+
+used in Artificial Neural Networks.
+
+
+You have already seen the threshold function,
+
+
+also called a step function.
+
+
+Other common choices include
+
+
+the sigmoid function.
+
+
+This is similar to a step function
+
+
+but smoother.
+
+
+It is a good choice when the
+
+
+output represents a probability.
+
+
+The output is always between zero and one.
+
+
+Hyperbolic tan, this is similar
+
+
+to the sigmoid function,
+
+
+but more stretched out. The Rectified
+
+
+Linear Activation unit is usually
+
+
+considered computationally efficient.
+
+
+The choice of activation function depends
+
+
+on the characteristics of the data.
+
+
+For example,
+
+
+the sigmoid function works well
+
+
+for classification purposes,
+
+
+resulting in faster training and convergence.
+
+
+The rectified linear unit is good
+
+
+for approximation. As it is simple,
+
+
+you can always start from this if you
+
+
+don't know the data characteristics.
+
+
+The designer of an Artificial
+
+
+Neural Network can also define their
+
+
+own custom activation function.
+

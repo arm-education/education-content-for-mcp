@@ -1,0 +1,197 @@
+﻿One of the most effective ways to
+optimize AI inference on CPUs is by
+
+reducing how much data we need to compute.
+
+And the simplest way to do that is through quantization.
+
+Quantization involves representing
+numbers with fewer bits—
+
+trading some precision for big gains in
+performance and memory efficiency.
+
+For example,
+instead of using 32-bit floating point
+
+numbers for every weight in a model,
+we might switch to 8-bit integers.
+
+That single change cuts memory usage by
+75% and reduces the amount of data that
+
+needs to move through memory buses during
+inference.
+
+Let's talk about how this works.
+
+In linear quantization, we map the original floating point range
+
+onto an integer range using a scale factor.
+
+For instance,
+if your floating point values range
+
+between –1 and 1, and you're converting
+them to INT8,
+
+you assign each float a corresponding
+integer between –128 and +127.
+
+This process is simple, fast,
+and works well for inference—
+
+especially when combined with quantized
+matrix multiply instructions like I8MM,
+
+which we'll discuss later.
+
+On Arm CPUs,
+we often work with formats like
+
+FP32, FP16, BF16, INT8, and even INT4.
+
+Each step down in bit-width lowers memory
+and compute requirements—
+
+but it also reduces numerical precision.
+
+FP16 and BF16 both use 16 bits
+but in different ways.
+
+BF16 keeps a larger dynamic range,
+which makes it more resistant to
+
+numerical overflow,
+which is especially useful for
+
+training or fine-tuning.
+
+But for inference,
+INT8 improves efficiency.
+
+It's small, fast,
+and accurate enough in most cases—
+
+especially after fine-tuning or
+calibration.
+
+If you need even more compression,
+INT4 can be used—
+
+although it often comes with a more
+noticeable accuracy trade-off and
+
+requires more careful tuning,
+even involving techniques such as
+
+quantization-aware training.
+
+Now let's shift gears to another powerful
+optimization: pruning.
+
+Pruning is exactly what it sounds
+like—cutting away parts of the model that
+
+aren't pulling their weight.
+
+That might mean removing neurons,
+channels,
+
+or even individual weights that
+contribute
+
+very little to the final output.
+
+The idea is that large models often
+contain redundancy—
+
+extra parameters that don't make a
+meaningful difference.
+
+By removing these,
+we reduce the amount of computation
+
+required during inference.
+
+One common method is called iterative
+magnitude pruning.
+
+You start by training a full, dense model.
+
+Then, you remove a small percentage of the
+weights with the lowest magnitudes—
+
+the ones closest to zero.
+
+After that,
+you fine-tune the model to recover any
+
+accuracy that was lost.
+
+And then you repeat the process,
+slowly increasing the sparsity of the
+model.
+
+Over time, this creates a model that is smaller,
+faster,
+
+and often just as accurate as the
+original—
+
+especially for tasks like classification
+or translation where robustness is key.
+
+Pruning can be unstructured,
+meaning individual weights are removed
+
+regardless of their position in the
+matrix.
+
+Or it can be structured, meaning entire rows, columns, or layers are removed
+
+to create a more regular, hardware-friendly shape.
+
+The more structured the pruning,
+the easier it is to accelerate on CPUs—
+
+because it aligns better with how memory
+is accessed and
+
+how operations are parallelized.
+
+So, to recap:
+quantization reduces precision to smaller
+
+bit widths like INT8 or INT4,
+drastically reducing
+
+memory use and compute time.
+
+It's particularly effective when matched
+with hardware features that support
+
+low-precision arithmetic.
+
+Pruning, on the other hand,
+reduces the number of weights and
+
+operations altogether—trimming away unnecessary computations
+
+to speed up the model and lighten its memory
+footprint.
+
+Together,
+these two techniques can form the
+
+algorithmic foundation of efficient
+inference on CPUs.
+
+And in the next video, we'll build on this
+by exploring how to further speed up
+
+inference through implementation-level
+optimizations—things like loop tiling,
+
+reordering, and unrolling.
+

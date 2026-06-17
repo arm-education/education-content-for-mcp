@@ -1,0 +1,63 @@
+﻿
+For Machine Learning to perform
+
+
+well, even on the smallest devices,
+
+
+it is essential to optimize the
+
+
+models to minimize the memory
+
+
+footprint and the number of operations
+
+
+required to perform inference tasks.
+
+
+In practice, this allows portable
+
+
+devices to be more responsive,
+
+
+and extends their battery life.
+
+
+In this last module,
+
+
+you will explore some of the cutting-edge
+
+
+techniques used to optimize
+
+
+the neural networks,
+
+
+such as using fixed-point arithmetic
+
+
+in place of floating-point arithmetic.
+
+
+To consolidate your learning,
+
+
+you will develop the best Machine
+
+
+Learning model that you can, that
+
+
+will be able to run on an Arm
+
+
+Cortex-M microprocessor, using
+
+
+a toolkit such as CMSIS-NN.
+

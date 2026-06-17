@@ -1,0 +1,287 @@
+﻿Now that we've explored the key
+components of the transformer
+
+architecture,
+let's look at how it's adapted to create
+
+large language models, or LLMs.
+
+In practice,
+most LLMs are built using the 
+
+decoder-only part of the transformer.
+
+Unlike the full encoder-decoder model,
+which is useful for tasks like
+
+translation, decoder-only models are
+streamlined to generate text—one token at a
+
+time—based on previously generated output.
+
+Before we can train or use a model,
+we need to process the input.
+
+This begins with tokenization—the
+process of converting raw text into
+
+discrete units called tokens.
+
+These tokens are then mapped to
+embeddings,
+
+which serve as the input to the model.
+
+Training a language model typically
+happens in three phases.
+
+First, there's pre-training, where the
+model learns to predict the next token in
+
+massive text corpora.
+
+This is done in a self-supervised way,
+meaning no human-labeled data is needed.
+
+Next comes supervised fine-tuning, where
+the model is refined using high-quality
+
+datasets for specific tasks, like
+question answering or summarization.
+
+Finally,
+to align the model's behavior with human
+
+preferences,
+we use reinforcement learning from human
+
+feedback, or RLHF.
+
+This phase tunes the model to be more
+helpful, safe,
+
+and aligned with user expectations.
+
+Once training is complete,
+we move into the generation phase,
+
+which is where inference happens.
+
+Generation begins with the prefill stage—
+where the model processes the full prompt
+
+to generate initial attention states.
+
+Then, using KV caching,
+we store the computed keys and values for
+
+each token in memory.
+
+These cached values are reused to
+efficiently compute subsequent outputs
+
+without reprocessing the entire prompt.
+
+This is essential for fast,
+low-latency text generation.
+
+Finally, during decoding,
+the model produces one token at
+
+a time, each based on the previous context and
+the stored attention information.
+
+In short,
+building an LLM isn't just about stacking
+
+transformer blocks.
+
+It's about adapting the architecture,
+processing the input efficiently,
+
+applying the right training recipe,
+and generating responses with optimized
+
+performance and alignment.
+
+Before a transformer can become a large
+language model—or LLM—
+
+there's a lot of work to be done.
+
+Think of the transformer as a powerful
+but untrained engine.
+
+To turn it into something like GPT or
+Claude,
+
+we need to teach it how to use language—
+
+And we do that in three main stages:
+pre-training, fine-tuning, and alignment.
+
+Let's start at the beginning—with
+tokenization.
+
+Transformers don't understand raw text.
+
+Instead,
+the first step is to convert text into
+
+tokens—numerical
+representations the  
+
+model can process.
+
+There are different strategies for
+tokenization:
+
+Word-based,
+which splits text into whole words—but
+
+struggles with new or rare ones;
+
+Character-based, which handles any input
+but leads to very long sequences;
+
+and subword tokenization, like byte-pair
+
+encoding or WordPiece.
+
+These balance the vocabulary size and
+sequence length—
+
+making them ideal for LLMS.
+
+Once we tokenize the input,
+each token is mapped to an integer, and
+
+then embedded as a vector.
+
+These token embeddings, combined with
+positional encodings, are what we feed
+
+into the transformer.
+
+Now comes the heavy lifting — pre-training.
+
+In this stage, the model learns general
+language patterns from massive datasets—
+
+sometimes hundreds of billions of words
+from books, websites, and articles.
+
+Most pre-training is self-supervised.
+
+That means the model learns from the data
+itself.
+
+One common method is next token
+prediction—where the model tries to
+
+predict the next word given all the
+previous ones.
+
+For example, if the input is
+"The cat sat on the...", then
+
+the model should predict "mat".
+
+This simple task forces the model to
+learn: grammar and sentence structure,
+
+common phrases and idioms;
+and factual knowledge embedded
+
+in the text.
+
+The goal isn't to teach the model a
+specific task—
+
+it's to make it fluent in the structure
+of language.
+
+Pre-training results in a foundational
+model—one that's good at understanding and
+
+generating text, but not yet specialized.
+
+Next comes supervised fine-tuning.
+
+Here, we teach the model to perform
+specific tasks by training it on high-quality,
+
+human labeled data—
+
+things like question-answer pairs,
+summaries, or dialogue examples.
+
+We still use cross-entropy loss—just like
+in pre-training—
+
+but now we only apply it to the output
+part of the interaction.
+
+So, if the input is a question,
+we only compute loss on the model's answer.
+
+This stage makes the model: more accurate
+on benchmarks,
+
+more coherent and helpful in responses;
+and better aligned with what users expect.
+
+Fine-tuning is where the model starts to
+feel more useful—
+
+it's not just generating fluent text:
+it's answering in ways that make sense.
+
+But there's one more step—alignment.
+
+Even after fine-tuning,
+LLMs can generate responses that are
+
+offensive, biased, or just plain wrong.
+
+To address this, we use reinforcement
+learning from human feedback,
+
+or RLHF.
+
+The process begins with reward modeling.
+
+Human labelers compare different outputs
+from the model and score them.
+
+The model then learns a function that
+predicts which responses humans prefer.
+
+Next, we do policy optimization—usually
+with a method called proximal
+
+policy optimization (PPO).
+
+The model is trained to generate
+responses that score higher on  
+
+the reward model.
+
+This step actually nudges the model
+toward behaving more like humans want
+
+it to.
+
+The goal of RLHF is to: make responses
+more aligned with human values,
+
+encourage helpfulness, safety,
+and factual accuracy;
+
+and avoid toxic or harmful outputs.
+
+Together, these three stages—pre-training,
+supervised fine-tuning, and RLHF—transform
+
+a raw transformer into a capable and
+trustworthy LLM.

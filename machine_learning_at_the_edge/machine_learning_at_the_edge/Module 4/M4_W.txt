@@ -1,0 +1,66 @@
+﻿
+Neural networks can be used to solve
+
+
+complex classification problems,
+
+
+as you have already seen.
+
+
+In this module, you'll discover
+
+
+a more advanced model:
+
+
+the Convolutional Neural Network.
+
+
+These are important for image
+
+
+processing — as they can interpret
+
+
+relationships between adjacent pixels —
+
+
+but they are also used in other
+
+
+applications such as financial modeling.
+
+
+This is a new and modern technique
+
+
+so you'll be learning
+
+
+about the cutting-edge of
+
+
+Machine Learning and the recent
+
+
+trends in this field. In the lab,
+
+
+you will develop a Convolutional Neural
+
+
+Network for audio processing, and optimize
+
+
+it for both accuracy and performance.
+
+
+This would allow it to give good results
+
+
+on a small device without draining
+
+
+the battery or delaying the response.
+

@@ -1,0 +1,264 @@
+﻿
+In this lab, we will build Machine
+
+
+Learning models with Anaconda and Python.
+
+
+We will use three different
+
+
+Machine Learning methods,
+
+
+a linear Support Vector Classifier,
+
+
+a Support Vector Classifier
+
+
+and a decision tree.
+
+
+With these methods,
+
+
+we will implement activity recognition
+
+
+models that take accelerometer
+
+
+data as input and predict the type
+
+
+of activity based on that data.
+
+
+In this lab, you will learn how to
+
+
+utilize Anaconda and Python to work with
+
+
+datasets and perform Machine Learning,
+
+
+how to utilize the Machine Learning
+
+
+API to extract features from the data
+
+
+and implement the different models, and
+
+
+how to implement activity recognition
+
+
+models with accelerometer data.
+
+
+Anaconda is a distribution of
+
+
+the Python language for data
+
+
+science and Machine Learning.
+
+
+With Anaconda you can easily install
+
+
+open source Machine Learning packages.
+
+
+Follow these instructions to
+
+
+install Anaconda on your machine.
+
+
+Visit the official Anaconda Web page,
+
+
+Anaconda.com.
+
+
+Under products,
+
+
+select Anaconda Distribution from the menu,
+
+
+then download the Anaconda
+
+
+installer by clicking this button.
+
+
+Open the Anaconda installer and
+
+
+install using the default options.
+
+
+Now the installation is finished.
+
+
+Watch carefully how to use Anaconda prompt.
+
+
+Open Anaconda prompt.
+
+
+On Anaconda prompt you can
+
+
+execute conda commands.
+
+
+For example, you can create an
+
+
+environment by typing conda
+
+
+create -N, choose an environment name,
+
+
+Python= and your Python version.
+
+
+Then you can activate the new
+
+
+environment by typing conda
+
+
+activate and the environment name.
+
+
+Now you can see that the current
+
+
+environment name changed to ml_lab.
+
+
+In this new environment you can install
+
+
+conda packages using Conda install.
+
+
+You can then deactivate the
+
+
+environment by typing conduct
+
+
+deactivate.
+
+
+We are going to create our first
+
+
+Machine Learning model for activity
+
+
+recognition on top of Jupyter notebook.
+
+
+Open Anaconda prompt and navigate to the
+
+
+lab1 folder using the cd command.
+
+
+Open Jupyter notebook by typing
+
+
+jupyter notebook.
+
+
+We need a dataset for training and
+
+
+testing and Machine Learning model.
+
+
+So we are going to download an
+
+
+open source accelerometer dataset.
+
+
+Follow the link,
+
+
+click Data Folder and download the dataset.
+
+
+Move the archive file to the lab1
+
+
+folder and extract the file.
+
+
+Open Jupyter Notebook. On Jupyter notebook,
+
+
+you can execute a code block
+
+
+by pressing Shift plus enter.
+
+
+The first code block imports
+
+
+the necessary Python packages.
+
+
+Execute the first block by pressing
+
+
+Shift plus enter.
+
+
+After the execution is finished,
+
+
+a number appears between these brackets.
+
+
+The second code block loads the
+
+
+information about the dataset,
+
+
+such as feature names and activity names.
+
+
+Execute the second block.
+
+
+Now you can check the number of features,
+
+
+the number of activities,
+
+
+and the list of activities.
+
+
+The next three code blocks load
+
+
+the train and test datasets to be
+
+
+used for Machine Learning.
+
